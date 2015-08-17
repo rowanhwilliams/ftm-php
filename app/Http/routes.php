@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', [
+    'as' => 'root', 'uses' => 'WelcomeController@index'
+]);
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
+
+Route::get('admin/index', [
+    'as' => 'root', 'uses' => 'Admin\MainController@index'
+]);
