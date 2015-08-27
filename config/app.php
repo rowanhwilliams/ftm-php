@@ -141,6 +141,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        // prod providers
+        Spatie\LaravelAnalytics\LaravelAnalyticsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -196,7 +198,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'LaravelAnalytics'  => Spatie\LaravelAnalytics\LaravelAnalyticsFacade::class,
     ],
 
 ];

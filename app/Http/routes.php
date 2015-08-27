@@ -26,3 +26,22 @@ Route::controllers([
 Route::get('admin/index', [
     'as' => 'root', 'uses' => 'Admin\MainController@index'
 ]);
+Route::resource('profile', 'ProfileController');
+
+// Admin routes
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function()
+{
+    // GET
+    Route::get('/', ['as' => 'admin.root', 'uses' => 'DashboardController@index']);
+    Route::get('setting', ['as' => 'admin.setting.index', 'uses' => 'SettingController@getSettings']);
+    // POST
+    Route::post('language/change', ['as' => 'admin.language.change' , 'uses' => 'LanguageController@postChange']);
+    Route::post('page/order', ['as' => 'admin.page.order' , 'uses' => 'PageController@postOrder']);
+    // PATCH
+    Route::patch('setting/{setting}', ['as' => 'admin.setting.update', 'uses' => 'SettingController@patchSettings']);
+    // Resources
+
+    Route::resource('language', 'LanguageController');
+    Route::resource('page', 'PageController');
+    Route::resource('user', 'UserController');
+});

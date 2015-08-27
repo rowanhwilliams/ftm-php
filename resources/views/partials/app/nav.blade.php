@@ -12,8 +12,8 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="{{ (Request::is('/admin/index') ? 'active' : '') }}">
-                    <a href="{{ URL::to('/admin/index') }}"><i class="fa fa-home"></i> Home</a>
+                <li class="{{ (Request::is('/') ? 'active' : '') }}">
+                    <a href="{{ URL::to('') }}"><i class="fa fa-home"></i> Home</a>
                 </li>
                 {{--<li class="{{ (Request::is('about') ? 'active' : '') }}">--}}
                     {{--<a href="{{ URL::to('about') }}">About</a>--}}
@@ -36,15 +36,15 @@
                                     class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             @if(Auth::check())
-                                @if(Auth::user()->admin==1)
+                                @if(Auth::user()->userType=='admin')
                                     <li>
-                                        <a href="{{ URL::to('admin/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
+                                        <a href="{{ URL::to('admin') }}"><i class="fa fa-tachometer"></i> Dashboard </a>
                                     </li>
                                 @endif
                                 <li role="presentation" class="divider"></li>
                             @endif
                             <li>
-                                <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
+                                <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout </a>
                             </li>
                         </ul>
                     </li>

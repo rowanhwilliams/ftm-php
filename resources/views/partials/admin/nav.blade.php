@@ -13,14 +13,36 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{{ (Request::is('/') ? 'active' : '') }}">
-                    <a href="{{ URL::to('') }}"><i class="fa fa-home"></i> Home</a>
+                    <a href="{{ URL::to('/') }}"><i class="fa fa-home"></i> Home</a>
                 </li>
-                {{--<li class="{{ (Request::is('about') ? 'active' : '') }}">--}}
-                    {{--<a href="{{ URL::to('about') }}">About</a>--}}
-                {{--</li>--}}
-                {{--<li class="{{ (Request::is('contact') ? 'active' : '') }}">--}}
-                    {{--<a href="{{ URL::to('contact') }}">Contact</a>--}}
-                {{--</li>--}}
+                <li class="{{ (Request::is('/admin/verticals') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Verticals</a>
+                </li>
+                <li class="{{ (Request::is('/admin/companies') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Companies</a>
+                </li>
+                <li class="{{ (Request::is('/admin/news') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">News</a>
+                </li>
+                <li class="{{ (Request::is('/admin/products') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Products</a>
+                </li>
+                <li class="{{ (Request::is('/admin/events') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Events</a>
+                </li>
+                <li class="{{ (Request::is('/admin/indices') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Indices</a>
+                </li>
+                <li class="{{ (Request::is('/admin/jobs') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Jobs</a>
+                </li>
+                <li class="{{ (Request::is('/admin/employee') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Employee</a>
+                </li>
+                <li class="{{ (Request::is('/admin/cities') ? 'active' : '') }}">
+                    <a href="{{ URL::to('/admin/') }}">Cities</a>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -36,15 +58,15 @@
                                     class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             @if(Auth::check())
-                                @if(Auth::user()->admin==1)
+                                @if(Auth::user()->userType=='admin')
                                     <li>
-                                        <a href="{{ URL::to('admin/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
+                                        <a href="{{ URL::to('admin') }}"><i class="fa fa-tachometer"></i> Dashboard </a>
                                     </li>
                                 @endif
                                 <li role="presentation" class="divider"></li>
                             @endif
                             <li>
-                                <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
+                                <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout </a>
                             </li>
                         </ul>
                     </li>

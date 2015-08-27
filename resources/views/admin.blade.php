@@ -26,12 +26,12 @@
     <link rel="shortcut icon" href="{{{ asset('assets/site/ico/favicon.ico') }}}">
 </head>
 <body>
-@include('partials.nav')
+@include('partials.admin.nav')
 
 <div class="container">
 @yield('content')
 </div>
-@include('partials.footer')
+@include('partials.app.footer')
 
 <!-- Scripts -->
 <script>
