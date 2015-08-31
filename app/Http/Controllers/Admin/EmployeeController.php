@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 
-class EmploeeController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,8 @@ class EmploeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::all();
+        return view("admin.employee.index", ['employees'=>$employees]);
     }
 
     /**
@@ -27,6 +29,7 @@ class EmploeeController extends Controller
     public function create()
     {
         //
+        return view("admin.employee.create");
     }
 
     /**
@@ -48,6 +51,8 @@ class EmploeeController extends Controller
      */
     public function show($id)
     {
+
+        return view('admin.employee.item');
         //
     }
 

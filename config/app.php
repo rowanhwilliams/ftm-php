@@ -136,6 +136,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+    	Illuminate\Html\HtmlServiceProvider::class,
+
 
         // debuger only for dev env
         Barryvdh\Debugbar\ServiceProvider::class,
@@ -199,6 +201,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'LaravelAnalytics'  => Spatie\LaravelAnalytics\LaravelAnalyticsFacade::class,
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'HTML'      => Illuminate\Html\HtmlFacade::class,
     ],
 
 ];
