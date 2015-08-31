@@ -45,4 +45,5 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::resource('page', 'PageController');
     Route::resource('user', 'UserController');
     Route::resource('employee', 'EmployeeController');
+    Route::resource('companies', 'CompaniesController');
 });

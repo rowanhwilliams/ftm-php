@@ -19,7 +19,7 @@
                     <a href="{{ URL::to('/admin/') }}">Verticals</a>
                 </li>
                 <li class="{{ (Request::is('/admin/companies') ? 'active' : '') }}">
-                    <a href="{{ URL::to('/admin/') }}">Companies</a>
+                    <a href="{{ URL::to('/admin/companies') }}">Companies</a>
                 </li>
                 <li class="{{ (Request::is('/admin/news') ? 'active' : '') }}">
                     <a href="{{ URL::to('/admin/') }}">News</a>
