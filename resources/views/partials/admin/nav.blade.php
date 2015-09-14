@@ -25,7 +25,7 @@
                     <a href="{{ URL::to('/admin/') }}">News</a>
                 </li>
                 <li class="{{ (Request::is('/admin/products') ? 'active' : '') }}">
-                    <a href="{{ URL::to('/admin/') }}">Products</a>
+                    <a href="{{ URL::to('/admin/products') }}">Products</a>
                 </li>
                 <li class="{{ (Request::is('/admin/events') ? 'active' : '') }}">
                     <a href="{{ URL::to('/admin/') }}">Events</a>

@@ -5,7 +5,6 @@
           <div class="row">
               <div class="pull-right">
                   <a class="btn btn-success btn-sm" href="{{ URL::to('/admin/companies/create') }}" role="button">Add</a>
-                  <a href="#" class="btn btn-danger btn-sm">Delete</a>
               </div>
           </div>
 
@@ -14,15 +13,36 @@
                   <thead>
                   <tr>
                       <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Company</th>
+                      <th>Company Name</th>
+                      <th>Year Founded</th>
+                      <th>Website</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                      <td colspan="4" class="text-center">No records found</td>
-                  </tr>
+
+                      @if (count($companies) > 0)
+                          @foreach ($companies as $company)
+                            <tr>
+                                <td class="text-center">{{$company["id_Company"]}}</td>
+                                <td class="text-left">{{$company["Company_Full_Name"]}}</td>
+                                <td class="text-left">{{$company["Year_Founded"]}}</td>
+                                <td class="text-left">{{$company["Website"]}}</td>
+                                <td class="text-center">
+                                    <?php $companyID = $company["id_Company"] ?>
+                                    <a class="btn btn-warning btn-sm" href="{{ URL::to("/admin/companies/$companyID/edit") }}" role="button">Edit</a>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-danger btn-sm" href="{{ URL::to("/admin/companies/$companyID/delete") }}" role="button">Delete</a>
+                                </td>
+                            </tr>
+                          @endforeach
+                      @else
+                        <tr>
+                            <td colspan="4" class="text-center">No records found</td>
+                        </tr>
+                      @endif
+
+
                   </tbody>
               </table>
           </div>

@@ -1,9 +1,11 @@
-@extends('app')
+@extends('admin')
 
 @section('content')
-    <h2>New employee</h2>
+    {!! HTML::ul($errors->all()) !!}
+    <h2>Edit <span class="text-danger">{!! $company->Company_Full_Name !!}</span> Company</h2>
 
-    {!! Form::model(new App\Models\Employee, ['route' => ['admin.employee.create', $project->slug], 'class'=>'']) !!}
-        @include('employee/partials/item', ['submit_text' => 'Create Task'])
+    {!! Form::model($company, ['method' => 'PATCH', 'route' => ['admin.companies.update', $company->id_Company], 'class'=>'','files' => true]) !!}
+
+        @include('admin.companies.partials.item', ['submit_text' => 'Save'])
     {!! Form::close() !!}
 @stop
