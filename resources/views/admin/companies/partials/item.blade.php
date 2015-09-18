@@ -1,3 +1,42 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#product_focus").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#product_focus").val() + "/productFocusType", function(data) {
+                var $productFocusType = $("#product_focus_type");
+                $productFocusType.empty();
+                $.each(data, function(index, value) {
+                    console.log(value);
+                    $productFocusType.append('<option value="' + value.id_Product_Focus_Type +'">' + value.Product_Focus_Type + '</option>');
+                });
+                $("#product_focus_type").trigger("change");
+            });
+        });
+        $("#product_focus_type").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#product_focus_type").val() + "/productFocusSubType", function(data) {
+                var $productFocusSubType = $("#product_focus_sub_type");
+                $productFocusSubType.empty();
+                $.each(data, function(index, value) {
+                    console.log(value);
+                    $productFocusSubType.append('<option value="' + value.id_Product_Focus_Sub_Type +'">' + value.Product_Focus_Sub_Type + '</option>');
+                });
+                $("#product_focus_sub_type").trigger("change");
+            });
+        });
+        $("input[name='Acquired_Subsidiary']").change(function() {
+            if(this.checked) {
+                $("#UltimateParent").show();
+            }
+            else {
+                $("#UltimateParent").hide();
+            }
+        });
+        if($("input[name='Acquired_Subsidiary']").is(':checked'))
+            $("#UltimateParent").show();  // checked
+        else
+            $("#UltimateParent").hide();  // unchecked
+        //myApp.showPleaseWait();
+    });
+</script>
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('Company_Full_Name', 'Company Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -55,7 +94,7 @@
     <div class="form-group">
         <div>{!! Form::checkbox('Acquired_Subsidiary') !!} {!!  Form::label('Acquired_Subsidiary', 'Acquired/Subsidiory', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="UltimateParent">
         <div>{!! Form::label('id_Ultimate_Parent', 'Ultimate Parent:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Ultimate_Parent', $ultimateParent, null, ['class' => 'form-control']) !!}</div>
     </div>
@@ -67,22 +106,32 @@
     </div>
 
     <div style="font-size: 18px">Media Contact Information</div>
+    @if ($mediaContacts->count() > 0)
+        <ul>
+        @foreach($mediaContacts->toArray() as $id => $media)
+            <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                {!! $media['Full_Name_Media_Contact'] !!} ({!! $media['Media_Contact_Phone'] !!})
+                {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_media_$id")) !!}
+            </li>
+        @endforeach
+        </ul>
+    @endif
     <div class="form-group">
-        <div>{!! Form::label('full_name', 'Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('full_name', null, ["class" => "form-control",'placeholder'=>'Full Name']) !!}</div>
+        <div>{!! Form::label('Full_Name_Media_Contact', 'Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Full_Name_Media_Contact', null, ["class" => "form-control",'placeholder'=>'Full Name']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('email', 'Email:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('email', null, ["class" => "form-control",'placeholder'=>'Email']) !!}</div>
+        <div>{!! Form::label('Media_contact_Email', 'Email:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Media_contact_Email', null, ["class" => "form-control",'placeholder'=>'Email']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('phone', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('phone', null, ["class" => "form-control",'placeholder'=>'Company Full Name']) !!}</div>
+        <div>{!! Form::label('Media_Contact_Phone', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Media_Contact_Phone', null, ["class" => "form-control",'placeholder'=>'Media contact phone']) !!}</div>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="pull-right">
-            <a class="btn btn-default btn-sm" href="#" role="button">Add New</a>
+            {!! Form::submit('Add New', array('class' => 'btn btn-default btn-sm', 'name' => 'add_new')) !!}
         </div>
     </div>
 </div>
@@ -90,35 +139,36 @@
 
     <div style="font-size: 18px">Headquarters Information</div>
     <div class="form-group">
-        <div>{!! Form::label('address1', 'Address Line 1:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('address1', null, ["class" => "form-control",'placeholder'=>'Address Line 1']) !!}</div>
+        <div>{!! Form::label('AddressLine1', 'Address Line 1:', Array("style" => "font-size: 16px;")) !!}</div>
+
+        <div>{!! Form::text('AddressLine1', $HQAddresses->AddressLine1, ["class" => "form-control",'placeholder'=>'Address Line 1']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('address2', 'Address Line 2:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('address2', null, ["class" => "form-control",'placeholder'=>'Address Line 2']) !!}</div>
+        <div>{!! Form::label('AddressLine2', 'Address Line 2:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('AddressLine2', $HQAddresses->AddressLine2, ["class" => "form-control",'placeholder'=>'Address Line 2']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('city', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('city', null, ["class" => "form-control",'placeholder'=>'City']) !!}</div>
+        <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('City', $HQAddresses->City, ["class" => "form-control",'placeholder'=>'City']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', null, ["class" => "form-control",'placeholder'=>'State']) !!}</div>
+        <div>{!! Form::label('State', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('State', $HQAddresses->State, ["class" => "form-control",'placeholder'=>'State']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>
-            @include('admin.employee.partials.countries', ['default' => null])
+            <div>{!! Form::select('id_Country', $country, $HQAddresses->id_Country, ['class' => 'form-control']) !!}</div>
         </div>
     </div>
 
     <div class="form-group">
-        <div>{!! Form::label('postal_code', 'Postal Code:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('postal_code', null, ["class" => "form-control",'placeholder'=>'Postal Code']) !!}</div>
+        <div>{!! Form::label('PostalCode', 'Postal Code:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('PostalCode', $HQAddresses->PostalCode, ["class" => "form-control",'placeholder'=>'Postal Code']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('phone', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('phone', null, ["class" => "form-control",'placeholder'=>'Phone']) !!}</div>
+        <div>{!! Form::label('PhoneNumber', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('PhoneNumber', $HQPhones->PhoneNumber, ["class" => "form-control",'placeholder'=>'Phone']) !!}</div>
     </div>
     <div style="font-size: 18px;">Company Attachments:</div>
     <div class="form-group">
@@ -126,7 +176,7 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="pull-right">
-                <a class="btn btn-default btn-sm" href="#" role="button">Add</a>
+                {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'Attach')) !!}
             </div>
         </div>
     </div>
@@ -143,7 +193,7 @@
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="pull-right">
-            {!! Form::submit($submit_text, array('class' => 'btn btn-default')) !!}
+            {!! Form::submit($submit_text, array('class' => 'btn btn-default btn-sm', 'name' => $submit_text)) !!}
         </div>
     </div>
 </div>

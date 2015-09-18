@@ -46,4 +46,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::resource('employee', 'EmployeeController');
     Route::resource('companies', 'CompaniesController');
     Route::resource('products', 'ProductsController');
+    Route::get('source/{id}/productFocusSubType', ['as' => 'admin.source.productFocusSubType', 'uses' => 'AjaxController@productFocusSubType']);
+    Route::get('source/{id}/productFocusType', ['as' => 'admin.source.productFocusType', 'uses' => 'AjaxController@productFocusType']);
 });
