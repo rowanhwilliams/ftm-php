@@ -1,9 +1,10 @@
 @extends('app')
 
 @section('content')
-    <h2>Edit Product</h2>
+    @include('errors.list')
+    <h2>Edit <span class="text-danger">{!! $products->Product_Title !!}</span> Product</h2>
 
-    {!! Form::model(new App\Models\Employee, ['route' => ['admin.employee.create', $project->slug], 'class'=>'']) !!}
-        @include('employee/partials/item', ['submit_text' => 'Create Task'])
+    {!! Form::model($products, ['method' => 'PATCH', 'route' => ['admin.products.update', $products->id_Product], 'class'=>'','files' => true]) !!}
+        @include('admin.products.partials.item', ['submit_text' => 'Save'])
     {!! Form::close() !!}
 @stop

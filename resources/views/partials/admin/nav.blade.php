@@ -37,7 +37,7 @@
                     <a href="{{ URL::to('/admin/') }}">Jobs</a>
                 </li>
                 <li class="{{ (Request::is('/admin/employee') ? 'active' : '') }}">
-                    <a href="{{ URL::to('/admin/employee') }}">Employee</a>
+                    <a href="{{ URL::to('/admin/employee') }}">People</a>
                 </li>
                 <li class="{{ (Request::is('/admin/cities') ? 'active' : '') }}">
                     <a href="{{ URL::to('/admin/') }}">Cities</a>
