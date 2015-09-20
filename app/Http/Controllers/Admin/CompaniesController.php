@@ -20,9 +20,6 @@ use App\Models\GrowthProfile;
 use App\Models\RevenueStage;
 use App\Models\CompanyType;
 use App\Models\CompanySubType;
-use App\Models\ProductFocusType;
-use App\Models\ProductFocus;
-use App\Models\ProductFocusSubType;
 use App\Models\HeadquartersInformation;
 use App\Models\Country;
 
@@ -36,7 +33,7 @@ class CompaniesController extends Controller
 
     public function index()
     {
-        $companies = Companies::all(['id_Company','Company_Full_Name','Year_Founded','Website']);
+        $companies = Companies::all(['id_Company','Company_Full_Name','Year_Founded','Website'])->sortBy('Company_Full_Name');
         // empty session data
         Session::forget('MediaContacts');
         return view("admin.companies.index", compact('companies'));
@@ -67,16 +64,15 @@ class CompaniesController extends Controller
         }
 
         $eSize = EmployeeSize::all()->toArray();
-        $gProfile = GrowthProfile::all()->toArray();
+        $gProfile = GrowthProfile::where('id_Growth_Profile', '>', 1)->get()->toArray();
         $oship = Ownership::all()->toArray();
-        $rStage = RevenueStage::all()->toArray();
+        $rStage = RevenueStage::where('id_Revenue_Stage', '>', 1)->get()->toArray();
         $cType = CompanyType::all()->toArray();
         $csType = CompanySubType::all()->toArray();
         $uParent = Companies::all()->toArray();
-        $pFocus = ProductFocus::all();
-        $pfType = ProductFocusType::where("id_Product_Focus", "=", "1")->get()->toArray();
-        $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", "1")->get()->toArray();
-        $cn =Country::all()->toArray();
+        $products = $company->products()->get();
+        //dd($products);
+        $cn = Country::all()->toArray();
 
         if ($company->headquaters()->count()) {
             $HQAddresses = $company->headquaters()->get()->first()->addresses()->get()->first();
@@ -113,15 +109,15 @@ class CompaniesController extends Controller
         foreach ($csType as $coSuType) {
             $companySubType[$coSuType["id_Company_Sub_Type"]] = $coSuType["Company_Sub_Type_Name"];
         }
-        foreach ($pFocus as $prFocus) {
-            $productFocus[$prFocus["id_Product_Focus"]] = $prFocus["Product_Focus"];
-        }
-        foreach ($pfType as $prfFocus) {
-            $productFocusType[$prfFocus["id_Product_Focus_Type"]] = $prfFocus["Product_Focus_Type"];
-        }
-        foreach ($pfsType as $prfsFocus) {
-            $productFocusSubType[$prfsFocus["id_Product_Focus_Sub_Type"]] = $prfsFocus["Product_Focus_Sub_Type"];
-        }
+//        foreach ($pFocus as $prFocus) {
+//            $productFocus[$prFocus["id_Product_Focus"]] = $prFocus["Product_Focus"];
+//        }
+//        foreach ($pfType as $prfFocus) {
+//            $productFocusType[$prfFocus["id_Product_Focus_Type"]] = $prfFocus["Product_Focus_Type"];
+//        }
+//        foreach ($pfsType as $prfsFocus) {
+//            $productFocusSubType[$prfsFocus["id_Product_Focus_Sub_Type"]] = $prfsFocus["Product_Focus_Sub_Type"];
+//        }
         foreach ($uParent as $ulParent) {
             $ultimateParent[$ulParent["id_Company"]] = $ulParent["Company_Full_Name"];
         }
@@ -129,8 +125,8 @@ class CompaniesController extends Controller
             $country[$cnt["id_Country"]] = $cnt["Country"];
         }
 
-        return compact("employeeSize", "growthProfile", "ownership", "revenueStage", "companyType", "companySubType", "productFocus", "productFocusType",
-            "productFocusSubType", "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones");
+        return compact("employeeSize", "growthProfile", "ownership", "revenueStage", "companyType", "companySubType",
+            "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products");
     }
 
     /**
@@ -176,12 +172,12 @@ class CompaniesController extends Controller
     }
     private function addressValidator(Request $request) {
         $address = [
-            'AddressLine1' => 'required|string',
-            'AddressLine2' => 'required|string',
+            'AddressLine1' => 'string',
+            'AddressLine2' => 'string',
             'City' => 'required|string',
-            'State' => 'required|string',
+            'State' => 'string',
             'id_Country' => 'required|numeric',
-            'PostalCode' => 'required|string'
+            'PostalCode' => 'string'
         ];
         $this->validate($request,$address);
         foreach(array_keys($address) as $key){

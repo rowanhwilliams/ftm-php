@@ -70,19 +70,14 @@
         <div>{!! Form::label('id_Company_Sub_Type', 'Company Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Company_Sub_Type', $companySubType, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div style="font-size: 18px">Produc Focus Information</div>
-    <div class="form-group">
-        <div>{!! Form::label('product_focus', 'Product Focus:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_focus', $productFocus, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('product_focus_type', 'Product Focus Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_focus_type', $productFocusType, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('product_focus_sub_type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_focus_sub_type', $productFocusSubType, null, ['class' => 'form-control']) !!}</div>
-    </div>
+    <div style="font-size: 18px">Produc Information</div>
+    @if($products->count() > 0)
+        @foreach($products as $product)
+            <div class="form-group">{!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}</div>
+        @endforeach
+    @else
+        <div class="form-group">No product found for <b>{!! $company->Company_Full_Name !!}</b></div>
+    @endif
     <div class="form-group">
         <div>{!! Form::label('Website', 'Website:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('Website', null, ["class" => "form-control",'placeholder'=>'Website']) !!}</div>

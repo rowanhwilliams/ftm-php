@@ -12,7 +12,6 @@
               <table class="table table-striped">
                   <thead>
                   <tr>
-                      <th>#</th>
                       <th nowrap="">Company Name</th>
                       <th nowrap="">Year Founded</th>
                       <th>Website</th>
@@ -21,9 +20,8 @@
                   <tbody>
 
                       @if ($companies->count() > 0)
-                          @foreach ($companies as $company)
+                          @foreach ($companies as $id => $company)
                             <tr>
-                                <td class="text-center">{{$company->id_Company}}</td>
                                 <td class="text-left">{{$company->Company_Full_Name}}</td>
                                 <td class="text-center">{{$company->Year_Founded}}</td>
                                 <td class="text-left">{{$company->Website}}</td>
@@ -37,7 +35,7 @@
                           @endforeach
                       @else
                         <tr>
-                            <td colspan="4" class="text-center">No records found</td>
+                            <td colspan="3" class="text-center">No records found</td>
                         </tr>
                       @endif
 

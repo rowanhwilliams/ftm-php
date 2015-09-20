@@ -51,11 +51,11 @@ class ProductsController extends Controller
             $products = new \App\Models\Products();
         }
 
-        $comps = Companies::all(["id_Company","Company_Full_Name"])->toArray();
+        $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
         $prType = ProductType::all()->toArray();
         $pFocus = ProductFocus::all();
-        $pfType = ProductFocusType::where("id_Product_Focus", "=", "1")->get()->toArray();
-        $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", "1")->get()->toArray();
+        $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus)->get()->toArray();
+        $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type)->get()->toArray();
         $tMarket  = TargetMarket::all()->toArray();
         $tEndUser = TargetEndUser::all()->toArray();
         $cAssets = AssetClass::all()->toArray();
@@ -98,6 +98,9 @@ class ProductsController extends Controller
             'First_Launched' => 'required|numeric',
             'id_Target_Market' => 'required|numeric',
             'id_Target_End_User' => 'required|numeric',
+            'id_Product_Focus' => 'required|numeric',
+            'id_Product_Focus_Type' => 'required|numeric',
+            'id_Product_Focus_Sub_Type' => 'required|numeric',
             'id_Asset_Class' => 'required|numeric',
             'FTM_Product_Description' => 'required|string'
         ];

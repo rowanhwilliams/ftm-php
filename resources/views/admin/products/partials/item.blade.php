@@ -1,3 +1,29 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_Product_Focus").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#id_Product_Focus").val() + "/productFocusType", function(data) {
+                var $productFocusType = $("#id_Product_Focus_Type");
+                $productFocusType.empty();
+                $.each(data, function(index, value) {
+                    console.log(value);
+                    $productFocusType.append('<option value="' + value.id_Product_Focus_Type +'">' + value.Product_Focus_Type + '</option>');
+                });
+                $("#id_Product_Focus_Type").trigger("change");
+            });
+        });
+        $("#id_Product_Focus_Type").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#id_Product_Focus_Type").val() + "/productFocusSubType", function(data) {
+                var $productFocusSubType = $("#id_Product_Focus_Sub_Type");
+                $productFocusSubType.empty();
+                $.each(data, function(index, value) {
+                    console.log(value);
+                    $productFocusSubType.append('<option value="' + value.id_Product_Focus_Sub_Type +'">' + value.Product_Focus_Sub_Type + '</option>');
+                });
+                $("#id_Product_Focus_Sub_Type").trigger("change");
+            });
+        });
+    });
+</script>
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('Product_Title', 'Product Title:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -12,12 +38,12 @@
         <div>{!! Form::select('id_Product_Type', $productType, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('product_focus', 'Product Focus:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_focus', $productFocus, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Product_Focus', 'Product Focus:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Product_Focus', $productFocus, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('product_focus_type', 'Product Focus Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_focus_type', $productFocusType, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Product_Focus_Type', 'Product Focus Type:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Product_Focus_Type', $productFocusType, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Product_Focus_Sub_Type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
