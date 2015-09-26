@@ -4,7 +4,7 @@
     <section class="content">
           <div class="row">
               <div class="pull-right">
-                  <a class="btn btn-success btn-sm" href="{{ URL::to('/admin/products/create') }}" role="button">Add</a>
+                  <a class="btn btn-success btn-xs" href="{{ URL::to('/admin/products/create') }}" role="button">Add</a>
               </div>
           </div>
 
@@ -14,7 +14,11 @@
                   <tr>
                       <th class="text-center">#</th>
                       <th nowrap="">Product Title</th>
-                      <th nowrap="" class="text-center">First Launched</th>
+                      <th nowrap="">Product Owner</th>
+                      <th nowrap="">Product Focus Type</th>
+                      <th nowrap="">Product Focus Sub Type</th>
+                      <th nowrap=""></th>
+                      <th nowrap=""></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -23,18 +27,20 @@
                           <tr>
                               <td class="text-center">{{$product->id_Product}}</td>
                               <td class="text-left">{{$product->Product_Title}}</td>
-                              <td class="text-center">{{$product->First_Launched}}</td>
+                              <td class="text-left">{{$product->Product_Title}}</td>
+                              <td class="text-left">{{$product->focusType()->first()->Product_Focus_Type}}</td>
+                              <td class="text-left">{{$product->focusSubType()->first()->Product_Focus_Sub_Type}}</td>
                               <td class="text-right" width="1%">
-                                  <a class="btn btn-warning btn-sm" href="{{ URL::route("admin.products.edit", $product->id_Product) }}" role="button">Edit</a>
+                                  <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.products.edit", $product->id_Product) }}" role="button">Edit</a>
                               </td>
                               <td class="text-left" width="1%">
-                                  <a class="btn btn-danger btn-sm" href="{{ URL::route("admin.products.destroy", $product->id_Product) }}" role="button">Delete</a>
+                                  <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.products.destroy", $product->id_Product) }}" role="button">Delete</a>
                               </td>
                           </tr>
                       @endforeach
                   @else
                   <tr>
-                      <td colspan="3" class="text-center">No records found</td>
+                      <td colspan="7" class="text-center">No records found</td>
                   </tr>
                   @endif
                   </tbody>

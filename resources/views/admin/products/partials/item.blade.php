@@ -49,9 +49,12 @@
         <div>{!! Form::label('id_Product_Focus_Sub_Type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Product_Focus_Sub_Type', $productFocusSubType, null, ['class' => 'form-control']) !!}</div>
     </div>
+    <div class="pull-right">
+        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    </div>
     <div class="form-group">
         <div>{!! Form::label('competitor_product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('competitor_product', array('0' => 'Unknown'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('competitor_product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">
@@ -64,7 +67,7 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('product_availability_teritory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_availability_teritory', array('0' => 'Unknown'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('product_availability_teritory', $regions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">
@@ -75,24 +78,26 @@
         <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Target_Market', $targetMarket, null, ['class' => 'form-control']) !!}</div>
     </div>
+    <div class="pull-right">
+        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    </div>
     <div class="form-group">
         <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Target_End_User', $targetEndUser, null, ['class' => 'form-control']) !!}</div>
     </div>
+    <div class="pull-right">
+        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    </div>
     <div class="form-group">
         <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Asset_Class', $assetClass, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('product_vertical', 'Product Vertical:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_vertical', array('1' => 'Unknown'), null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="pull-right">
         <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Key_Decision_Maker', 'Key Decision Maker:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Key_Decision_Maker', array('1' => 'Unknown'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Key_Decision_Maker', $positions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div style="font-size: 18px;">Product Attachments:</div>
     <div class="form-group">

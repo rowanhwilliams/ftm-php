@@ -69,8 +69,8 @@ class CompaniesController extends Controller
         $rStage = RevenueStage::where('id_Revenue_Stage', '>', 1)->get()->toArray();
         $cType = CompanyType::all()->toArray();
         $csType = CompanySubType::all()->toArray();
-        $uParent = Companies::all()->toArray();
-        $products = $company->products()->get();
+        $uParent = Companies::all()->sortBy('Company_Full_Name')->toArray();
+        $products = $company->products();
         //dd($products);
         $cn = Country::all()->toArray();
 
@@ -143,7 +143,6 @@ class CompaniesController extends Controller
             return Redirect::back()->withInput($request->except(["Full_Name_Media_Contact","Media_contact_Email","Media_Contact_Phone"]));
         }
 
-
         $address = $this->addressValidator($request);
         $addressModel = Addresses::create($address);
         $phone = $this->phoneValidator($request);
@@ -157,6 +156,9 @@ class CompaniesController extends Controller
         return redirect(route('admin.companies.index'))->with('flash', 'The Company was created');
         //
         //dd($request->all());
+    }
+    private function attachDataValidator(Request $request){
+        
     }
     private function mediaValidator(Request $request) {
         $mediaValidator = [
@@ -187,7 +189,7 @@ class CompaniesController extends Controller
     }
 
     private function phoneValidator(Request $request) {
-        $phone = ['PhoneNumber' => 'required|string'];
+        $phone = ['PhoneNumber' => 'string'];
         $this->validate($request,$phone);
         return ['PhoneNumber' => $request['PhoneNumber']];
     }
@@ -203,13 +205,13 @@ class CompaniesController extends Controller
             'id_Company_Type' => 'required|numeric',
             'id_Company_Sub_Type' => 'required|numeric',
             'Website' => 'required|url',
-            'FinTechMonitor_Company_Code' => 'required',
+            'FinTechMonitor_Company_Code' => 'string',
             'id_Ultimate_Parent' => 'required|numeric',
             'Acquired_Subsidiary' => 'sometimes|accepted',
             'Graduate_Program' => 'sometimes|accepted',
             'Firm_Out_Of_Business' => 'sometimes|accepted',
             'Company_About_Us' => 'required',
-            'Company_Description_FTM' => 'required'
+            'Company_Description_FTM' => 'srring'
         ];
         $this->validate($request,$CompanyValidator);
         foreach(array_keys($CompanyValidator) as $key){
@@ -250,6 +252,7 @@ class CompaniesController extends Controller
      */
     public function update($id, Request $request)
     {
+        dd($request);
         $company = Companies::findOrFail($id);
         if (isset($request['add_new']) && $request['add_new']) {
             $mediaData = $this->mediaValidator($request);

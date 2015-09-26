@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Positions;
 use App\Models\Products;
+use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,7 @@ use App\Models\Companies;
 use App\Models\TargetMarket;
 use App\Models\TargetEndUser;
 use App\Models\AssetClass;
+
 
 class ProductsController extends Controller
 {
@@ -46,19 +49,24 @@ class ProductsController extends Controller
     private function passData($id = null) {
         if (!is_null($id)) {
             $products = Products::findOrNew($id);
+            $cProducts = Products::where("id_Product", "!=", $id)->get()->toArray();
         }
         else {
             $products = new \App\Models\Products();
+            $cProducts = Products::all()->toArray();
         }
 
         $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
         $prType = ProductType::all()->toArray();
         $pFocus = ProductFocus::all();
-        $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus)->get()->toArray();
-        $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type)->get()->toArray();
+        $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus ? $products->id_Product_Focus : 1)->get()->toArray();
+        $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type ? $products->id_Product_Focus_Type : 1)->get()->toArray();
         $tMarket  = TargetMarket::all()->toArray();
         $tEndUser = TargetEndUser::all()->toArray();
         $cAssets = AssetClass::all()->toArray();
+        $pRegions = Region::all()->toArray();
+        $pPos = Positions::all()->toArray();
+
 
         foreach ($prType as $pType){
             $productType[$pType["id_Product_Type"]] = $pType["Product_Type"];
@@ -84,9 +92,18 @@ class ProductsController extends Controller
         foreach ($cAssets as $clAssets) {
             $assetClass[$clAssets["id_Asset_Class"]] = $clAssets["Asset_Class"];
         }
+        foreach ($cProducts as $cpProducts) {
+            $competitorProducts[$cpProducts["id_Product"]] = $cpProducts["Product_Title"];
+        }
+        foreach ($pRegions as $prRegions) {
+            $regions[$prRegions["id_Region"]] = $prRegions["Region"];
+        }
+        foreach ($pPos as $prPos) {
+            $positions[$prPos["id_Position"]] = $prPos["Position_Name"];
+        }
 
         return compact("productType", "productFocus", "productFocusType", "productFocusSubType", "companies", "targetMarket",
-            "targetEndUser","assetClass", "products");
+            "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions");
     }
 
     private function productValidator(Request $request) {

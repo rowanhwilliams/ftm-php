@@ -70,10 +70,15 @@
         <div>{!! Form::label('id_Company_Sub_Type', 'Company Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Company_Sub_Type', $companySubType, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div style="font-size: 18px">Produc Information</div>
+    <div style="font-size: 18px">Product Information</div>
     @if($products->count() > 0)
-        @foreach($products as $product)
-            <div class="form-group">{!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}</div>
+        @foreach($products->get() as $product)
+            <div class="form-group">
+                {!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}
+                <div class="small text-primary">{!! $product->focus()->first()->Product_Focus !!},
+                    {!! $product->focusType()->first()->Product_Focus_Type !!}, {!! $product->focusSubType()->first()->Product_Focus_Sub_Type !!}</div>
+            </div>
+
         @endforeach
     @else
         <div class="form-group">No product found for <b>{!! $company->Company_Full_Name !!}</b></div>
@@ -167,7 +172,7 @@
     </div>
     <div style="font-size: 18px;">Company Attachments:</div>
     <div class="form-group">
-        {!! Form::label('photo', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('photo', ["class" => "form-control"]) !!}
+        {!! Form::label('photo', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attachments', ["class" => "form-control"]) !!}
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="pull-right">

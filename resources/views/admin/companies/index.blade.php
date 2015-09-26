@@ -4,7 +4,7 @@
     <section class="content">
           <div class="row">
               <div class="pull-right">
-                  <a class="btn btn-success btn-sm" href="{{ URL::to('/admin/companies/create') }}" role="button">Add</a>
+                  <a class="btn btn-success btn-xs" href="{{ URL::to('admin.companies.create') }}" role="button">Add</a>
               </div>
           </div>
 
@@ -26,10 +26,10 @@
                                 <td class="text-center">{{$company->Year_Founded}}</td>
                                 <td class="text-left">{{$company->Website}}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-warning btn-sm" href="{{ URL::route("admin.companies.edit", $company->id_Company) }}" role="button">Edit</a>
+                                    <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.companies.edit", $company->id_Company) }}" role="button">Edit</a>
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-danger btn-sm" href="{{ URL::route("admin.companies.destroy", $company->id_Company) }}" role="button">Delete</a>
+                                    <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.companies.destroy", $company->id_Company) }}" role="button">Delete</a>
                                 </td>
                             </tr>
                           @endforeach
