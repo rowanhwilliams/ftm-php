@@ -49,16 +49,16 @@
         <div>{!! Form::label('id_Product_Focus_Sub_Type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Product_Focus_Sub_Type', $productFocusSubType, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
-    </div>
+    {{--<div class="pull-right">--}}
+        {{--<a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>--}}
+    {{--</div>--}}
     <div class="form-group">
         <div>{!! Form::label('competitor_product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('competitor_product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">
-            <a class="btn btn-default btn-sm disabled" href="#" role="button">Add New</a>
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm disabled', 'name' => 'add_competitor')) !!}
         </div>
     </div>
     <div class="form-group">
@@ -71,41 +71,88 @@
     </div>
     <div class="row">
         <div class="pull-right">
-            <a class="btn btn-default btn-sm disabled" href="#" role="button">Add New</a>
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm disabled', 'name' => 'add_teritory')) !!}
         </div>
     </div>
     <div class="form-group">
+        @if ($productTargetMarket->count() > 0)
+            <ul>
+                @foreach($productTargetMarket->toArray() as $id => $tMarket)
+                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                        {!! $tMarket['Target_Market'] !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
         <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Target_Market', $targetMarket, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    <div class="row">
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_target_market')) !!}
+        </div>
     </div>
+
     <div class="form-group">
+        @if ($productTargetEndUser->count() > 0)
+            <ul>
+                @foreach($productTargetEndUser->toArray() as $id => $endUser)
+                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                        {!! $endUser['Target_End_User'] !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
         <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Target_End_User', $targetEndUser, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    <div class="row">
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_target_end_user')) !!}
+        </div>
     </div>
     <div class="form-group">
+        @if ($productAssetClass->count() > 0)
+            <ul>
+                @foreach($productAssetClass->toArray() as $id => $productAssetCl)
+                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                        {!! $productAssetCl['Asset_Class'] !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
         <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Asset_Class', $assetClass, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>
+    <div class="row">
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_asset_class')) !!}
+        </div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Key_Decision_Maker', 'Key Decision Maker:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Key_Decision_Maker', $positions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div style="font-size: 18px;">Product Attachments:</div>
+    @if ($attachments->count() > 0)
+        <ul>
+            @foreach($attachments->toArray() as $id => $attachment)
+                <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    {!! $attachment['Attachment_File_Name'] !!}
+                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="form-group">
-        {!! Form::label('photo', "Product Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('photo', ["class" => "form-control"]) !!}
+        {!! Form::label('attached_file', "Product Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attached_file', ["class" => "form-control"]) !!}
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="pull-right">
-                <a class="btn btn-default btn-sm" href="#" role="button">Add New</a>
+                {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'attach_file')) !!}
             </div>
         </div>
     </div>

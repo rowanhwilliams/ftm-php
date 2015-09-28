@@ -4,7 +4,7 @@
     <section class="content">
           <div class="row">
               <div class="pull-right">
-                  <a class="btn btn-success btn-xs" href="{{ URL::to('admin.companies.create') }}" role="button">Add</a>
+                  <a class="btn btn-success btn-xs" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
               </div>
           </div>
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TargetMarket extends Model
 {
+    public $timestamps = false;
     protected $table="Target_Market";
     protected $primaryKey ="id_Target_Market";
 }

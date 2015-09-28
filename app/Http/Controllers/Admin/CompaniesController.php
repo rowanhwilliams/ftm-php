@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Addresses;
-use App\Models\MediaContacts;
 use App\Models\Phones;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Redirect;
 
 use App\Http\Requests;
@@ -36,6 +36,7 @@ class CompaniesController extends Controller
         $companies = Companies::all(['id_Company','Company_Full_Name','Year_Founded','Website'])->sortBy('Company_Full_Name');
         // empty session data
         Session::forget('MediaContacts');
+        Session::forget('CompanyAttachments');
         return view("admin.companies.index", compact('companies'));
     }
 
@@ -54,13 +55,18 @@ class CompaniesController extends Controller
         if (!is_null($id)) {
             $company = Companies::findOrNew($id);
             $mediaContacts = $company->mediaContacts()->get();
+            $attachments = $company->attachments()->get();
         }
         else {
             $company = new \App\Models\Companies();
             if (!Session::has('MediaContacts')) {
                 Session::set('MediaContacts', $company->mediaContacts()->get());
             }
+            if (!Session::has('CompanyAttachments')) {
+                Session::set('CompanyAttachments', $company->attachments()->get());
+            }
             $mediaContacts = Session::get('MediaContacts');
+            $attachments = Session::get("CompanyAttachments");
         }
 
         $eSize = EmployeeSize::all()->toArray();
@@ -71,7 +77,7 @@ class CompaniesController extends Controller
         $csType = CompanySubType::all()->toArray();
         $uParent = Companies::all()->sortBy('Company_Full_Name')->toArray();
         $products = $company->products();
-        //dd($products);
+
         $cn = Country::all()->toArray();
 
         if ($company->headquaters()->count()) {
@@ -87,9 +93,6 @@ class CompaniesController extends Controller
         else {
             $HQPhones = new \App\Models\Phones();
         }
-
-        //
-        //dd($HQPhones);
 
         foreach ($eSize as $emSize){
             $employeeSize[$emSize["id_Employee_Size"]] = $emSize["Employee_Size"];
@@ -109,15 +112,6 @@ class CompaniesController extends Controller
         foreach ($csType as $coSuType) {
             $companySubType[$coSuType["id_Company_Sub_Type"]] = $coSuType["Company_Sub_Type_Name"];
         }
-//        foreach ($pFocus as $prFocus) {
-//            $productFocus[$prFocus["id_Product_Focus"]] = $prFocus["Product_Focus"];
-//        }
-//        foreach ($pfType as $prfFocus) {
-//            $productFocusType[$prfFocus["id_Product_Focus_Type"]] = $prfFocus["Product_Focus_Type"];
-//        }
-//        foreach ($pfsType as $prfsFocus) {
-//            $productFocusSubType[$prfsFocus["id_Product_Focus_Sub_Type"]] = $prfsFocus["Product_Focus_Sub_Type"];
-//        }
         foreach ($uParent as $ulParent) {
             $ultimateParent[$ulParent["id_Company"]] = $ulParent["Company_Full_Name"];
         }
@@ -126,7 +120,7 @@ class CompaniesController extends Controller
         }
 
         return compact("employeeSize", "growthProfile", "ownership", "revenueStage", "companyType", "companySubType",
-            "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products");
+            "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products", "attachments");
     }
 
     /**
@@ -139,8 +133,13 @@ class CompaniesController extends Controller
     {
         if (isset($request['add_new']) && $request['add_new']) {
             $mediaData = $this->mediaValidator($request);
-            Session::set('MediaContacts',Session::get('MediaContacts')->push(new \App\Models\MediaContacts($mediaData)));
+            Session::set('MediaContacts', Session::get('MediaContacts')->push(new \App\Models\MediaContacts($mediaData)));
             return Redirect::back()->withInput($request->except(["Full_Name_Media_Contact","Media_contact_Email","Media_Contact_Phone"]));
+        }
+        else if (isset($request['attach_file']) && $request['attach_file']) {
+            $attachmentFields = $this->attachFileValidator($request);
+            Session::set('CompanyAttachments', Session::get('CompanyAttachments')->push(new \App\Models\Attachments($attachmentFields)));
+            return Redirect::back()->withInput($request->except(["attached_file"]));
         }
 
         $address = $this->addressValidator($request);
@@ -152,13 +151,31 @@ class CompaniesController extends Controller
         $companyFields['Date_Created'] = Carbon::now();
         $companyModel = Companies::create($companyFields);
         $companyModel->mediaContacts()->saveMany(Session::get('MediaContacts'));
-        $companyModel->headquaters()->save(new \App\Models\HeadquartersInformation(['PhoneId' => $phoneModel->PhoneId, 'AddressId'=>$addressModel->AddressId]));
+        foreach(Session::get('CompanyAttachments') as $atts){
+            $companyModel->attachments()->save($atts);
+        }
+
+        $companyModel->headquaters()->save(new \App\Models\HeadquartersInformation(['PhoneId' => $phoneModel->PhoneId,
+            'AddressId'=>$addressModel->AddressId]));
         return redirect(route('admin.companies.index'))->with('flash', 'The Company was created');
-        //
-        //dd($request->all());
     }
-    private function attachDataValidator(Request $request){
-        
+    private function StoreAttachment($parentID, Request $request) {
+        $AttachmentFieldsData = [];
+        Storage::makeDirectory("C_".$parentID);
+        Storage::disk("local")->put("C_".$parentID."/".$request->files->get("attached_file")->getClientOriginalName(),
+            file_get_contents($request->file("attached_file")));
+        $AttachmentFieldsData["Attachment_Storage_File_Name"] = $request->files->get("attached_file")->getClientOriginalName();
+        return $AttachmentFieldsData;
+    }
+    private function attachFileValidator(Request $request){
+        $fileValidator = [
+            'attached_file' => 'required|mimes:png,gif,jpeg,pdf,doc,rtf,xls|max:2048'
+        ];
+
+        $this->validate($request, $fileValidator);
+        $AttachmentFields = $this->StoreAttachment($request->_token, $request);
+        return ["Attachment_File_Name" => $request->files->get("attached_file")->getClientOriginalName(),
+            "Attachment_Storage_File_Name"=>$AttachmentFields["Attachment_Storage_File_Name"]];
     }
     private function mediaValidator(Request $request) {
         $mediaValidator = [
@@ -211,7 +228,7 @@ class CompaniesController extends Controller
             'Graduate_Program' => 'sometimes|accepted',
             'Firm_Out_Of_Business' => 'sometimes|accepted',
             'Company_About_Us' => 'required',
-            'Company_Description_FTM' => 'srring'
+            'Company_Description_FTM' => 'string'
         ];
         $this->validate($request,$CompanyValidator);
         foreach(array_keys($CompanyValidator) as $key){
@@ -252,12 +269,16 @@ class CompaniesController extends Controller
      */
     public function update($id, Request $request)
     {
-        dd($request);
         $company = Companies::findOrFail($id);
         if (isset($request['add_new']) && $request['add_new']) {
             $mediaData = $this->mediaValidator($request);
             $company->mediaContacts()->save(new \App\Models\MediaContacts($mediaData));
             return Redirect::back()->withInput($request->except(["Full_Name_Media_Contact","Media_contact_Email","Media_Contact_Phone"]));
+        }
+        else if (isset($request['attach_file']) && $request['attach_file']) {
+            $attachmentFields = $this->attachFileValidator($request);
+            $company->attachments()->save(new \App\Models\Attachments($attachmentFields));
+            return Redirect::back()->withInput($request->except(["attached_file"]));
         }
         $address = $this->addressValidator($request);
         $phone = $this->phoneValidator($request);

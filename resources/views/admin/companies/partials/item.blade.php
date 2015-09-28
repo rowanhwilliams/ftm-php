@@ -171,12 +171,22 @@
         <div>{!! Form::text('PhoneNumber', $HQPhones->PhoneNumber, ["class" => "form-control",'placeholder'=>'Phone']) !!}</div>
     </div>
     <div style="font-size: 18px;">Company Attachments:</div>
+    @if ($attachments->count() > 0)
+        <ul>
+            @foreach($attachments->toArray() as $id => $attachment)
+                <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    {!! $attachment['Attachment_File_Name'] !!}
+                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="form-group">
-        {!! Form::label('photo', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attachments', ["class" => "form-control"]) !!}
+        {!! Form::label('attached_file', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attached_file', ["class" => "form-control"]) !!}
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="pull-right">
-                {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'Attach')) !!}
+                {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'attach_file')) !!}
             </div>
         </div>
     </div>

@@ -8,6 +8,8 @@ use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Redirect;
 
 use App\Http\Requests;
@@ -32,7 +34,10 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Products::all();
-
+        Session::forget('ProductAttachments');
+        Session::forget('ProductAssetsClass');
+        Session::forget('ProductTargetMarket');
+        Session::forget('ProductTargetEndUser');
         return view("admin.products.index", compact("products"));
     }
 
@@ -50,10 +55,39 @@ class ProductsController extends Controller
         if (!is_null($id)) {
             $products = Products::findOrNew($id);
             $cProducts = Products::where("id_Product", "!=", $id)->get()->toArray();
+            $attachments = $products->attachments()->get();
+            $productTargetMarket = $products->targetMarket()->get();
+            $productTargetEndUser = $products->targetEndUser()->get();
+            $productAssetClass = $products->assetClass()->get();
+            //$territories = $products->territory()->get();
         }
         else {
             $products = new \App\Models\Products();
             $cProducts = Products::all()->toArray();
+            if (!Session::has('ProductAttachments')) {
+                Session::set('ProductAttachments', $products->attachments()->get());
+            }
+            $attachments = Session::get("ProductAttachments");
+
+//            if (!Session::has('ProductTerritory')) {
+//                Session::set('ProductTerritory', $products->territory()->get());
+//            }
+//            $territories = Session::get("ProductTerritory");
+
+            if (!Session::has('ProductAssetsClass')) {
+                Session::set('ProductAssetsClass', $products->assetClass()->get());
+            }
+            $productAssetClass = Session::get("ProductAssetsClass");
+
+            if (!Session::has('ProductTargetMarket')) {
+                Session::set('ProductTargetMarket', $products->targetMarket()->get());
+            }
+            $productTargetMarket = Session::get("ProductTargetMarket");
+
+            if (!Session::has('ProductTargetEndUser')) {
+                Session::set('ProductTargetEndUser', $products->targetEndUser()->get());
+            }
+            $productTargetEndUser = Session::get("ProductTargetEndUser");
         }
 
         $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
@@ -103,7 +137,63 @@ class ProductsController extends Controller
         }
 
         return compact("productType", "productFocus", "productFocusType", "productFocusSubType", "companies", "targetMarket",
-            "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions");
+            "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions", "attachments",
+            "productTargetEndUser", "productTargetMarket", "productAssetClass", "territories");
+    }
+
+    private function StoreAttachment($parentID, Request $request) {
+        $AttachmentFieldsData = [];
+        Storage::makeDirectory("P_".$parentID);
+        Storage::disk("local")->put("P_".$parentID."/".$request->files->get("attached_file")->getClientOriginalName(),
+            file_get_contents($request->file("attached_file")));
+        $AttachmentFieldsData["Attachment_Storage_File_Name"] = $request->files->get("attached_file")->getClientOriginalName();
+        return $AttachmentFieldsData;
+    }
+    private function attachFileValidator(Request $request){
+        $fileValidator = [
+            'attached_file' => 'required|mimes:png,gif,jpeg,pdf,doc,rtf,xls|max:2048'
+        ];
+
+        $this->validate($request, $fileValidator);
+        $AttachmentFields = $this->StoreAttachment($request->_token, $request);
+        return ["Attachment_File_Name" => $request->files->get("attached_file")->getClientOriginalName(),
+            "Attachment_Storage_File_Name"=>$AttachmentFields["Attachment_Storage_File_Name"]];
+    }
+    // Target Territory validator
+    private function addTerritoryValidator(Request $request) {
+        $territoryValidator = [
+            'product_availability_teritory' => 'required|numeric'
+        ];
+
+        $this->validate($request, $territoryValidator);
+        return ["product_availability_teritory" => $request->product_availability_teritory];
+    }
+    // Target Asset Class validator
+    private function addClassAssetsValidator(Request $request) {
+        $classAssetsValidator = [
+            'id_Asset_Class' => 'required|numeric'
+        ];
+
+        $this->validate($request, $classAssetsValidator);
+        return ["id_Asset_Class" => $request->id_Asset_Class];
+    }
+    // Target end user validator
+    private function addTargetEndUserValidator(Request $request) {
+        $classAssetsValidator = [
+            'id_Target_End_User' => 'required|numeric'
+        ];
+
+        $this->validate($request, $classAssetsValidator);
+        return ["id_Target_End_User" => $request->id_Target_End_User];
+    }
+    // Target market validator
+    private function addTargetMarketValidator(Request $request) {
+        $classAssetsValidator = [
+            'id_Target_Market' => 'required|numeric'
+        ];
+
+        $this->validate($request, $classAssetsValidator);
+        return ["id_Target_Market" => $request->id_Target_Market];
     }
 
     private function productValidator(Request $request) {
@@ -113,12 +203,9 @@ class ProductsController extends Controller
             'id_Owner_Company' => 'required|numeric',
             'id_Product_Type' => 'required|numeric',
             'First_Launched' => 'required|numeric',
-            'id_Target_Market' => 'required|numeric',
-            'id_Target_End_User' => 'required|numeric',
             'id_Product_Focus' => 'required|numeric',
             'id_Product_Focus_Type' => 'required|numeric',
             'id_Product_Focus_Sub_Type' => 'required|numeric',
-            'id_Asset_Class' => 'required|numeric',
             'FTM_Product_Description' => 'required|string'
         ];
         $this->validate($request, $productsValidator);
@@ -137,9 +224,43 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        if (isset($request['attach_file']) && $request['attach_file']) {
+            $attachmentFields = $this->attachFileValidator($request);
+            Session::set('ProductAttachments', Session::get('ProductAttachments')->push(new \App\Models\Attachments($attachmentFields)));
+            return Redirect::back()->withInput($request->except(["attached_file"]));
+        }
+        if (isset($request['add_asset_class']) && $request['add_asset_class']) {
+            $assetClassField = $this->addClassAssetsValidator($request);
+            Session::set('ProductAssetsClass', Session::get('ProductAssetsClass')->push(AssetClass::findOrNew($assetClassField["id_Asset_Class"])));
+            return Redirect::back()->withInput($request->except(["add_asset_class"]));
+        }
+        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
+            $tergetEndUserField = $this->addTargetEndUserValidator($request);
+            Session::set('ProductTargetEndUser', Session::get('ProductTargetEndUser')->push(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"])));
+            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
+        }
+        if (isset($request['add_target_market']) && $request['add_target_market']) {
+            $tergetEndUserField = $this->addTargetMarketValidator($request);
+            Session::set('ProductTargetMarket', Session::get('ProductTargetMarket')->push(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"])));
+            return Redirect::back()->withInput($request->except(["add_target_market"]));
+        }
+
         $productsFields = $this->productValidator($request);
         $productsFields['Date_Created'] = Carbon::now();
         $productsModel = Products::create($productsFields);
+        foreach(Session::get('CompanyAttachments') as $atts){
+            $productsModel->attachments()->save($atts);
+        }
+        foreach(Session::get('ProductAssetsClass') as $assetClass) {
+            $productsModel->assetClass()->save($assetClass);
+        }
+        foreach(Session::get('ProductTargetEndUser') as $endUserTrg) {
+            $productsModel->targetEndUser()->save($endUserTrg);
+        }
+        foreach(Session::get('ProductTargetMarket') as $marketTrg) {
+            $productsModel->targetMarket()->save($marketTrg);
+        }
+
         return redirect(route('admin.products.index'))->with('flash', 'The Product was created');
     }
 
@@ -175,6 +296,28 @@ class ProductsController extends Controller
     public function update($id, Request $request)
     {
         $productModel = Products::findOrFail($id);
+        if (isset($request['attach_file']) && $request['attach_file']) {
+            $attachmentFields = $this->attachFileValidator($request);
+            $productModel->attachments()->save(new \App\Models\Attachments($attachmentFields));
+            return Redirect::back()->withInput($request->except(["attached_file"]));
+        }
+
+        if (isset($request['add_asset_class']) && $request['add_asset_class']) {
+            $assetClassField = $this->addClassAssetsValidator($request);
+            $productModel->assetClass()->save(AssetClass::findOrNew($assetClassField["id_Asset_Class"]));
+            return Redirect::back()->withInput($request->except(["add_asset_class"]));
+        }
+        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
+            $tergetEndUserField = $this->addTargetEndUserValidator($request);
+            $productModel->targetEndUser()->save(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"]));
+            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
+        }
+        if (isset($request['add_target_market']) && $request['add_target_market']) {
+            $tergetEndUserField = $this->addTargetMarketValidator($request);
+            $productModel->targetMarket()->save(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"]));
+            return Redirect::back()->withInput($request->except(["add_target_market"]));
+        }
+
         $productsFields = $this->productValidator($request);
         $productModel->fill($productsFields)->save();
         return redirect(route('admin.products.index'))->with('flash', 'The Product was updated');;
