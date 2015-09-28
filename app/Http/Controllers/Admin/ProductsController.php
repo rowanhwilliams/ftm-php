@@ -38,6 +38,7 @@ class ProductsController extends Controller
         Session::forget('ProductAssetsClass');
         Session::forget('ProductTargetMarket');
         Session::forget('ProductTargetEndUser');
+        //dd($products->first()->owner()->get());
         return view("admin.products.index", compact("products"));
     }
 
@@ -248,7 +249,7 @@ class ProductsController extends Controller
         $productsFields = $this->productValidator($request);
         $productsFields['Date_Created'] = Carbon::now();
         $productsModel = Products::create($productsFields);
-        foreach(Session::get('CompanyAttachments') as $atts){
+        foreach(Session::get('ProductAttachments') as $atts){
             $productsModel->attachments()->save($atts);
         }
         foreach(Session::get('ProductAssetsClass') as $assetClass) {

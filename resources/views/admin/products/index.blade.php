@@ -27,7 +27,7 @@
                           <tr>
                               <td class="text-center">{{$product->id_Product}}</td>
                               <td class="text-left">{{$product->Product_Title}}</td>
-                              <td class="text-left">{{$product->Product_Title}}</td>
+                              <td class="text-left">{{$product->owner()->first()->Company_Full_Name}}</td>
                               <td class="text-left">{{$product->focusType()->first()->Product_Focus_Type}}</td>
                               <td class="text-left">{{$product->focusSubType()->first()->Product_Focus_Sub_Type}}</td>
                               <td class="text-right" width="1%">

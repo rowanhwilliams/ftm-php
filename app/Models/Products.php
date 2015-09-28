@@ -16,6 +16,9 @@ class Products extends Model
     public function focusType(){
         return $this->hasOne('App\Models\ProductFocusType', 'id_Product_Focus_Type');
     }
+    public function owner(){
+        return $this->hasOne('App\Models\Companies', 'id_Company', 'id_Owner_Company');
+    }
 //    public function competitor(){
 //        return $this->hasMany('App\Models\CompetitorProduct','id_Product');
 //    }
