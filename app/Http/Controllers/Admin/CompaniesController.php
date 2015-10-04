@@ -22,6 +22,8 @@ use App\Models\CompanyType;
 use App\Models\CompanySubType;
 use App\Models\HeadquartersInformation;
 use App\Models\Country;
+use App\Models\ProductFocusType;
+
 
 class CompaniesController extends Controller
 {
@@ -77,6 +79,18 @@ class CompaniesController extends Controller
         $csType = CompanySubType::all()->toArray();
         $uParent = Companies::all()->sortBy('Company_Full_Name')->toArray();
         $products = $company->products();
+        foreach($products->get() as $product) {
+            $productSubTypeList = [];
+            $productTypeList = [];
+            foreach($product->focusSubType()->get() as $productSubType) {
+                $productSubTypeList[] = $productSubType->Product_Focus_Sub_Type;
+                $productTypeListValues = ProductFocusType::where('id_Product_Focus_Type', '=', $productSubType->id_Product_Focus_Type)->get()->first();
+                $productTypeList[] = $productTypeListValues->Product_Focus_Type;
+            }
+            $productFocusSubTypeList[$product->id_Product] = implode(',', $productSubTypeList);
+            $productFocusTypeList[$product->id_Product] = implode(',', $productTypeList);
+
+        }
 
         $cn = Country::all()->toArray();
 
@@ -119,7 +133,7 @@ class CompaniesController extends Controller
             $country[$cnt["id_Country"]] = $cnt["Country"];
         }
 
-        return compact("employeeSize", "growthProfile", "ownership", "revenueStage", "companyType", "companySubType",
+        return compact("employeeSize", "growthProfile","productFocusSubTypeList", "productFocusTypeList", "ownership", "revenueStage", "companyType", "companySubType",
             "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products", "attachments");
     }
 

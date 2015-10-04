@@ -33,32 +33,52 @@
         <div>{!! Form::label('id_Owner_Company', 'Owner:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Owner_Company', $companies, null, ['class' => 'form-control']) !!}</div>
     </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Product_Type', 'Product Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Product_Type', $productType, null, ['class' => 'form-control']) !!}</div>
+    <div style="border: solid 2px lightgrey; padding: 10px;">
+        @if ($productFocusSubTypeList->count() > 0)
+            <ul>
+                @foreach($productFocusSubTypeList->toArray() as $id => $FocusSubType)
+                    <li style="list-style: none" class="row small text-primary">
+                        {!! $FocusSubType['Product_Focus_Sub_Type'] !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        <div class="form-group">
+            <div>{!! Form::label('id_Product_Focus', 'Product Focus:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::select('id_Product_Focus', $productFocus, null, ['class' => 'form-control']) !!}</div>
+        </div>
+        <div class="form-group">
+            <div>{!! Form::label('id_Product_Focus_Type', 'Product Focus Type:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::select('id_Product_Focus_Type', $productFocusType, null, ['class' => 'form-control']) !!}</div>
+        </div>
+        <div class="form-group">
+            <div>{!! Form::label('id_Product_Focus_Sub_Type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::select('id_Product_Focus_Sub_Type', $productFocusSubType, null, ['class' => 'form-control']) !!}</div>
+        </div>
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_Product_Focus_Sub_type')) !!}
+        </div>
     </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Product_Focus', 'Product Focus:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Product_Focus', $productFocus, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Product_Focus_Type', 'Product Focus Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Product_Focus_Type', $productFocusType, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Product_Focus_Sub_Type', 'Product Focus Sub Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Product_Focus_Sub_Type', $productFocusSubType, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    {{--<div class="pull-right">--}}
-        {{--<a class="btn btn-default btn-sm disabled" href="#" role="button">Add</a>--}}
-    {{--</div>--}}
-    <div class="form-group">
-        <div>{!! Form::label('competitor_product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('competitor_product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
+
+    <div class="form-group" style="padding-top: 15px;">
+        <div>{!! Form::label('id_Competitor_Product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
+        @if ($productCompetitors->count() > 0)
+            <ul>
+                @foreach($productCompetitors as $id => $productComp)
+
+                    <li style="list-style: none" class="row small text-primary">
+
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        <div>{!! Form::select('id_Competitor_Product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm disabled', 'name' => 'add_competitor')) !!}
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_competitor')) !!}
         </div>
     </div>
     <div class="form-group">
@@ -66,26 +86,36 @@
         <div>{!! Form::selectYear('First_Launched', 1985, 2015, null, ['class'=>'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('product_availability_teritory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('product_availability_teritory', $regions, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm disabled', 'name' => 'add_teritory')) !!}
-        </div>
-    </div>
-    <div class="form-group">
-        @if ($productTargetMarket->count() > 0)
+        <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
+        @if ($territories->count() > 0)
             <ul>
-                @foreach($productTargetMarket->toArray() as $id => $tMarket)
-                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
-                        {!! $tMarket['Target_Market'] !!}
+                @foreach($territories->toArray() as $id => $territory)
+                    <li style="list-style: none" class="row small text-primary">
+                        {!! $territory['Territory_Name'] !!}
                         {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
                     </li>
                 @endforeach
             </ul>
         @endif
-        <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Availability_Territory', $regions, null, ['class' => 'form-control']) !!}</div>
+    </div>
+    <div class="row">
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_teritory')) !!}
+        </div>
+    </div>
+    <div class="form-group">
+         <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
+        @if ($productTargetMarket->count() > 0)
+            <ul>
+                @foreach($productTargetMarket->toArray() as $id => $tmarket)
+                    <li style="list-style: none" class="row small text-primary">
+                        {!! $tmarket['Target_Market'] !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
         <div>{!! Form::select('id_Target_Market', $targetMarket, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
@@ -95,17 +125,17 @@
     </div>
 
     <div class="form-group">
+        <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
         @if ($productTargetEndUser->count() > 0)
             <ul>
                 @foreach($productTargetEndUser->toArray() as $id => $endUser)
-                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    <li style="list-style: none" class="row small text-primary">
                         {!! $endUser['Target_End_User'] !!}
                         {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
                     </li>
                 @endforeach
             </ul>
         @endif
-        <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Target_End_User', $targetEndUser, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
@@ -114,17 +144,17 @@
         </div>
     </div>
     <div class="form-group">
+        <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
         @if ($productAssetClass->count() > 0)
             <ul>
                 @foreach($productAssetClass->toArray() as $id => $productAssetCl)
-                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    <li style="list-style: none" class="row small text-primary">
                         {!! $productAssetCl['Asset_Class'] !!}
                         {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
                     </li>
                 @endforeach
             </ul>
         @endif
-        <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Asset_Class', $assetClass, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
@@ -140,7 +170,7 @@
     @if ($attachments->count() > 0)
         <ul>
             @foreach($attachments->toArray() as $id => $attachment)
-                <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                <li style="list-style: none" class="row small text-primary">
                     {!! $attachment['Attachment_File_Name'] !!}
                     {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
                 </li>

@@ -34,7 +34,7 @@
                     <a href="{{ URL::to('/admin/') }}">Indices</a>
                 </li>
                 <li class="{{ (Request::is('/admin/jobs') ? 'active' : '') }}">
-                    <a href="{{ URL::to('/admin/') }}">Jobs</a>
+                    <a href="{{ URL::to('/admin/jobs') }}">Jobs</a>
                 </li>
                 <li class="{{ (Request::is('/admin/employee') ? 'active' : '') }}">
                     <a href="{{ URL::to('/admin/employee') }}">People</a>

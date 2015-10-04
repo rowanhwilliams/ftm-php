@@ -72,14 +72,22 @@
     </div>
     <div style="font-size: 18px">Product Information</div>
     @if($products->count() > 0)
-        @foreach($products->get() as $product)
-            <div class="form-group">
-                {!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}
-                <div class="small text-primary">{!! $product->focus()->first()->Product_Focus !!},
-                    {!! $product->focusType()->first()->Product_Focus_Type !!}, {!! $product->focusSubType()->first()->Product_Focus_Sub_Type !!}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 small text-primary">Product Title</div>
+            <div class="col-md-4 small text-primary">Product Focus Type</div>
+            <div class="col-md-5 small text-primary">Product Focus Sub Type</div>
+        </div>
+            @foreach($products->get() as $product)
+                <div class="form-group row">
+                    {{--{!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}--}}
+                    {{--<div class="small text-primary">{!! $product->focus()->first()->Product_Focus !!},--}}
+                        {{--{!! $product->focusType()->first()->Product_Focus_Type !!}, {!! $product->focusSubType()->first()->Product_Focus_Sub_Type !!}</div>--}}
+                    <div class="col-md-3 small text-primary">{!! $product->Product_Title !!}</div>
+                    <div class="col-md-4 small text-primary">{!! $productFocusTypeList[$product->id_Product] !!}</div>
+                    <div class="col-md-5 small text-primary">{!! $productFocusSubTypeList[$product->id_Product] !!}</div>
+                </div>
 
-        @endforeach
+            @endforeach
     @else
         <div class="form-group">No product found for <b>{!! $company->Company_Full_Name !!}</b></div>
     @endif

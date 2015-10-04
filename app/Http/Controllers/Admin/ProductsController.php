@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AvailabilityTerritory;
+use App\Models\CompetitorProduct;
 use App\Models\Positions;
 use App\Models\Products;
 use App\Models\Region;
@@ -38,8 +40,27 @@ class ProductsController extends Controller
         Session::forget('ProductAssetsClass');
         Session::forget('ProductTargetMarket');
         Session::forget('ProductTargetEndUser');
-        //dd($products->first()->owner()->get());
-        return view("admin.products.index", compact("products"));
+        Session::forget('ProductTerritory');
+        Session::forget('ProductCompetitors');
+        Session::forget('ProductFocusSubType');
+        $productFocusSubTypeList = [];
+        $productFocusTypeList = [];
+        $productOwnerList = [];
+        foreach($products as $product) {
+            $productSubTypeList = [];
+            $productTypeList = [];
+            $productOwnerList[$product->id_Product] = Companies::where('id_Company', '=', $product->id_Owner_Company)->get()->first();
+            foreach($product->focusSubType()->get() as $productSubType) {
+                $productSubTypeList[] = $productSubType->Product_Focus_Sub_Type;
+                $productTypeListValues = ProductFocusType::where('id_Product_Focus_Type', '=', $productSubType->id_Product_Focus_Type)->get()->first();
+                $productTypeList[] = $productTypeListValues->Product_Focus_Type;
+            }
+
+            $productFocusSubTypeList[$product->id_Product] = implode(',', $productSubTypeList);
+            $productFocusTypeList[$product->id_Product] = implode(',', $productTypeList);
+
+        }
+        return view("admin.products.index", compact("products", "productFocusSubTypeList", "productFocusTypeList", "productOwnerList"));
     }
 
     /**
@@ -60,7 +81,9 @@ class ProductsController extends Controller
             $productTargetMarket = $products->targetMarket()->get();
             $productTargetEndUser = $products->targetEndUser()->get();
             $productAssetClass = $products->assetClass()->get();
-            //$territories = $products->territory()->get();
+            $territories = $products->territory()->get();
+            $productFocusSubTypeList = $products->focusSubType()->get();
+            //$productCompetitors = $products->competitor()->get();
         }
         else {
             $products = new \App\Models\Products();
@@ -69,11 +92,20 @@ class ProductsController extends Controller
                 Session::set('ProductAttachments', $products->attachments()->get());
             }
             $attachments = Session::get("ProductAttachments");
+            if (!Session::has('ProductFocusSubType')) {
+                Session::set('ProductFocusSubType', $products->focusSubType()->get());
+            }
+            $productFocusSubTypeList = Session::get("ProductFocusSubType");
 
-//            if (!Session::has('ProductTerritory')) {
-//                Session::set('ProductTerritory', $products->territory()->get());
-//            }
-//            $territories = Session::get("ProductTerritory");
+            if (!Session::has('ProductCompetitors')) {
+                Session::set('ProductCompetitors', $products->competitor()->get());
+            }
+            $productCompetitors = Session::get("ProductCompetitors");
+
+            if (!Session::has('ProductTerritory')) {
+                Session::set('ProductTerritory', $products->territory()->get());
+            }
+            $territories = Session::get("ProductTerritory");
 
             if (!Session::has('ProductAssetsClass')) {
                 Session::set('ProductAssetsClass', $products->assetClass()->get());
@@ -99,9 +131,9 @@ class ProductsController extends Controller
         $tMarket  = TargetMarket::all()->toArray();
         $tEndUser = TargetEndUser::all()->toArray();
         $cAssets = AssetClass::all()->toArray();
-        $pRegions = Region::all()->toArray();
+        $pRegions = AvailabilityTerritory::all()->toArray();
         $pPos = Positions::all()->toArray();
-
+        $competitorProducts = [];
 
         foreach ($prType as $pType){
             $productType[$pType["id_Product_Type"]] = $pType["Product_Type"];
@@ -131,7 +163,7 @@ class ProductsController extends Controller
             $competitorProducts[$cpProducts["id_Product"]] = $cpProducts["Product_Title"];
         }
         foreach ($pRegions as $prRegions) {
-            $regions[$prRegions["id_Region"]] = $prRegions["Region"];
+            $regions[$prRegions["id_Availability_Territory"]] = $prRegions["Territory_Name"];
         }
         foreach ($pPos as $prPos) {
             $positions[$prPos["id_Position"]] = $prPos["Position_Name"];
@@ -139,7 +171,8 @@ class ProductsController extends Controller
 
         return compact("productType", "productFocus", "productFocusType", "productFocusSubType", "companies", "targetMarket",
             "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions", "attachments",
-            "productTargetEndUser", "productTargetMarket", "productAssetClass", "territories");
+            "productTargetEndUser", "productTargetMarket", "productAssetClass", "territories", "productFocusSubTypeList",
+            "productCompetitors");
     }
 
     private function StoreAttachment($parentID, Request $request) {
@@ -163,11 +196,11 @@ class ProductsController extends Controller
     // Target Territory validator
     private function addTerritoryValidator(Request $request) {
         $territoryValidator = [
-            'product_availability_teritory' => 'required|numeric'
+            'id_Availability_Territory' => 'required|numeric'
         ];
 
         $this->validate($request, $territoryValidator);
-        return ["product_availability_teritory" => $request->product_availability_teritory];
+        return ["id_Availability_Territory" => $request->id_Availability_Territory];
     }
     // Target Asset Class validator
     private function addClassAssetsValidator(Request $request) {
@@ -187,6 +220,15 @@ class ProductsController extends Controller
         $this->validate($request, $classAssetsValidator);
         return ["id_Target_End_User" => $request->id_Target_End_User];
     }
+    // Target end user validator
+    private function addProducFocusSubTypeValidator(Request $request) {
+        $classFocusSubTypeValidator = [
+            'id_Product_Focus_Sub_Type' => 'required|numeric'
+        ];
+
+        $this->validate($request, $classFocusSubTypeValidator);
+        return ["id_Product_Focus_Sub_Type" => $request->id_Product_Focus_Sub_Type];
+    }
     // Target market validator
     private function addTargetMarketValidator(Request $request) {
         $classAssetsValidator = [
@@ -202,11 +244,8 @@ class ProductsController extends Controller
         $productsValidator = [
             'Product_Title' => 'required|string',
             'id_Owner_Company' => 'required|numeric',
-            'id_Product_Type' => 'required|numeric',
+            'id_Key_Decision_Maker' => 'required|numeric',
             'First_Launched' => 'required|numeric',
-            'id_Product_Focus' => 'required|numeric',
-            'id_Product_Focus_Type' => 'required|numeric',
-            'id_Product_Focus_Sub_Type' => 'required|numeric',
             'FTM_Product_Description' => 'required|string'
         ];
         $this->validate($request, $productsValidator);
@@ -215,6 +254,14 @@ class ProductsController extends Controller
         }
         $productsFields['Date_Modified'] = Carbon::now();
         return $productsFields;
+    }
+
+    private function addCompetitorProductValidator(Request $request) {
+        $ProductCompatitorValidator = [
+            'id_Competitor_Product' => 'required|numeric'
+        ];
+        $this->validate($request, $ProductCompatitorValidator);
+        return ["id_Competitor_Product" => $request->id_Competitor_Product];
     }
 
     /**
@@ -245,6 +292,23 @@ class ProductsController extends Controller
             Session::set('ProductTargetMarket', Session::get('ProductTargetMarket')->push(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"])));
             return Redirect::back()->withInput($request->except(["add_target_market"]));
         }
+        if (isset($request['add_teritory']) && $request['add_teritory']) {
+            $territoryField = $this->addTerritoryValidator($request);
+            Session::set('ProductTerritory', Session::get('ProductTerritory')->push(AvailabilityTerritory::findOrNew($territoryField["id_Availability_Territory"])));
+            return Redirect::back()->withInput($request->except(["add_teritory"]));
+        }
+        if (isset($request['add_Product_Focus_Sub_type']) && $request['add_Product_Focus_Sub_type']) {
+            $producFocusSubTypeField = $this->addProducFocusSubTypeValidator($request);
+            Session::set('ProductFocusSubType', Session::get('ProductFocusSubType')->
+                push(ProductFocusSubType::findOrNew($producFocusSubTypeField["id_Product_Focus_Sub_Type"])));
+            return Redirect::back()->withInput($request->except(["add_Product_Focus_Sub_type"]));
+        }
+        if (isset($request['add_competitor']) && $request['add_competitor']) {
+            $competitorProductField = $this->addCompetitorProductValidator($request);
+            Session::set('ProductCompetitors', Session::get('ProductCompetitors')->push(CompetitorProduct::findOrNew($competitorProductField['id_Competitor_Product'])));
+            return Redirect::back()->withInput($request->except(["add_competitor"]));
+        }
+
 
         $productsFields = $this->productValidator($request);
         $productsFields['Date_Created'] = Carbon::now();
@@ -260,6 +324,15 @@ class ProductsController extends Controller
         }
         foreach(Session::get('ProductTargetMarket') as $marketTrg) {
             $productsModel->targetMarket()->save($marketTrg);
+        }
+        foreach(Session::get('ProductTerritory') as $territory) {
+            $productsModel->territory()->save($territory);
+        }
+        foreach(Session::get('ProductFocusSubType') as $focusSubType) {
+            $productsModel->focusSubType()->save($focusSubType);
+        }
+        foreach(Session::get('ProductCompetitors') as $productCompetitors) {
+            $productsModel->competitor()->save($productCompetitors);
         }
 
         return redirect(route('admin.products.index'))->with('flash', 'The Product was created');
@@ -317,6 +390,16 @@ class ProductsController extends Controller
             $tergetEndUserField = $this->addTargetMarketValidator($request);
             $productModel->targetMarket()->save(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"]));
             return Redirect::back()->withInput($request->except(["add_target_market"]));
+        }
+        if (isset($request['add_teritory']) && $request['add_teritory']) {
+            $territoryField = $this->addTerritoryValidator($request);
+            $productModel->territory()->save(AvailabilityTerritory::findOrNew($territoryField["id_Availability_Territory"]));
+            return Redirect::back()->withInput($request->except(["add_teritory"]));
+        }
+        if (isset($request['add_Product_Focus_Sub_type']) && $request['add_Product_Focus_Sub_type']) {
+            $producFocusSubTypeField = $this->addProducFocusSubTypeValidator($request);
+            $productModel->focusSubType()->save(ProductFocusSubType::findOrNew($producFocusSubTypeField["id_Product_Focus_Sub_Type"]));
+            return Redirect::back()->withInput($request->except(["add_Product_Focus_Sub_type"]));
         }
 
         $productsFields = $this->productValidator($request);

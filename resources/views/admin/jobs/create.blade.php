@@ -1,0 +1,11 @@
+@extends('admin')
+
+@section('content')
+    @include('errors.list')
+    <h2>New Job</h2>
+
+   {!! Form::model(new \App\Models\Jobs, ['route' => ['admin.jobs.store'], 'class'=>'','files' => true]) !!}
+
+    @include('admin/jobs/partials/item', ['submit_text' => 'Create'])
+    {!! Form::close() !!}
+@stop
