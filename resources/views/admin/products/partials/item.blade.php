@@ -38,6 +38,9 @@
             <ul>
                 @foreach($productFocusSubTypeList->toArray() as $id => $FocusSubType)
                     <li style="list-style: none" class="row small text-primary">
+                        {!! \App\Models\ProductFocus::findOrNew(\App\Models\ProductFocusType::
+                            findOrNew($FocusSubType['id_Product_Focus_Type'])->id_Product_Focus)->Product_Focus !!},
+                        {!! \App\Models\ProductFocusType::findOrNew($FocusSubType['id_Product_Focus_Type'])->Product_Focus_Type !!},
                         {!! $FocusSubType['Product_Focus_Sub_Type'] !!}
                         {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
                     </li>
@@ -63,17 +66,17 @@
 
     <div class="form-group" style="padding-top: 15px;">
         <div>{!! Form::label('id_Competitor_Product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
-        @if ($productCompetitors->count() > 0)
-            <ul>
-                @foreach($productCompetitors as $id => $productComp)
+        {{--@if ($productCompetitors->count() > 0)--}}
+            {{--<ul>--}}
+                {{--@foreach($productCompetitors as $id => $productComp)--}}
 
-                    <li style="list-style: none" class="row small text-primary">
+                    {{--<li style="list-style: none" class="row small text-primary">--}}
 
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
+                        {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}--}}
+                    {{--</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--@endif--}}
         <div>{!! Form::select('id_Competitor_Product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">

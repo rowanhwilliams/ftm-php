@@ -58,10 +58,12 @@
     </div>
 
     <div class="form-group">
-        <div>{!! Form::label('Job_max_salary', 'Job Max Salary:', Array("style" => "font-size: 16px;")) !!}</div>    #збоку потрібно  зробити випадаюче меню із типами валют#
-        <div>{!! Form::select('Select a curreny from a list bellow?', array('1' => 'AED ', '2' => 'AUD  ', '3' => ' CAD', '4' => ' CHF ',
-    '5' => ' CHF  ', '6' => 'CNY', '7' => 'DKK ', '8' => 'EUR  ', '9' => 'GBP ', '10' => 'HKD ','11' => ' JPY  ','12' => ' NOK','13' => 'SEK','14' => 'SGD','15' => 'USD ','16' => ' ZAR '), null, ['class' => 'form-control']) !!}</div>
-        <div>{!! Form::text('Job_max_salary', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('Job_max_salary', 'Job Max Salary:', Array("style" => "font-size: 16px;")) !!}</div>
+        <span class="col-md-8">{!! Form::text('Job_max_salary', "", ["class" => "form-control"]) !!}</span>
+        <span class="col-md-4">{!! Form::select('Select a curreny from a list bellow?', array('1' => 'AED ', '2' => 'AUD  ', '3' => ' CAD', '4' => ' CHF ',
+                '5' => ' CHF  ', '6' => 'CNY', '7' => 'DKK ', '8' => 'EUR  ', '9' => 'GBP ', '10' => 'HKD ','11' => ' JPY  ','12' => ' NOK','13' => 'SEK',
+                '14' => 'SGD','15' => 'USD ','16' => ' ZAR '), null, ['class' => 'form-control']) !!}
+        </span>
     </div>
 
     <div class="form-group">
