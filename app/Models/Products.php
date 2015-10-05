@@ -11,7 +11,7 @@ class Products extends Model
     protected $primaryKey ="id_Product";
     protected $guarded = [];
     public function competitor() {
-        return $this->hasMany('App\Models\CompetitorProduct','id_Competitor_Product');
+        return $this->belongsToMany('App\Models\Products','Product_Competitor_Product', 'id_Competitor_Product','id_Product');
     }
     public function focusSubType() {
         return $this->belongsToMany('App\Models\ProductFocusSubType', 'Product_Product_Focus_Sub_Type', 'id_Product', 'id_Product_Focus_Sub_Type');

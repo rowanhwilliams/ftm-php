@@ -95,19 +95,18 @@ class CompaniesController extends Controller
         $cn = Country::all()->toArray();
 
         if ($company->headquaters()->count()) {
-            $HQAddresses = $company->headquaters()->get()->first()->addresses()->get()->first();
+            $HQAddresses = Addresses::findOrNew($company->headquaters()->get()->first()->AddressId)->get()->first();
         }
         else {
             $HQAddresses = new \App\Models\Addresses();
         }
 
-        if ($company->headquaters()->count()){
-            $HQPhones = $company->headquaters()->first()->phones()->get()->first();
+        if ($company->headquaters()->count() && $company->headquaters()->get()->first()->PhoneId){
+            $HQPhones = Phones::findOrNew($company->headquaters()->get()->first()->PhoneId)->get()->first();
         }
         else {
             $HQPhones = new \App\Models\Phones();
         }
-
         foreach ($eSize as $emSize){
             $employeeSize[$emSize["id_Employee_Size"]] = $emSize["Employee_Size"];
         }
@@ -297,14 +296,14 @@ class CompaniesController extends Controller
         $address = $this->addressValidator($request);
         $phone = $this->phoneValidator($request);
         if ($company->headquaters()->count()) {
-            $company->headquaters()->first()->addresses()->first()->fill($address)->save();
+            Addresses::findOrNew($company->headquaters()->first()->AddressId)->get()->first()->fill($address)->save();
         }
         else {
             $addressModel = Addresses::create($address);
 
         }
         if ($company->headquaters()->count()){
-            $company->headquaters()->first()->phones()->first()->fill($phone)->save();
+            Phones::findOrNew($company->headquaters()->first()->PhoneId)->get()->first()->fill($phone)->save();
         }
         else {
             $phoneModel = Phones::create($phone);

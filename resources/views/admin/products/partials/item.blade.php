@@ -66,17 +66,16 @@
 
     <div class="form-group" style="padding-top: 15px;">
         <div>{!! Form::label('id_Competitor_Product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
-        {{--@if ($productCompetitors->count() > 0)--}}
-            {{--<ul>--}}
-                {{--@foreach($productCompetitors as $id => $productComp)--}}
-
-                    {{--<li style="list-style: none" class="row small text-primary">--}}
-
-                        {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}--}}
-                    {{--</li>--}}
-                {{--@endforeach--}}
-            {{--</ul>--}}
-        {{--@endif--}}
+        @if ($productCompetitors->count() > 0)
+            <ul>
+                @foreach($productCompetitors as $id => $productComp)
+                    <li style="list-style: none" class="row small text-primary">
+                        {!! $productComp->Product_Title !!}
+                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
         <div>{!! Form::select('id_Competitor_Product', $competitorProducts, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">

@@ -83,7 +83,7 @@ class ProductsController extends Controller
             $productAssetClass = $products->assetClass()->get();
             $territories = $products->territory()->get();
             $productFocusSubTypeList = $products->focusSubType()->get();
-            //$productCompetitors = $products->competitor()->get();
+            $productCompetitors = $products->competitor()->get();
         }
         else {
             $products = new \App\Models\Products();
@@ -305,7 +305,7 @@ class ProductsController extends Controller
         }
         if (isset($request['add_competitor']) && $request['add_competitor']) {
             $competitorProductField = $this->addCompetitorProductValidator($request);
-            Session::set('ProductCompetitors', Session::get('ProductCompetitors')->push(CompetitorProduct::findOrNew($competitorProductField['id_Competitor_Product'])));
+            Session::set('ProductCompetitors', Session::get('ProductCompetitors')->push(Products::findOrNew($competitorProductField['id_Competitor_Product'])));
             return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
 
@@ -400,6 +400,11 @@ class ProductsController extends Controller
             $producFocusSubTypeField = $this->addProducFocusSubTypeValidator($request);
             $productModel->focusSubType()->save(ProductFocusSubType::findOrNew($producFocusSubTypeField["id_Product_Focus_Sub_Type"]));
             return Redirect::back()->withInput($request->except(["add_Product_Focus_Sub_type"]));
+        }
+        if (isset($request['add_competitor']) && $request['add_competitor']) {
+            $competitorProductField = $this->addCompetitorProductValidator($request);
+            $productModel->competitor()->save(Products::findOrNew($competitorProductField['id_Competitor_Product']));
+            return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
 
         $productsFields = $this->productValidator($request);
