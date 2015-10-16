@@ -4,16 +4,16 @@
         <div>{!! Form::select('size', array('mr' => 'Mr', 'ms' => 'Ms', 'miss' => 'Miss', 'sir' => 'Sir', 'mrs' => 'Mrs', 'dr' => 'Dr', 'lady' => 'Lady', 'lord' => 'Lord'), null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('first_name', 'First Name:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('first_name', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('First_Name', 'First Name:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('First_Name', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('midle_name', 'Midle Name:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('midle_name', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('Middle_Name', 'Midle Name:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Middle_Name', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('last_name', 'Last Name:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('last_name', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('Surname', 'Last Name:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Surname', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -27,11 +27,11 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('state', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('city', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('city', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('city', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div style="font-size: 16px;">Upload photo:</div>
     <div class="form-group">

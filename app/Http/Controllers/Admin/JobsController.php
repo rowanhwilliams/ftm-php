@@ -72,7 +72,7 @@ class JobsController extends Controller
             $languages[$langs["id_Language"]] = $langs["Language_Name"];
         }
 
-        return compact("companies", "commisionOrBonus","targetEndUser","jobFamily","country", "regions", "jobFamily", "languages");
+        return compact("companies", "commisionOrBonus","targetEndUser","jobFamily","country", "regions", "languages");
     }
 
     /**
