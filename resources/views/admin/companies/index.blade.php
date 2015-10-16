@@ -3,9 +3,17 @@
 @section('content')
     <section class="content">
           <div class="row">
-              <div class="pull-right">
+
+              <div class="col-md-11">
+                  {!! Form::open(['method'=>'PATCH', 'url' => 'admin/companies/search', 'class'=>'form navbar-form navbar-right searchform']) !!}
+                  {!! Form::text('search', null, array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
+                  {!! Form::submit('Search', array('class'=>'btn btn-xs')) !!}
+                  {!! Form::close() !!}
+              </div>
+              <div class="col-md-1">
                   <a class="btn btn-success btn-xs" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
               </div>
+
           </div>
 
           <div class="row">
@@ -42,6 +50,7 @@
 
                   </tbody>
               </table>
+              {{--{!! $companies->render() !!}--}}
           </div>
 
 

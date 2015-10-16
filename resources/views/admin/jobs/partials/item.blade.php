@@ -85,7 +85,7 @@
 
     <div class="form-group">
         <div>{!! Form::label('language', 'Language:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('language', array('1' => '', '2' => '', '3' => ''), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('language', $languages, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">

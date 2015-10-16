@@ -16,15 +16,16 @@
         <div>{!! Form::text('last_name', "", ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('continent', 'Continent :', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('continent', array('asia' => 'Asia', 'africa' => 'Africa', 'na' => 'North America', "sa" => "South America", "antarctica" => "Antarctica", "europe"=>"Europe","australia"=>"Australia"), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Availability_Territory', $regions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>
-            @include('admin.employee.partials.countries', ['default' => null])
+            <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control']) !!}</div>
         </div>
-    </div>    <div class="form-group">
+    </div>
+    <div class="form-group">
         <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('state', "", ["class" => "form-control"]) !!}</div>
     </div>
@@ -40,7 +41,7 @@
 
     <div class="form-group">
         <div>{!! Form::label('employee_type', 'Employee Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('employee_type', array('1' => 'Employee type 1', '2' => 'Employee type 2', '3' => 'Employee type 3'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('employee_type',$employeeType, null, ['class' => 'form-control']) !!}</div>
     </div>
 </div>
 <div class="col-md-6">
@@ -51,11 +52,11 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('attends_date', 'Dates Attends:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::selectYear('attends_date_start', 1920, 2015) !!} - {!! Form::selectYear('attends_date_end', 1920, 2015) !!}</div>
+        <div>{!! Form::selectYear('attends_date_start', 1920, 2015, ['class'=>'form-control']) !!} - {!! Form::selectYear('attends_date_end', 1920, 2015, ['class'=>'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('degree', 'Degree:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('degree', array('1' => 'Degree 1', '2' => 'Degree 2', '3' => 'Degree 3'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('degree',$historyDegree, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('education_description', 'Education Description', Array("style" => "font-size: 16px;")) !!}</div>
@@ -70,11 +71,11 @@
     <div style="font-size: 18px">Career History</div>
     <div class="form-group">
         <div>{!! Form::label('company', 'Company:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('company', array('1' => 'Company 1', '2' => 'Company 2', '3' => 'Company 3'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('company',$companies, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('position', 'Position:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('position', array('1' => 'Position 1', '2' => 'Position 2', '3' => 'Position 3'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('position', $positions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('time_period', 'Time Period:', Array("style" => "font-size: 16px;")) !!}</div>

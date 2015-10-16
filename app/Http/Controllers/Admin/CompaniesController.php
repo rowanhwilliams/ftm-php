@@ -35,7 +35,8 @@ class CompaniesController extends Controller
 
     public function index()
     {
-        $companies = Companies::all(['id_Company','Company_Full_Name','Year_Founded','Website'])->sortBy('Company_Full_Name');
+        //dd("test");
+        $companies = Companies:: all(['id_Company','Company_Full_Name','Year_Founded','Website'])->sortBy('Company_Full_Name');
         // empty session data
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
@@ -49,6 +50,10 @@ class CompaniesController extends Controller
      */
     public function create()
     {
+        return view("admin.companies.create", $this->passData());
+    }
+
+    public function search(){
         return view("admin.companies.create", $this->passData());
     }
 
@@ -92,7 +97,7 @@ class CompaniesController extends Controller
 
         }
 
-        $cn = Country::all()->toArray();
+        $cn = Country::all()->sortby("Country")->toArray();
 
         if ($company->headquaters()->count()) {
             $HQAddresses = Addresses::findOrNew($company->headquaters()->get()->first()->AddressId)->get()->first();
@@ -259,6 +264,7 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
+        //dd("test");
         //
     }
 
