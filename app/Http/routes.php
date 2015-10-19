@@ -33,18 +33,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 {
     // GET
     Route::get('/', ['as' => 'admin.root', 'uses' => 'DashboardController@index']);
-    Route::get('setting', ['as' => 'admin.setting.index', 'uses' => 'SettingController@getSettings']);
+//    Route::get('setting', ['as' => 'admin.setting.index', 'uses' => 'SettingController@getSettings']);
     // POST
-    Route::post('language/change', ['as' => 'admin.language.change' , 'uses' => 'LanguageController@postChange']);
-    Route::post('page/order', ['as' => 'admin.page.order' , 'uses' => 'PageController@postOrder']);
+//    Route::post('language/change', ['as' => 'admin.language.change' , 'uses' => 'LanguageController@postChange']);
+//    Route::post('page/order', ['as' => 'admin.page.order' , 'uses' => 'PageController@postOrder']);
     // PATCH
-    Route::patch('setting/{setting}', ['as' => 'admin.setting.update', 'uses' => 'SettingController@patchSettings']);
+//    Route::patch('setting/{setting}', ['as' => 'admin.setting.update', 'uses' => 'SettingController@patchSettings']);
     // Resources
 
-    Route::resource('language', 'LanguageController');
+//    Route::resource('language', 'LanguageController');
     Route::resource('user', 'UserController');
     Route::resource('employee', 'EmployeeController');
-    Route::resource('companies', 'CompaniesController');
+    Route::resource('companies', 'CompaniesController', ['only' => ['index', 'create', 'store', 'update', 'edit', 'destroy', 'search']]);
     Route::resource('products', 'ProductsController');
     Route::resource('jobs', 'JobsController');
     Route::get('source/{id}/productFocusSubType', ['as' => 'admin.source.productFocusSubType', 'uses' => 'AjaxController@productFocusSubType']);

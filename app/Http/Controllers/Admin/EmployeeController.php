@@ -8,9 +8,15 @@ use App\Models\People;
 use \App\Models\Companies;
 use \App\Models\AvailabilityTerritory;
 use \App\Models\Country;
+use App\Models\PeopleTitle;
 use \App\Models\Positions;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Redirect;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -25,8 +31,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-        return view("admin.employee.index", ['employees'=>$employees]);
+        Session::forget('UniversityHistory');
+        Session::forget('CareerHistory');
+        $people = People::all()->sortBy("First_Name");
+        return view("admin.employee.index", compact("people"));
     }
 
     /**
@@ -44,23 +52,38 @@ class EmployeeController extends Controller
     {
         if (!is_null($id)) {
             $people = People::findOrNew($id);
+            $universityHisttory = $people->universityHistory()->get();
+            $careerHistory = $people->careerHistory()->get();
+            $employee = $people->employee()->get()->first();
+            $address = $people->address()->get()->first();
         }
         else {
             $people = new \App\Models\People();
+
+            if (!Session::has('UniversityHistory')) {
+                Session::set('UniversityHistory', $people->universityHistory()->get());
+            }
+
+            if (!Session::has('CareerHistory')) {
+                Session::set('CareerHistory', $people->careerHistory()->get());
+            }
+
+            $universityHisttory = Session::get('UniversityHistory');
+            $careerHistory = Session::get('CareerHistory');
+
         }
-        $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
+        if (is_null($employee)) {
+            $employee = new \App\Models\Employee();
+        }
+        if (is_null($address)) {
+            $address = new \App\Models\Addresses();
+        }
+
+        $pTitle = PeopleTitle::all()->sortBy("Title_Name")->toArray();
         $pRegions = AvailabilityTerritory::all()->toArray();
         $cn = Country::all()->sortby("Country")->toArray();
         $eType = EmployeeType::all()->sortBy("Type_Name")->toArray();
-        $pPos = Positions::all()->sortBy("Position_Name")->toArray();
-        $degree = Degree::all()->sortBy("Degree_title")->toArray();
-        if (!sizeof($degree)) {
-            $degree = new \App\Models\Degree();
-        }
 
-        foreach ($comps as $comp) {
-            $companies[$comp["id_Company"]] = $comp["Company_Full_Name"];
-        }
         foreach ($pRegions as $prRegions) {
             $regions[$prRegions["id_Availability_Territory"]] = $prRegions["Territory_Name"];
         }
@@ -70,15 +93,75 @@ class EmployeeController extends Controller
         foreach ($eType as $emType) {
             $employeeType[$emType["id_Employee_Type"]] = $emType["Type_Name"];
         }
-        foreach ($pPos as $prPos) {
-            $positions[$prPos["id_Position"]] = $prPos["Position_Name"];
-        }
-        foreach ($degree as $dlist) {
-            $historyDegree[$dlist["id_Degree"]] = $dlist["Degree_title"];
+        foreach ($pTitle as $peopTitle) {
+            $peopleTitle[$peopTitle["id_People_Title"]] = $peopTitle["Title_Name"];
         }
 
+        return compact("country", "regions", "employeeType", "people", "peopleTitle", "universityHisttory",
+                        "careerHistory", "employee", "address");
+    }
 
-        return compact("companies", "country", "regions", "employeeType", "positions", "historyDegree");
+    private function educationValidator(Request $request)
+    {
+        $educationValidator = [
+            'University_Name' => 'required|string',
+            'Degree_title' => 'required|string',
+            'Start_year' => 'required|numeric',
+            'Finish_year' => 'required|numeric'
+        ];
+        $this->validate($request, $educationValidator);
+        foreach(array_keys($educationValidator) as $key){
+            $educationFields[$key] = $request[$key];
+        }
+        return $educationFields;
+    }
+
+    private function careerValidator(Request $request)
+    {
+        $careerValidator = [
+            'Position_Name' => 'required|string',
+            'Company_Name' => 'required|string',
+            'Start_year' => 'required|numeric',
+            'Finish_year' => 'required|numeric',
+            'Start_Month' => 'required|numeric',
+            'Finish_Month' => 'required|numeric',
+            'Current_Position_Status' => 'sometimes|accepted'
+        ];
+        $this->validate($request, $careerValidator);
+        foreach(array_keys($careerValidator) as $key){
+            $careerFields[$key] = $request[$key];
+        }
+        return $careerFields;
+    }
+
+    private function peopleValidator(Request $request)
+    {
+        $peopleValidator = [
+            'First_Name' => 'required|string',
+            'Middle_Name' => 'required|string',
+            'Surname' => 'required|string',
+            'Career_Description' => 'required|string',
+            'id_People_Title' => 'required|numeric'
+        ];
+        $this->validate($request, $peopleValidator);
+        foreach(array_keys($peopleValidator) as $key){
+            $peopleFields[$key] = $request[$key];
+        }
+        $peopleFields['Date_Modified'] = Carbon::now();
+        return $peopleFields;
+    }
+
+    private function employeeValidator(Request $request)
+    {
+        $employeeValidator = [
+            'Education_Description' => 'required|string',
+            'id_Employee_Type' => 'required|numeric'
+        ];
+        $this->validate($request, $employeeValidator);
+        foreach(array_keys($employeeValidator) as $key){
+            $employeeFields[$key] = $request[$key];
+        }
+        return $employeeFields;
     }
 
     /**
@@ -89,7 +172,39 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (isset($request['add_education']) && $request['add_education']) {
+            $educationData = $this->educationValidator($request);
+            Session::set('UniversityHistory', Session::get('UniversityHistory')->push(new \App\Models\DegreeHistory($educationData)));
+            return Redirect::back()->withInput($request->except(["University_Name","Degree_title","Start_year", "Finish_year"]));
+        }
+
+        if (isset($request['add_career']) && $request['add_career']) {
+            $careerData = $this->careerValidator($request);
+            Session::set('CareerHistory', Session::get('CareerHistory')->push(new \App\Models\CareerHistory([
+                "Position_Name" => $careerData["Position_Name"], "Company_Name" => $careerData["Company_Name"],
+                "Current_Position_Status" => $careerData["Current_Position_Status"],
+                "Start_Date_At_Position" => Carbon::create($careerData["Start_year"], $careerData["Start_Month"],1,0),
+                "Finish_Date_At_Position" => Carbon::create($careerData["Finish_year"], $careerData["Finish_Month"],1,0),
+            ])));
+            return Redirect::back()->withInput($request->except(["Position_Name","Company_Name","Start_year", "Finish_year","Start_Month", "Finish_Month", "Current_Position_Status"]));
+        }
+
+        $peopleFields = $this->peopleValidator($request);
+        $employeeFields = $this->employeeValidator($request);
+
+        $peopleFields['Date_Created'] = Carbon::now();
+        $peopleModel = People::create($peopleFields);
+        $peopleModel->employee()->create($employeeFields);
+
+        foreach(Session::get('UniversityHistory') as $modelData){
+            $peopleModel->universityHistory()->save($modelData);
+        }
+
+        foreach(Session::get('CareerHistory') as $modelData){
+            $peopleModel->careerHistory()->save($modelData);
+        }
+
+        return redirect(route('admin.employee.index'))->with('flash', 'The Company was updated');
     }
 
     /**
@@ -113,7 +228,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("admin.employee.edit", $this->passData($id));
     }
 
     /**
@@ -125,7 +240,31 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $peopleModel = People::findOrFail($id);
+        if (isset($request['add_education']) && $request['add_education']) {
+            $educationData = $this->educationValidator($request);
+            $peopleModel->universityHistory()->save(new \App\Models\DegreeHistory($educationData));
+            return Redirect::back()->withInput($request->except(["University_Name","Degree_title","Start_year", "Finish_year"]));
+        }
+
+        if (isset($request['add_career']) && $request['add_career']) {
+            $careerData = $this->careerValidator($request);
+            $peopleModel->careerHistory()->save(new \App\Models\CareerHistory([
+                "Position_Name" => $careerData["Position_Name"], "Company_Name" => $careerData["Company_Name"],
+                "Current_Position_Status" => $careerData["Current_Position_Status"],
+                "Start_Date_At_Position" => Carbon::create($careerData["Start_year"], $careerData["Start_Month"],1,0),
+                "Finish_Date_At_Position" => Carbon::create($careerData["Finish_year"], $careerData["Finish_Month"],1,0),
+            ]));
+            return Redirect::back()->withInput($request->except(["Position_Name","Company_Name","Start_year", "Finish_year","Start_Month", "Finish_Month", "Current_Position_Status"]));
+        }
+
+        $peopleFields = $this->peopleValidator($request);
+
+        $employeeFields = $this->employeeValidator($request);
+        $peopleModel->fill($peopleFields)->save();
+        $peopleModel->employee()->first()->fill($employeeFields)->save();
+
+        return redirect(route('admin.employee.index'))->with('flash', 'The Company was updated');
     }
 
     /**

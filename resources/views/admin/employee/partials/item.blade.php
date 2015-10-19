@@ -1,7 +1,7 @@
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('title', 'Title:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('size', array('mr' => 'Mr', 'ms' => 'Ms', 'miss' => 'Miss', 'sir' => 'Sir', 'mrs' => 'Mrs', 'dr' => 'Dr', 'lady' => 'Lady', 'lord' => 'Lord'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_People_Title', $peopleTitle, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('First_Name', 'First Name:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -16,7 +16,7 @@
         <div>{!! Form::text('Surname', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::label('id_Availability_Territory', 'Region:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Availability_Territory', $regions, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', null, ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('state', $address->State, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('city', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -40,63 +40,99 @@
     </div>
 
     <div class="form-group">
-        <div>{!! Form::label('employee_type', 'Employee Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('employee_type',$employeeType, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Employee_Type', 'Employee Type:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Employee_Type',$employeeType, $employee->id_Employee_Type, ['class' => 'form-control']) !!}</div>
     </div>
 </div>
 <div class="col-md-6">
     <div style="font-size: 18px">Education History</div>
+    @if ($universityHisttory->count() > 0)
+        <ul>
+            @foreach($universityHisttory as $id => $historyItem)
+                <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    {!! $historyItem->University_Name !!}
+                    {!! $historyItem->Degree_title !!}
+                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="form-group">
-        <div>{!! Form::label('university', 'University:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('university', array('1' => 'University 1', '2' => 'University 2', '3' => 'University 3'), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('University_Name', 'University:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('University_Name', null, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('attends_date', 'Dates Attends:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::selectYear('attends_date_start', 1920, 2015, ['class'=>'form-control']) !!} - {!! Form::selectYear('attends_date_end', 1920, 2015, ['class'=>'form-control']) !!}</div>
+        <div class="col-md-5">{!! Form::selectYear('Start_year', 1920, 2015, null, ['class'=>'form-control']) !!}</div>
+        <div class="col-md-2"> - </div>
+        <div class="col-md-5">{!! Form::selectYear('Finish_year', 1920, 2015, null, ['class'=>'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('degree', 'Degree:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('degree',$historyDegree, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('education_description', 'Education Description', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::textarea('education_description',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('Degree_title', 'Degree:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Degree_title', null, ['class' => 'form-control']) !!}</div>
     </div>
 
     <div class="row">
         <div class="pull-right">
-            <a class="btn btn-default btn-sm" href="#" role="button">Add</a>
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_education')) !!}
         </div>
     </div>
-    <div style="font-size: 18px">Career History</div>
+
     <div class="form-group">
-        <div>{!! Form::label('company', 'Company:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('company',$companies, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('Education_Description', 'Education Description', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::textarea('Education_Description',$employee->Education_Description, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
+    </div>
+
+    <div style="font-size: 18px">Career History</div>
+    @if ($careerHistory->count() > 0)
+        <ul>
+            @foreach($careerHistory as $id => $historyItem)
+                <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                    {!! $historyItem->Company_Name !!}
+                    {!! $historyItem->Position_Name !!}
+                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                </li>
+            @endforeach
+        </ul>
+    @endif
+    <div class="form-group">
+        <div>{!! Form::label('Company_Name', 'Company:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Company_Name', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('position', 'Position:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('position', $positions, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('Position_Name', 'Position:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Position_Name', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('time_period', 'Time Period:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div> {!! Form::selectMonth('month') !!} {!! Form::selectYear('time_period_start', 1920, 2015) !!} - {!! Form::selectMonth('month') !!} {!! Form::selectYear('time_period_end', 1920, 2015) !!}</div>
+        <div class="row">
+            <div class="col-md-2">From:</div>
+            <div class="col-md-5">{!! Form::selectMonth('Start_Month', null, ['class' => 'form-control']) !!}</div>
+            <div class="col-md-5">{!! Form::selectYear('Start_year', 1920, 2015, null, ['class' => 'form-control']) !!}</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-2">To:</div>
+            <div class="col-md-5">{!! Form::selectMonth('Finish_Month', null, ['class' => 'form-control']) !!}</div>
+            <div class="col-md-5">{!! Form::selectYear('Finish_year', 1920, 2015, null, ['class' => 'form-control']) !!}</div>
+        </div>
     </div>
     <div class="form-group">
-        <div>{!! Form::checkbox('agree') !!} {!!  Form::label('time_period', 'Currently work here', Array("style" => "font-size: 16px;")) !!} </div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('carrer_description', 'Cereer Description', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::textarea('carrer_description',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
+        <div>{!! Form::checkbox('Current_Position_Status') !!} {!!  Form::label('time_period', 'Currently work here', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
     <div class="row">
         <div class="pull-right">
-            <a class="btn btn-default btn-sm" href="#" role="button">Add</a>
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_career')) !!}
         </div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('Career_Description', 'Cereer Description', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::textarea('Career_Description',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="pull-right">
-            {!! Form::submit('Save', array('class' => 'btn btn-default')) !!}
+            {!! Form::submit($submit_text, array('class' => 'btn btn-default btn-sm', 'name' => $submit_text)) !!}
         </div>
     </div>
 </div>

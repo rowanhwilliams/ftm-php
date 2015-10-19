@@ -1,9 +1,10 @@
-@extends('app')
+@extends('admin')
 
 @section('content')
-    <h2>New employee</h2>
+    @include('errors.list')
+    <h2>Edit <span class="text-danger">{!! $people->First_Name." ".$people->Surname !!}</span> Employee</h2>
 
-    {!! Form::model(new App\Models\Employee, ['route' => ['admin.employee.create', $project->slug], 'class'=>'']) !!}
-        @include('employee/partials/item', ['submit_text' => 'Create Task'])
+    {!! Form::model($people, ['method' => 'PATCH', 'route' => ['admin.employee.update', $people->id_People], 'class'=>'','files' => true]) !!}
+        @include('admin.employee.partials.item', ['submit_text' => 'Save'])
     {!! Form::close() !!}
 @stop
