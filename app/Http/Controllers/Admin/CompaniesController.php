@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Addresses;
 use App\Models\Phones;
+use App\Models\Products;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Redirect;
@@ -24,7 +27,6 @@ use App\Models\HeadquartersInformation;
 use App\Models\Country;
 use App\Models\ProductFocusType;
 
-
 class CompaniesController extends Controller
 {
     /**
@@ -33,14 +35,17 @@ class CompaniesController extends Controller
      * @return Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        //dd("test");
-        $companies = Companies:: all(['id_Company','Company_Full_Name','Year_Founded','Website'])->sortBy('Company_Full_Name');
+        $search = "";
+        $companies = DB::table('Company')->orderBy('Company_Full_Name', 'asc')->paginate(15);
+        $products = Products::all();
+        //$companies = Paginator::make($companies, $companies->count(), 15);
         // empty session data
+        Session::forget('CompanySearch');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies'));
+        return view("admin.companies.index", compact('companies', "products", "search"));
     }
 
     /**
@@ -53,19 +58,28 @@ class CompaniesController extends Controller
         return view("admin.companies.create", $this->passData());
     }
 
-    public function search(){
-        return view("admin.companies.create", $this->passData());
+    public function search(Request $request)
+    {
+        $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
+        Session::set('CompanySearch', $search);
+
+        //dd($search);
+        $companies = DB::table('Company')->where('Company_Full_Name', 'like', "%$search%")->orderBy('Company_Full_Name', 'asc')->paginate(15);
+        $products = Products::all();
+        return view("admin.companies.index", compact('companies', "products", "search"));
     }
 
     private function passData($id = null)
     {
+        $HQAddresses = new \App\Models\Addresses();
+        $HQPhones = new \App\Models\Phones();
+        $company = new \App\Models\Companies();
         if (!is_null($id)) {
             $company = Companies::findOrNew($id);
             $mediaContacts = $company->mediaContacts()->get();
             $attachments = $company->attachments()->get();
         }
         else {
-            $company = new \App\Models\Companies();
             if (!Session::has('MediaContacts')) {
                 Session::set('MediaContacts', $company->mediaContacts()->get());
             }
@@ -85,33 +99,25 @@ class CompaniesController extends Controller
         $uParent = Companies::all()->sortBy('Company_Full_Name')->toArray();
         $products = $company->products();
         foreach($products->get() as $product) {
-            $productSubTypeList = [];
+            $productFocusTypeList[$product->id_Product] = [];
             $productTypeList = [];
             foreach($product->focusSubType()->get() as $productSubType) {
-                $productSubTypeList[] = $productSubType->Product_Focus_Sub_Type;
+                $productTypeList[0] = $productSubType->Product_Focus_Sub_Type;
                 $productTypeListValues = ProductFocusType::where('id_Product_Focus_Type', '=', $productSubType->id_Product_Focus_Type)->get()->first();
-                $productTypeList[] = $productTypeListValues->Product_Focus_Type;
+                $productTypeList[1] = $productTypeListValues->Product_Focus_Type;
+                $productFocusTypeList[$product->id_Product][] = $productTypeList;
             }
-            $productFocusSubTypeList[$product->id_Product] = implode(',', $productSubTypeList);
-            $productFocusTypeList[$product->id_Product] = implode(',', $productTypeList);
 
         }
 
-        $cn = Country::all()->sortby("Country")->toArray();
-
-        if ($company->headquaters()->count()) {
-            $HQAddresses = Addresses::findOrNew($company->headquaters()->get()->first()->AddressId)->get()->first();
-        }
-        else {
-            $HQAddresses = new \App\Models\Addresses();
+        if ($company->headquaters()->get()->count()) {
+            $HQAddresses = Addresses::findOrNew($company->headquaters()->get()->first()->AddressId);
         }
 
-        if ($company->headquaters()->count() && $company->headquaters()->get()->first()->PhoneId){
-            $HQPhones = Phones::findOrNew($company->headquaters()->get()->first()->PhoneId)->get()->first();
+        if ($company->headquaters()->get()->count() && $company->headquaters()->get()->first()->PhoneId){
+            $HQPhones = Phones::findOrNew($company->headquaters()->get()->first()->PhoneId);
         }
-        else {
-            $HQPhones = new \App\Models\Phones();
-        }
+
         foreach ($eSize as $emSize){
             $employeeSize[$emSize["id_Employee_Size"]] = $emSize["Employee_Size"];
         }
@@ -133,11 +139,9 @@ class CompaniesController extends Controller
         foreach ($uParent as $ulParent) {
             $ultimateParent[$ulParent["id_Company"]] = $ulParent["Company_Full_Name"];
         }
-        foreach ($cn as $cnt) {
-            $country[$cnt["id_Country"]] = $cnt["Country"];
-        }
+        $country = Country::getListCountries();
 
-        return compact("employeeSize", "growthProfile","productFocusSubTypeList", "productFocusTypeList", "ownership", "revenueStage", "companyType", "companySubType",
+        return compact("employeeSize", "growthProfile", "productFocusTypeList", "ownership", "revenueStage", "companyType", "companySubType",
             "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products", "attachments");
     }
 
@@ -240,7 +244,6 @@ class CompaniesController extends Controller
             'id_Company_Type' => 'required|numeric',
             'id_Company_Sub_Type' => 'required|numeric',
             'Website' => 'required|url',
-            'FinTechMonitor_Company_Code' => 'string',
             'id_Ultimate_Parent' => 'required|numeric',
             'Acquired_Subsidiary' => 'sometimes|accepted',
             'Graduate_Program' => 'sometimes|accepted',
@@ -301,15 +304,15 @@ class CompaniesController extends Controller
         }
         $address = $this->addressValidator($request);
         $phone = $this->phoneValidator($request);
-        if ($company->headquaters()->count()) {
-            Addresses::findOrNew($company->headquaters()->first()->AddressId)->get()->first()->fill($address)->save();
+        if ($company->headquaters()->get()->count()) {
+            Addresses::findOrNew($company->headquaters()->first()->AddressId)->fill($address)->save();
         }
         else {
             $addressModel = Addresses::create($address);
 
         }
-        if ($company->headquaters()->count()){
-            Phones::findOrNew($company->headquaters()->first()->PhoneId)->get()->first()->fill($phone)->save();
+        if ($company->headquaters()->get()->count()){
+            Phones::findOrNew($company->headquaters()->first()->PhoneId)->fill($phone)->save();
         }
         else {
             $phoneModel = Phones::create($phone);

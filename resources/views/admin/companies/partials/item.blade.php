@@ -73,18 +73,23 @@
     <div style="font-size: 18px">Product Information</div>
     @if($products->count() > 0)
         <div class="row">
-            <div class="col-md-3 small text-primary">Product Title</div>
-            <div class="col-md-4 small text-primary">Product Focus Type</div>
-            <div class="col-md-5 small text-primary">Product Focus Sub Type</div>
+            <div class="col-md-3 small text-warn">Product Title</div>
+            <div class="col-md-4 small text-warn">Product Focus Type</div>
+            <div class="col-md-5 small text-warn">Product Focus Sub Type</div>
         </div>
             @foreach($products->get() as $product)
+                <?php $display = true ?>
                 <div class="form-group row">
-                    {{--{!! Form::text($product->id_Product, $product->Product_Title, Array('class'=>'form-control disabled', 'readonly')) !!}--}}
-                    {{--<div class="small text-primary">{!! $product->focus()->first()->Product_Focus !!},--}}
-                        {{--{!! $product->focusType()->first()->Product_Focus_Type !!}, {!! $product->focusSubType()->first()->Product_Focus_Sub_Type !!}</div>--}}
-                    <div class="col-md-3 small text-primary">{!! $product->Product_Title !!}</div>
-                    <div class="col-md-4 small text-primary">{!! $productFocusTypeList[$product->id_Product] !!}</div>
-                    <div class="col-md-5 small text-primary">{!! $productFocusSubTypeList[$product->id_Product] !!}</div>
+                    @foreach($productFocusTypeList[$product->id_Product] as $id => $productAttrList)
+                        <div class="col-md-3 small text-primary">
+                            @if($display)
+                                {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title) !!}
+                                <?php $display = false ?>
+                            @endif
+                        </div>
+                        <div class="col-md-4 small text-primary">{!! $productAttrList[0] !!}</div>
+                        <div class="col-md-5 small text-primary">{!! $productAttrList[1] !!}</div>
+                    @endforeach
                 </div>
 
             @endforeach
@@ -94,10 +99,6 @@
     <div class="form-group">
         <div>{!! Form::label('Website', 'Website:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('Website', null, ["class" => "form-control",'placeholder'=>'Website']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('FinTechMonitor_Company_Code', 'FTM Code:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('FinTechMonitor_Company_Code', null, ["class" => "form-control",'placeholder'=>'FTM Code']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::checkbox('Acquired_Subsidiary') !!} {!!  Form::label('Acquired_Subsidiary', 'Acquired/Subsidiory', Array("style" => "font-size: 16px;")) !!} </div>

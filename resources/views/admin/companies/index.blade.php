@@ -5,8 +5,8 @@
           <div class="row">
 
               <div class="col-md-11">
-                  {!! Form::open(['method'=>'PATCH', 'url' => 'admin/companies/search', 'class'=>'form navbar-form navbar-right searchform']) !!}
-                  {!! Form::text('search', null, array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
+                  {!! Form::open(['method'=>'POST', 'route' => ['companies_search'], 'class'=>'form navbar-form navbar-right searchform']) !!}
+                  {!! Form::text('search', $search, array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
                   {!! Form::submit('Search', array('class'=>'btn btn-xs')) !!}
                   {!! Form::close() !!}
               </div>
@@ -23,6 +23,8 @@
                       <th nowrap="">Company Name</th>
                       <th nowrap="">Year Founded</th>
                       <th>Website</th>
+                      <th nowrap="">Product Name </th>
+                      <th colspan="2"></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -30,9 +32,16 @@
                       @if ($companies->count() > 0)
                           @foreach ($companies as $id => $company)
                             <tr>
-                                <td class="text-left">{{$company->Company_Full_Name}}</td>
-                                <td class="text-center">{{$company->Year_Founded}}</td>
-                                <td class="text-left">{{$company->Website}}</td>
+                                <td class="text-left">{{ sizeof($company->Company_Full_Name) ? $company->Company_Full_Name : "-"}}</td>
+                                <td class="text-center">{{ $company->Year_Founded > 0 ? $company->Year_Founded : "-"}}</td>
+                                <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website) : "-" !!}</td>
+                                <td class="text-left" nowrap>
+                                    @foreach ($products as $id => $product)
+                                        @if($product->id_Owner_Company == $company->id_Company)
+                                            {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title) !!}
+                                        @endif
+                                    @endforeach
+                                </td>
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.companies.edit", $company->id_Company) }}" role="button">Edit</a>
                                 </td>
@@ -43,14 +52,14 @@
                           @endforeach
                       @else
                         <tr>
-                            <td colspan="3" class="text-center">No records found</td>
+                            <td colspan="6" class="text-center">No records found</td>
                         </tr>
                       @endif
 
 
                   </tbody>
               </table>
-              {{--{!! $companies->render() !!}--}}
+              <div class="text-center"> {!! $companies->render() !!} </div>
           </div>
 
 
