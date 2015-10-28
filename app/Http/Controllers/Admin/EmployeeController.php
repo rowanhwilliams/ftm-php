@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Addresses;
 use App\Models\Degree;
 use App\Models\EmployeeType;
 use App\Models\People;
@@ -50,15 +51,20 @@ class EmployeeController extends Controller
 
     private function passData($id = null)
     {
+        $people = new \App\Models\People();
+        $address = new \App\Models\Addresses();
+        $employee = new \App\Models\Employee();
         if (!is_null($id)) {
             $people = People::findOrNew($id);
             $universityHisttory = $people->universityHistory()->get();
             $careerHistory = $people->careerHistory()->get();
             $employee = $people->employee()->get()->first();
-            $address = $people->address()->get()->first();
+            if ($people->address()->get()->first()) {
+                $address = $people->address()->get()->first();
+            }
         }
         else {
-            $people = new \App\Models\People();
+
 
             if (!Session::has('UniversityHistory')) {
                 Session::set('UniversityHistory', $people->universityHistory()->get());
@@ -71,12 +77,6 @@ class EmployeeController extends Controller
             $universityHisttory = Session::get('UniversityHistory');
             $careerHistory = Session::get('CareerHistory');
 
-        }
-        if (is_null($employee)) {
-            $employee = new \App\Models\Employee();
-        }
-        if (is_null($address)) {
-            $address = new \App\Models\Addresses();
         }
 
         $pTitle = PeopleTitle::all()->sortBy("Title_Name")->toArray();
@@ -164,6 +164,20 @@ class EmployeeController extends Controller
         return $employeeFields;
     }
 
+    private function addressValidator(Request $request)
+    {
+        $addressValidator = [
+            'City' => 'required|string',
+            'id_Country' => 'required|numeric',
+            'State' => 'string'
+        ];
+        $this->validate($request, $addressValidator);
+        foreach(array_keys($addressValidator) as $key){
+            $addressFields[$key] = $request[$key];
+        }
+        return $addressFields;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -191,10 +205,14 @@ class EmployeeController extends Controller
 
         $peopleFields = $this->peopleValidator($request);
         $employeeFields = $this->employeeValidator($request);
+        $addressFields = $this->addressValidator($request);
+        $addressModel = Addresses::create($addressFields);
 
         $peopleFields['Date_Created'] = Carbon::now();
+        $peopleFields['AddressId'] = $addressModel->AddressId;
         $peopleModel = People::create($peopleFields);
         $peopleModel->employee()->create($employeeFields);
+
 
         foreach(Session::get('UniversityHistory') as $modelData){
             $peopleModel->universityHistory()->save($modelData);
@@ -261,8 +279,18 @@ class EmployeeController extends Controller
         $peopleFields = $this->peopleValidator($request);
 
         $employeeFields = $this->employeeValidator($request);
-        $peopleModel->fill($peopleFields)->save();
+        $addressFields = $this->addressValidator($request);
+
         $peopleModel->employee()->first()->fill($employeeFields)->save();
+        if ($peopleModel->address()->first()) {
+            $peopleModel->address()->first()->fill($addressFields)->save();
+        }
+        else
+        {
+            $adressModel = $peopleModel->address()->create($addressFields);
+            $peopleFields['AddressId'] = $adressModel->AddressId;
+        }
+        $peopleModel->fill($peopleFields)->save();
 
         return redirect(route('admin.employee.index'))->with('flash', 'The Company was updated');
     }

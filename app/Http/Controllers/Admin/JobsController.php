@@ -103,7 +103,7 @@ class JobsController extends Controller
         $jobValidator = [
             'id_Company_Preference' => 'required|numeric',
             'id_job_Type' => 'required|numeric',
-            'Job_Title' => 'required|string',
+            //'Job_Title' => 'required|string',
             'id_Target_End_User' => 'required|numeric',
             'id_Commission_Or_Bonus' => 'required|numeric',
             'Job_Max_Salary' => 'required|numeric',

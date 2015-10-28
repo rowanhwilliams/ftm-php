@@ -38,14 +38,16 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         $search = "";
-        $companies = DB::table('Company')->orderBy('Company_Full_Name', 'asc')->paginate(15);
+        $companies = DB::table('Company')->orderBy('Company_Full_Name', 'asc')->paginate(50);
         $products = Products::all();
+        $employeeSize = EmployeeSize::all();
+
         //$companies = Paginator::make($companies, $companies->count(), 15);
         // empty session data
         Session::forget('CompanySearch');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies', "products", "search"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize"));
     }
 
     /**
@@ -63,10 +65,11 @@ class CompaniesController extends Controller
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
         Session::set('CompanySearch', $search);
 
-        //dd($search);
-        $companies = DB::table('Company')->where('Company_Full_Name', 'like', "%$search%")->orderBy('Company_Full_Name', 'asc')->paginate(15);
+        $companies = DB::table('Company')->where('Company_Full_Name', 'like', "%$search%")
+                ->where('Company_About_Us', 'like', "%$search%", 'OR')->orderBy('Company_Full_Name', 'asc')->paginate(50);
         $products = Products::all();
-        return view("admin.companies.index", compact('companies', "products", "search"));
+        $employeeSize = EmployeeSize::all();
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize"));
     }
 
     private function passData($id = null)
@@ -109,6 +112,7 @@ class CompaniesController extends Controller
             }
 
         }
+
 
         if ($company->headquaters()->get()->count()) {
             $HQAddresses = Addresses::findOrNew($company->headquaters()->get()->first()->AddressId);
@@ -257,18 +261,6 @@ class CompaniesController extends Controller
         }
         $companyFields['Date_Modified'] = Carbon::now();
         return $companyFields;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //dd("test");
-        //
     }
 
     /**

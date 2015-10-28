@@ -23,5 +23,9 @@ class Companies extends Model
     public function products() {
         return $this->hasMany('App\Models\Products', 'id_Owner_Company');
     }
+    public function employeeSize()
+    {
+        return $this->hasOne('App\Models\EmployeeSize', 'id_Employee_Size');
+    }
 
 }

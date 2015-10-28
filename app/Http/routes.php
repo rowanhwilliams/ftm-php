@@ -44,11 +44,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 //    Route::resource('language', 'LanguageController');
     Route::resource('user', 'UserController');
     Route::resource('employee', 'EmployeeController');
+    Route::post('companies/search', ['as' => 'admin.companies.search', 'uses' => 'CompaniesController@search']);
+    Route::get('companies/search', 'CompaniesController@search');
     Route::resource('companies', 'CompaniesController');
-    Route::post('companies/search',
-        ['as' => 'companies_search', 'uses' => 'CompaniesController@search']);
-    Route::get('companies/search',
-        ['as' => 'companies_get_search', 'uses' => 'CompaniesController@search1']);
     Route::resource('products', 'ProductsController');
     Route::resource('jobs', 'JobsController');
     Route::get('source/{id}/productFocusSubType', ['as' => 'admin.source.productFocusSubType', 'uses' => 'AjaxController@productFocusSubType']);

@@ -26,12 +26,12 @@
         </div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', $address->State, ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('State', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('State', $address->State, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('city', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('city', null, ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('City', $address->City, ["class" => "form-control"]) !!}</div>
     </div>
     <div style="font-size: 16px;">Upload photo:</div>
     <div class="form-group">

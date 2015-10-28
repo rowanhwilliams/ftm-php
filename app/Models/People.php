@@ -24,6 +24,6 @@ class People extends Model
     }
     public function address()
     {
-        return $this->hasOne('App\Models\Addresses', 'AddressId');
+        return $this->hasOne('App\Models\Addresses', 'AddressId', 'AddressId');
     }
 }
