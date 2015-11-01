@@ -38,7 +38,10 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         $search = "";
-        $companies = DB::table('Company')->orderBy('Company_Full_Name', 'asc')->paginate(50);
+        $companies = DB::table('Company')
+                ->where("Deleted", "=", NULL)
+                ->orderBy('Company_Full_Name', 'asc')
+                ->paginate(50);
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
 
@@ -65,8 +68,12 @@ class CompaniesController extends Controller
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
         Session::set('CompanySearch', $search);
 
-        $companies = DB::table('Company')->where('Company_Full_Name', 'like', "%$search%")
-                ->where('Company_About_Us', 'like', "%$search%", 'OR')->orderBy('Company_Full_Name', 'asc')->paginate(50);
+        $companies = DB::table('Company')
+                ->where('Company_Full_Name', 'like', "%$search%")
+                ->where("Deleted", "=", NULL)
+                ->where('Company_About_Us', 'like', "%$search%", 'OR')
+                ->orderBy('Company_Full_Name', 'asc')
+                ->paginate(50);
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
         return view("admin.companies.index", compact('companies', "products", "search", "employeeSize"));
@@ -207,7 +214,7 @@ class CompaniesController extends Controller
         $mediaValidator = [
             'Full_Name_Media_Contact' => 'required|string',
             'Media_contact_Email' => 'required|email',
-            'Media_Contact_Phone' => 'required|numeric'
+            'Media_Contact_Phone' => 'required|string'
         ];
         $this->validate($request,$mediaValidator);
         foreach(array_keys($mediaValidator) as $key){
@@ -318,7 +325,7 @@ class CompaniesController extends Controller
 
         $companyFields = $this->companyValidator($request);
         $company->fill($companyFields)->save();
-        return redirect(route('admin.companies.index'))->with('flash', 'The Company was updated');;
+        return redirect(route('admin.companies.index'))->with('flash', 'The Company was updated');
     }
 
     /**
@@ -327,10 +334,11 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $companies = Companies::findOrFail($id);
-        dd($companies);
+        dd($request);
+        $company = Companies::findOrFail($id);
+        $company->fill(["Deleted" => Carbon::now()])->save();
         return redirect(route('admin.companies.index'));
     }
 }

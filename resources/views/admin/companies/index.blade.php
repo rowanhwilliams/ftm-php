@@ -33,7 +33,7 @@
                       @if ($companies->count() > 0)
                           @foreach ($companies as $id => $company)
                             <tr>
-                                <td class="text-left">{{ sizeof($company->Company_Full_Name) ? $company->Company_Full_Name : "-"}}</td>
+                                <td class="text-left">{!! sizeof($company->Company_Full_Name) ? link_to(URL::route("admin.companies.edit", $company->id_Company), $company->Company_Full_Name) : "-" !!}</td>
                                 <td class="text-center">{{ $company->Year_Founded > 0 ? $company->Year_Founded : "-"}}</td>
                                 <td class="text-left">{{ $company->id_Employee_Size ? $employeeSize->find($company->id_Employee_Size)->Employee_Size : "-" }}</td>
                                 <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website) : "-" !!}</td>
@@ -50,6 +50,7 @@
                                 <td class="text-center">
                                     {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.companies.destroy', $company->id_Company], 'class' => 'pull-right']) !!}
                                     {!! Form::hidden('_method', 'DELETE') !!}
+                                    {!! Form::hidden('_object', '_company') !!}
                                     {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}
                                     {!! Form::close() !!}
                                 </td>

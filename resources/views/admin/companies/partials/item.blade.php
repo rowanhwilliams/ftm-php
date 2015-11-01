@@ -114,38 +114,37 @@
         <div>{!! Form::checkbox('Firm_Out_Of_Business') !!} {!!  Form::label('Firm_Out_Of_Business', 'Firm out of business', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
 
-    <div style="font-size: 18px">Media Contact Information</div>
-    @if ($mediaContacts->count() > 0)
-        <ul>
-        @foreach($mediaContacts->toArray() as $id => $media)
-            <li style="color:blue; font-weight: bold; list-style: none" class="row">
-                {!! $media['Full_Name_Media_Contact'] !!} ({!! $media['Media_Contact_Phone'] !!})
-                {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_media_$id")) !!}
-            </li>
-        @endforeach
-        </ul>
-    @endif
-    <div class="form-group">
-        <div>{!! Form::label('Full_Name_Media_Contact', 'Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Full_Name_Media_Contact', null, ["class" => "form-control",'placeholder'=>'Full Name']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('Media_contact_Email', 'Email:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Media_contact_Email', null, ["class" => "form-control",'placeholder'=>'Email']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('Media_Contact_Phone', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Media_Contact_Phone', null, ["class" => "form-control",'placeholder'=>'Media contact phone']) !!}</div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add New', array('class' => 'btn btn-default btn-sm', 'name' => 'add_new')) !!}
-        </div>
-    </div>
 </div>
 <div class="col-md-6">
-
+    <div style="font-size: 18px">Media Contact Information</div>
+    <div style="border: solid 2px lightgrey; padding: 10px;">
+        @if ($mediaContacts->count() > 0)
+            <ul>
+                @foreach($mediaContacts->toArray() as $id => $media)
+                    <li style="list-style: none" class="row small text-primary">
+                        {!! $media['Full_Name_Media_Contact'] !!} Mail: {!! $media['Media_contact_Email'] !!} Phone:({!! $media['Media_Contact_Phone'] !!})
+                        {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_media_$id")) !!}--}}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        <div class="form-group">
+            <div>{!! Form::label('Full_Name_Media_Contact', 'Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::text('Full_Name_Media_Contact', null, ["class" => "form-control",'placeholder'=>'Full Name']) !!}</div>
+        </div>
+        <div class="form-group">
+            <div>{!! Form::label('Media_contact_Email', 'Email:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::text('Media_contact_Email', null, ["class" => "form-control",'placeholder'=>'Email']) !!}</div>
+        </div>
+        <div class="form-group">
+            <div>{!! Form::label('Media_Contact_Phone', 'Phone:', Array("style" => "font-size: 16px;")) !!}</div>
+            <div>{!! Form::text('Media_Contact_Phone', null, ["class" => "form-control",'placeholder'=>'Media contact phone']) !!}</div>
+        </div>
+        <div class="pull-right">
+            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_new')) !!}
+        </div>
+    </div>
+    <div class="row">&nbsp</div>
     <div style="font-size: 18px">Headquarters Information</div>
     <div class="form-group">
         <div>{!! Form::label('AddressLine1', 'Address Line 1:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -180,26 +179,25 @@
         <div>{!! Form::text('PhoneNumber', $HQPhones->PhoneNumber, ["class" => "form-control",'placeholder'=>'Phone']) !!}</div>
     </div>
     <div style="font-size: 18px;">Company Attachments:</div>
-    @if ($attachments->count() > 0)
-        <ul>
-            @foreach($attachments->toArray() as $id => $attachment)
-                <li style="color:blue; font-weight: bold; list-style: none" class="row">
-                    {!! $attachment['Attachment_File_Name'] !!}
-                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                </li>
-            @endforeach
-        </ul>
-    @endif
-    <div class="form-group">
-        {!! Form::label('attached_file', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attached_file', ["class" => "form-control"]) !!}
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="pull-right">
-                {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'attach_file')) !!}
-            </div>
+    <div style="border: solid 2px lightgrey; padding: 10px;">
+        @if ($attachments->count() > 0)
+            <ul>
+                @foreach($attachments->toArray() as $id => $attachment)
+                    <li style="color:blue; font-weight: bold; list-style: none" class="row">
+                        {!! $attachment['Attachment_File_Name'] !!}
+                        {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}--}}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        <div class="form-group">
+            {!! Form::label('attached_file', "Company Attachments File Name:", Array("style" => "font-size: 16px;")) !!}{!! Form::file('attached_file', ["class" => "form-control"]) !!}
+        </div>
+        <div class="pull-right">
+            {!! Form::submit('Attach', array('class' => 'btn btn-default btn-sm', 'name' => 'attach_file')) !!}
         </div>
     </div>
-
     <div class="form-group">
         <div>{!! Form::label('Company_About_Us', 'Company About Us:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('Company_About_Us',null, ['size' => '30x2', 'class' => 'form-control','placeholder'=>'Company About Us']) !!}</div>
@@ -212,7 +210,7 @@
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="pull-right">
-            {!! Form::submit($submit_text, array('class' => 'btn btn-default btn-sm', 'name' => $submit_text)) !!}
+            {!! Form::submit($submit_text, array('class' => 'btn btn-success btn-sm', 'name' => $submit_text)) !!}
         </div>
     </div>
 </div>
