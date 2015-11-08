@@ -2,10 +2,10 @@
 
 @section('content')
     @include('errors.list')
-    <h2>Edit <span class="text-danger">{!! $company->Company_Full_Name !!}</span> Company</h2>
+    <h2>Edit <span class="text-danger">{!! $jobs->Job_Title !!}</span> Job</h2>
 
-    {!! Form::model($company, ['method' => 'PATCH', 'route' => ['admin.companies.update', $company->id_Company], 'class'=>'','files' => true]) !!}
+    {!! Form::model($jobs, ['method' => 'PATCH', 'route' => ['admin.jobs.update', $jobs->id_Job], 'class'=>'','files' => true]) !!}
 
-        @include('admin.companies.partials.item', ['submit_text' => 'Save'])
+        @include('admin.jobs.partials.item', ['submit_text' => 'Save'])
     {!! Form::close() !!}
 @stop

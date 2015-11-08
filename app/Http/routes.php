@@ -49,6 +49,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::resource('companies', 'CompaniesController');
     Route::resource('products', 'ProductsController');
     Route::resource('jobs', 'JobsController');
+    Route::resource('news', 'NewsController');
     Route::get('source/{id}/productFocusSubType', ['as' => 'admin.source.productFocusSubType', 'uses' => 'AjaxController@productFocusSubType']);
     Route::get('source/{id}/productFocusType', ['as' => 'admin.source.productFocusType', 'uses' => 'AjaxController@productFocusType']);
+    Route::get('source/{id}/JobFamily', ['as' => 'admin.source.JobFamily', 'uses' => 'AjaxController@jobTypeByJobFamily']);
+    Route::get('source/{id}/GetCoutryRegion', ['as' => 'admin.source.GetCoutryRegion', 'uses' => 'AjaxController@getCoutryByRegion']);
+
 });

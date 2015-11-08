@@ -1,48 +1,69 @@
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_Job_Family").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#id_Job_Family").val() + "/JobFamily", function(data) {
+                var jobType = $("#id_Job_Type");
+                jobType.empty();
+                $.each(data, function(index, value) {
+                    console.log(value);
+                    jobType.append('<option value="' + value.id_Job_Type +'">' + value.Job_Type + '</option>');
+                });
+            });
+        });
+        $("#id_Region").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#id_Region").val() + "/GetCoutryRegion", function(data) {
+                var country = $("#id_Country");
+                country.empty();
+                $.each(data, function(index, value) {
+                    country.append('<option value="' + value.id_Country +'">' + value.Country + '</option>');
+                });
+            });
+        });
+    });
+</script>
 <div class="col-md-6">
 
     <div class="form-group">
+        {{--{!! dd($companyPreference) !!}}--}}
         <div>{!! Form::label('Company', 'Company:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Company_Preference',$companies, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Company',$companies, $companyPreference->id_Company, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('why_this_firm?', 'Why this firm?', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::textarea('why_this_firm?',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('Why_This_Firm', 'Why this firm?', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::textarea('Why_This_Firm', $companyPreference->Why_This_Firm, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('compensation_notes', 'Compensation Notes', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::textarea('compensation_notes',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('Compensation_Notes', 'Compensation Notes', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::textarea('Compensation_Notes', $companyPreference->Compensation_Notes, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('Job_Family', 'Job Family:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('Job_Family', $jobFamily, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Job_Family', $jobFamily, $id_Job_Family, ['class' => 'form-control', "id" => "id_Job_Family"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('id_job_Type', 'Job Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_job_Type', array('1' => '', '2' => '', '3' => ''), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Job_Type', 'Job Type:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Job_Type', $jobTypes, null, ['class' => 'form-control', "id" => "id_Job_Type"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('Job_Title', 'Job Title:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Job_Title', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('Job_Title', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div style="font-size: 18px">Job Location</div>
       <div class="form-group">
-        <div>{!! Form::label('Region', 'Region', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('Region', $regions, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_Region', 'Region', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Region', $regions, null, ['class' => 'form-control', "id" => "id_Region"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>
-            <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control']) !!}</div>
-        </div>
+        <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control', "id" => "id_Country"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('state', null, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('City', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('City', null, ["class" => "form-control"]) !!}</div>
     </div>
 </div>
 <div class="col-md-6">
@@ -58,7 +79,7 @@
 
     <div class="form-group">
         <div>{!! Form::label('Job_Max_Salary', 'Job Max Salary:', Array("style" => "font-size: 16px;")) !!}</div>
-        <span class="col-md-8">{!! Form::text('Job_Max_Salary', "", ["class" => "form-control"]) !!}</span>
+        <span class="col-md-8">{!! Form::text('Job_Max_Salary', null, ["class" => "form-control"]) !!}</span>
         <span class="col-md-4">{!! Form::select('Select a curreny from a list bellow?', array('1' => 'AED ', '2' => 'AUD  ', '3' => ' CAD', '4' => ' CHF ',
                 '5' => ' CHF  ', '6' => 'CNY', '7' => 'DKK ', '8' => 'EUR  ', '9' => 'GBP ', '10' => 'HKD ','11' => ' JPY  ','12' => ' NOK','13' => 'SEK',
                 '14' => 'SGD','15' => 'USD ','16' => ' ZAR '), null, ['class' => 'form-control']) !!}
@@ -67,12 +88,12 @@
 
     <div class="form-group">
         <div>{!! Form::label('Years_Experience_Required', 'Year Experience Required:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Years_Experience_Required', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('Years_Experience_Required', null, ["class" => "form-control"]) !!}</div>
     </div>
 
     <div class="form-group">
         <div>{!! Form::label('Percentage_Travel', 'Percentage Travel:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Percentage_Travel', "", ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('Percentage_Travel', null, ["class" => "form-control"]) !!}</div>
     </div>
 
     <div class="form-group">

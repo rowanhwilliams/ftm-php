@@ -38,6 +38,7 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         $search = "";
+        $searchFilter = "Company_Full_Name";
         $companies = DB::table('Company')
                 ->where("Deleted", "=", NULL)
                 ->orderBy('Company_Full_Name', 'asc')
@@ -50,7 +51,7 @@ class CompaniesController extends Controller
         Session::forget('CompanySearch');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilter"));
     }
 
     /**
@@ -66,17 +67,17 @@ class CompaniesController extends Controller
     public function search(Request $request)
     {
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
+        $searchFilter = $request->get("search-filter") ? $request->get("search-filter") : "Company_Full_Name";
         Session::set('CompanySearch', $search);
 
         $companies = DB::table('Company')
-                ->where('Company_Full_Name', 'like', "%$search%")
                 ->where("Deleted", "=", NULL)
-                ->where('Company_About_Us', 'like', "%$search%", 'OR')
+                ->where($searchFilter, 'like', "%$search%")
                 ->orderBy('Company_Full_Name', 'asc')
                 ->paginate(50);
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize","searchFilter"));
     }
 
     private function passData($id = null)
@@ -336,7 +337,6 @@ class CompaniesController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        dd($request);
         $company = Companies::findOrFail($id);
         $company->fill(["Deleted" => Carbon::now()])->save();
         return redirect(route('admin.companies.index'));

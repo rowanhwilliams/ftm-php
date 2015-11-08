@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\CommisionOrBonus;
+use App\Models\CompanyPreference;
 use App\Models\JobFamily;
 use App\Models\Jobs;
 use App\Models\Companies;
+use App\Models\JobType;
+use App\Models\Region;
 use App\Models\SupportedLanguages;
 use App\Models\TargetEndUser;
 use App\Models\Country;
@@ -26,53 +29,61 @@ class JobsController extends Controller
      */
     public function index()
     {
-        return view("admin.jobs.index");
+        $jobs = Jobs::all()->sortBy("Job_Title");
+        return view("admin.jobs.index", compact("jobs"));
     }
 
     private function passData($id = null)
     {
         if (!is_null($id)) {
             $jobs = Jobs::findOrNew($id);
-        }
-        else {
+        } else {
             $jobs = new \App\Models\Jobs();
+
         }
-        $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
+        if ($jobs->id_Company_Preference)
+        {
+            $companyPreference = CompanyPreference::where("id_Company_Preference", "=", $jobs->id_Company_Preference)->get()->first();
+        }
+        else
+        {
+            $companyPreference = new \App\Models\CompanyPreference();
+        }
         $commOrBon = CommisionOrBonus::all()->sortBy("Commission_Or_Bonus")->toArray();
-        $jobFam = JobFamily::all()->sortBy("Job_Family")->toArray();
-        $pRegions = AvailabilityTerritory::all()->toArray();
-        $cn = Country::all()->sortby("Country")->toArray();
         $lns = SupportedLanguages::all()->sortBy("Language_Name")->toArray();
 
-        //dd($commOrBon);
-        if (sizeof($commOrBon) == 0) {
+         if (sizeof($commOrBon) == 0) {
             $commOrBon = new \App\Models\CommisionOrBonus();
         }
         $tEndUser = TargetEndUser::all()->sortBy("Target_End_User")->toArray();
 
-        foreach ($comps as $comp) {
-            $companies[$comp["id_Company"]] = $comp["Company_Full_Name"];
-        }
         foreach ($commOrBon as $commisionOrBonusVal) {
             $commisionOrBonus[$commisionOrBonusVal["id_Commission_Or_Bonus"]] = $commisionOrBonusVal["Commission_Or_Bonus"];
         }
         foreach ($tEndUser as $tgEndUser) {
             $targetEndUser[$tgEndUser["id_Target_End_User"]] = $tgEndUser["Target_End_User"];
         }
-        foreach ($jobFam as $jobFamVal) {
-            $jobFamily[$jobFamVal["id_Job_Family"]] = $jobFamVal["Job_Family"];
-        }
-        foreach ($pRegions as $prRegions) {
-            $regions[$prRegions["id_Availability_Territory"]] = $prRegions["Territory_Name"];
-        }
-        foreach ($cn as $cnt) {
-            $country[$cnt["id_Country"]] = $cnt["Country"];
-        }
+
         foreach ($lns as $langs) {
             $languages[$langs["id_Language"]] = $langs["Language_Name"];
         }
 
-        return compact("companies", "commisionOrBonus","targetEndUser","jobFamily","country", "regions", "languages");
+        $companies = Companies::getCompaniesOptions();
+        $regions = Region::getRegionsOptions();
+        $jobFamily = JobFamily::getJobsFamilyOptions();
+        $country = Country::getCountriesOptionsByRegion();
+        if (is_null($jobs->id_Job_Type))
+        {
+            $id_Job_Family = 1;
+            $jobTypes = JobType::getJobsTypesByJobFamilyOptions();
+        }
+        else {
+            $id_Job_Family = JobType::where("id_Job_Type", "=", $jobs->id_Job_Type)->get()->first()->id_Job_Family;
+            $jobTypes = JobType::getJobsTypesByJobFamilyOptions($id_Job_Family);
+        }
+
+        return compact("companies", "commisionOrBonus","targetEndUser","jobFamily","country", "regions", "languages", "jobs",
+                        "jobTypes", "id_Job_Family", "companyPreference");
     }
 
     /**
@@ -93,32 +104,23 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        $jobFields = $this->jobValidator($request);
+        $preferenceFields = $this->doValidation($request, CompanyPreference::getValidatorRules());
+        $preferenceModel = CompanyPreference::create($preferenceFields);
+        $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
+        $jobFields["id_Company_Preference"] = $preferenceModel->id_Company_Preference;
         $jobModel = Jobs::create($jobFields);
+        //$jobModel->companyPreference()->save(new \App\Models\CompanyPreference($preferenceFields));
         return redirect(route('admin.jobs.index'))->with('flash', 'The Job was created');
     }
 
-    public function jobValidator(Request $request)
+    public function doValidation(Request $request, $validateRules)
     {
-        $jobValidator = [
-            'id_Company_Preference' => 'required|numeric',
-            'id_job_Type' => 'required|numeric',
-            //'Job_Title' => 'required|string',
-            'id_Target_End_User' => 'required|numeric',
-            'id_Commission_Or_Bonus' => 'required|numeric',
-            'Job_Max_Salary' => 'required|numeric',
-            'Years_Experience_Required' => 'required|numeric',
-            'Percentage_Travel' => 'required|numeric',
-            'Variable_Cap' => 'sometimes|accepted',
-            'Visa_Sponsorship_Possible' => 'sometimes|accepted',
-            'Job_Description' => 'required|string',
-            'Job_Requirements' => 'required|string'
-        ];
-        $this->validate($request, $jobValidator);
-        foreach(array_keys($jobValidator) as $key){
-            $jobFields[$key] = $request[$key];
+        $requestFields = [];
+        $this->validate($request, $validateRules);
+        foreach(array_keys($validateRules) as $key){
+            $requestFields[$key] = $request[$key];
         }
-        return $jobFields;
+        return $requestFields;
     }
 
     /**
@@ -140,7 +142,7 @@ class JobsController extends Controller
      */
     public function edit($id)
     {
-        return view("admin.jobs.create", $this->passData($id));
+        return view("admin.jobs.edit", $this->passData($id));
     }
 
     /**
@@ -152,7 +154,14 @@ class JobsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jobModel = Jobs::findOrNew($id);
+        $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
+        $preferenceFields = $this->doValidation($request, CompanyPreference::getValidatorRules());
+        $jobModel->companyPreference()->fill($preferenceFields)->save();
+        $jobModel->fill($jobFields)->save();
+
+
+        return redirect(route('admin.jobs.index'))->with('flash', 'The Job was saved');
     }
 
     /**
