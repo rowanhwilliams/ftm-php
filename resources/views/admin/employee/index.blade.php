@@ -2,6 +2,10 @@
 
 @section('content')
     <section class="content">
+        <style>
+            #list-table_mc td {padding:1px}
+            #list-table_mc .btn-xs {padding:1px 2px}
+        </style>
         <div class="row">
 
             <div class="col-md-11">
@@ -16,7 +20,7 @@
 
         </div>
         <div class="row">
-          <table class="table table-striped">
+          <table class="table table-striped" id="list-table_mc">
               <thead>
               <tr>
                   <th>First Name</th>

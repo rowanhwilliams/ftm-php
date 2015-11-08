@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_Region").change(function() {
+            $.getJSON("{{ URL::to("admin/source") }}" +"/" + $("#id_Region").val() + "/GetCoutryRegion", function(data) {
+                var country = $("#id_Country");
+                country.empty();
+                $.each(data, function(index, value) {
+                    country.append('<option value="' + value.id_Country +'">' + value.Country + '</option>');
+                });
+            });
+        });
+    });
+</script>
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('title', 'Title:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -17,13 +30,11 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Availability_Territory', 'Region:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Availability_Territory', $regions, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Region', $regions, null, ['class' => 'form-control', 'id' => 'id_Region']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>
-            <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control']) !!}</div>
-        </div>
+        <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control', 'id' => 'id_Country']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('State', 'State:', Array("style" => "font-size: 16px;")) !!}</div>

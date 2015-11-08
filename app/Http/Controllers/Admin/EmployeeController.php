@@ -7,7 +7,7 @@ use App\Models\Degree;
 use App\Models\EmployeeType;
 use App\Models\People;
 use \App\Models\Companies;
-use \App\Models\AvailabilityTerritory;
+use \App\Models\Region;
 use \App\Models\Country;
 use App\Models\PeopleTitle;
 use \App\Models\Positions;
@@ -80,22 +80,17 @@ class EmployeeController extends Controller
         }
 
         $pTitle = PeopleTitle::all()->sortBy("Title_Name")->toArray();
-        $pRegions = AvailabilityTerritory::all()->toArray();
-        $cn = Country::all()->sortby("Country")->toArray();
         $eType = EmployeeType::all()->sortBy("Type_Name")->toArray();
 
-        foreach ($pRegions as $prRegions) {
-            $regions[$prRegions["id_Availability_Territory"]] = $prRegions["Territory_Name"];
-        }
-        foreach ($cn as $cnt) {
-            $country[$cnt["id_Country"]] = $cnt["Country"];
-        }
         foreach ($eType as $emType) {
             $employeeType[$emType["id_Employee_Type"]] = $emType["Type_Name"];
         }
         foreach ($pTitle as $peopTitle) {
             $peopleTitle[$peopTitle["id_People_Title"]] = $peopTitle["Title_Name"];
         }
+
+        $regions = Region::getRegionsOptions();
+        $country = Country::getCountriesOptionsByRegion();
 
         return compact("country", "regions", "employeeType", "people", "peopleTitle", "universityHisttory",
                         "careerHistory", "employee", "address");
