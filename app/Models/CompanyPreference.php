@@ -9,7 +9,7 @@ class CompanyPreference extends Model
     public $timestamps = false;
     protected $table = 'Company_Preference';
     protected $primaryKey ='id_Company_Preference';
-    protected $guarded = [];
+    protected $fillable = ["Why_This_Firm","Compensation_Notes", "id_Company"];
 
     private $validatorRules = [
         'id_Company' => 'required|numeric',

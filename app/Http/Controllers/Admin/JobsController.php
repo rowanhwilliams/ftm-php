@@ -105,11 +105,10 @@ class JobsController extends Controller
     public function store(Request $request)
     {
         $preferenceFields = $this->doValidation($request, CompanyPreference::getValidatorRules());
-        $preferenceModel = CompanyPreference::create($preferenceFields);
         $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
-        $jobFields["id_Company_Preference"] = $preferenceModel->id_Company_Preference;
         $jobModel = Jobs::create($jobFields);
-        //$jobModel->companyPreference()->save(new \App\Models\CompanyPreference($preferenceFields));
+        $jobModel->companyPreference()->create($preferenceFields);
+        $jobModel->fill(["id_Company_Preference" => $jobModel->companyPreference()->first()->id_Company_Preference])->save();
         return redirect(route('admin.jobs.index'))->with('flash', 'The Job was created');
     }
 
@@ -155,9 +154,11 @@ class JobsController extends Controller
     public function update(Request $request, $id)
     {
         $jobModel = Jobs::findOrNew($id);
+        $companyPreferenceModel = CompanyPreference::findOrNew($jobModel->id_Company_Preference);
+        //dd($jobModel);
         $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
-        $preferenceFields = $this->doValidation($request, CompanyPreference::getValidatorRules());
-        $jobModel->companyPreference()->fill($preferenceFields)->save();
+        $companyPreferenceModel->fill($this->doValidation($request, CompanyPreference::getValidatorRules()))->save();
+        $jobFields["id_Company_Preference"] = $companyPreferenceModel->id_Company_Preference;
         $jobModel->fill($jobFields)->save();
 
 
