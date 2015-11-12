@@ -52,7 +52,6 @@ class CompaniesController extends Controller
                 $paginationList[$firstChar] += 1;
             }
         }
-        $allPages = array_keys($paginationList);
 
         if ($request->page)
         {
@@ -64,7 +63,7 @@ class CompaniesController extends Controller
 
         }
         else {
-            $activePage = $allPages[0];
+            $activePage = "a";
             $companies = DB::table('Company')
                 ->where("Deleted", "=", NULL)
                 ->where("Company_Full_Name", "like",  "$activePage%")
@@ -79,6 +78,7 @@ class CompaniesController extends Controller
         //$companies = Paginator::make($companies, $companies->count(), 15);
         // empty session data
         Session::forget('CompanySearch');
+        Session::forget('SearchFilter');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
         return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilter", "paginationList", "activePage"));
@@ -96,10 +96,13 @@ class CompaniesController extends Controller
 
     public function search(Request $request)
     {
+
         $paginationList = [];
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
-        $searchFilter = $request->get("search-filter") ? $request->get("search-filter") : "Company_Full_Name";
+        $searchFilter = Session::get('SearchFilter') ? Session::get('SearchFilter') : "Company_Full_Name";
+        $searchFilter = $request->get("search-filter") ? $request->get("search-filter") : $searchFilter;
         Session::set('CompanySearch', $search);
+        Session::set('SearchFilter', $searchFilter  );
 
         $companiesList = DB::table('Company')
                 ->where("Deleted", "=", NULL)
@@ -119,8 +122,6 @@ class CompaniesController extends Controller
                 }
             }
 
-            $allPages = array_keys($paginationList);
-
             if ($request->page)
             {
                 $activePage = $request->page;
@@ -132,7 +133,7 @@ class CompaniesController extends Controller
 
             }
             else {
-                $activePage = $allPages[0];
+                $activePage = "a";
                 $companies = DB::table('Company')
                     ->where("Deleted", "=", NULL)
                     ->where($searchFilter, 'like', "%$search%")

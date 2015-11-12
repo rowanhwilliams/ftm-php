@@ -95,7 +95,7 @@
                   {{--<li><a href="#">&laquo;</a></li>--}}
                   @foreach($paginationList as $index => $list)
                       @if($activePage == $index)
-                        <li class="active">
+                          <li class="active">
                       @else
                           <li>
                       @endif

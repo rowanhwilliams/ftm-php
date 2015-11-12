@@ -12,6 +12,7 @@
 
     <div class="form-group">
         <div>{!! Form::label('Story Time', 'Story Time:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>Hour: {!! Form::selectRange('number',00,24) !!} Minute: {!! Form::selectRange('number',00,60) !!}</div>
     </div>
 
 

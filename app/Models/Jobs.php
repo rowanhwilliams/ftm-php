@@ -33,4 +33,8 @@ class Jobs extends Model
     {
         return $this->hasOne('App\Models\CompanyPreference', 'id_Company_Preference');
     }
+    public function address()
+    {
+        return $this->hasOne('App\Models\Addresses', 'AddressId', 'AddressId');
+    }
 }

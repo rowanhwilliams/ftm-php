@@ -10,4 +10,15 @@ class Addresses extends Model
     protected $table = 'Addresses';
     protected $primaryKey ="AddressId";
     protected $fillable = ['AddressLine1','AddressLine2','City','State','PostalCode','id_Country'];
+
+    private $validatorRules = [
+        'City' => 'required|string',
+        'id_Country' => 'required|numeric',
+        'State' => 'string'
+    ];
+
+    protected function getValidatorRules()
+    {
+        return $this->validatorRules;
+    }
 }
