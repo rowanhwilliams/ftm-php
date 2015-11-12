@@ -16,7 +16,6 @@
           <table class="table table-striped" id="list-table_mc">
               <thead>
               <tr>
-                  <th class="text-center">#</th>
                   <th nowrap="">Product Title</th>
                   <th nowrap="">Product Owner</th>
                   <th nowrap="">Product Focus Type</th>
@@ -29,14 +28,10 @@
               @if ($products->count() > 0)
                   @foreach ($products as $product)
                       <tr>
-                          <td class="text-center">{{$product->id_Product}}</td>
-                          <td class="text-left">{{$product->Product_Title}}</td>
+                          <td class="text-left">{!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title) !!}</td>
                           <td class="text-left">{!! $productOwnerList[$product->id_Product]['Company_Full_Name'] !!}</td>
                           <td class="text-left">{!! $productFocusTypeList[$product->id_Product] !!}</td>
                           <td class="text-left">{!! $productFocusSubTypeList[$product->id_Product] !!}</td>
-                          <td class="text-right" width="1%">
-                              <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.products.edit", $product->id_Product) }}" role="button">Edit</a>
-                          </td>
                           <td class="text-left" width="1%">
                               <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.products.destroy", $product->id_Product) }}" role="button">Delete</a>
                           </td>
@@ -44,7 +39,7 @@
                   @endforeach
               @else
               <tr>
-                  <td colspan="7" class="text-center">No records found</td>
+                  <td colspan="6" class="text-center">No records found</td>
               </tr>
               @endif
               </tbody>

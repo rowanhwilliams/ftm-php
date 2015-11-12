@@ -39,10 +39,40 @@ class CompaniesController extends Controller
     {
         $search = "";
         $searchFilter = "Company_Full_Name";
-        $companies = DB::table('Company')
+        $companiesList = Companies::all()->sortBy("Company_Full_Name");
+        $paginationList  = [];
+        foreach($companiesList as $company)
+        {
+            if (strlen($company->Company_Full_Name)) {
+                $firstChar = strtolower(substr($company->Company_Full_Name, 0, 1));
+                if(!isset($paginationList[$firstChar]))
+                {
+                    $paginationList[$firstChar] = 0;
+                }
+                $paginationList[$firstChar] += 1;
+            }
+        }
+        $allPages = array_keys($paginationList);
+
+        if ($request->page)
+        {
+            $activePage = $request->page;
+            $companies = DB::table('Company')
                 ->where("Deleted", "=", NULL)
-                ->orderBy('Company_Full_Name', 'asc')
-                ->paginate(50);
+                ->where("Company_Full_Name", "like", "$activePage%")
+                ->orderBy('Company_Full_Name', 'asc');
+
+        }
+        else {
+            $activePage = $allPages[0];
+            $companies = DB::table('Company')
+                ->where("Deleted", "=", NULL)
+                ->where("Company_Full_Name", "like",  "$activePage%")
+                ->orderBy('Company_Full_Name', 'asc');
+
+
+        }
+
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
 
@@ -51,7 +81,7 @@ class CompaniesController extends Controller
         Session::forget('CompanySearch');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilter"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilter", "paginationList", "activePage"));
     }
 
     /**
@@ -66,18 +96,60 @@ class CompaniesController extends Controller
 
     public function search(Request $request)
     {
+        $paginationList = [];
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
         $searchFilter = $request->get("search-filter") ? $request->get("search-filter") : "Company_Full_Name";
         Session::set('CompanySearch', $search);
 
-        $companies = DB::table('Company')
+        $companiesList = DB::table('Company')
                 ->where("Deleted", "=", NULL)
                 ->where($searchFilter, 'like', "%$search%")
-                ->orderBy('Company_Full_Name', 'asc')
-                ->paginate(50);
+                ->orderBy('Company_Full_Name', 'asc');
+
+        if ($companiesList->count()) {
+            foreach($companiesList->get() as $company)
+            {
+                if (strlen($company->Company_Full_Name)) {
+                    $firstChar = strtolower(substr($company->Company_Full_Name, 0, 1));
+                    if(!isset($paginationList[$firstChar]))
+                    {
+                        $paginationList[$firstChar] = 0;
+                    }
+                    $paginationList[$firstChar] += 1;
+                }
+            }
+
+            $allPages = array_keys($paginationList);
+
+            if ($request->page)
+            {
+                $activePage = $request->page;
+                $companies = DB::table('Company')
+                    ->where("Deleted", "=", NULL)
+                    ->where($searchFilter, 'like', "%$search%")
+                    ->where("Company_Full_Name", "like", "$activePage%")
+                    ->orderBy('Company_Full_Name', 'asc');
+
+            }
+            else {
+                $activePage = $allPages[0];
+                $companies = DB::table('Company')
+                    ->where("Deleted", "=", NULL)
+                    ->where($searchFilter, 'like', "%$search%")
+                    ->where("Company_Full_Name", "like",  "$activePage%")
+                    ->orderBy('Company_Full_Name', 'asc');
+
+
+            }
+        }
+        else {
+            $companies = $companiesList;
+            $activePage = "";
+        }
+
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize","searchFilter"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize","searchFilter","paginationList", "activePage"));
     }
 
     private function passData($id = null)

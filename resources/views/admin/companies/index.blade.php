@@ -60,21 +60,18 @@
                   <tbody>
 
                       @if ($companies->count() > 0)
-                          @foreach ($companies as $id => $company)
+                          @foreach ($companies->get() as $id => $company)
                             <tr>
                                 <td class="text-left">{!! sizeof($company->Company_Full_Name) ? link_to(URL::route("admin.companies.edit", $company->id_Company), $company->Company_Full_Name) : "-" !!}</td>
                                 <td class="text-center">{{ $company->Year_Founded > 0 ? $company->Year_Founded : "-"}}</td>
                                 <td class="text-left">{{ $company->id_Employee_Size ? $employeeSize->find($company->id_Employee_Size)->Employee_Size : "-" }}</td>
-                                <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website) : "-" !!}</td>
+                                <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website, $company->Website, ["target"=>"_blank"]) : "-" !!}</td>
                                 <td class="text-left" nowrap>
                                     @foreach ($products as $id => $product)
                                         @if($product->id_Owner_Company == $company->id_Company)
-                                            {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title) !!}
+                                            {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title, ["target"=>"_blank"]) !!}
                                         @endif
                                     @endforeach
-                                </td>
-                                <td class="text-center">
-                                    <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.companies.edit", $company->id_Company) }}" role="button">Edit</a>
                                 </td>
                                 <td class="text-center">
                                     {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.companies.destroy', $company->id_Company], 'class' => 'pull-right']) !!}
@@ -87,14 +84,32 @@
                           @endforeach
                       @else
                         <tr>
-                            <td colspan="7" class="text-center">No records found</td>
+                            <td colspan="6" class="text-center">No records found</td>
                         </tr>
                       @endif
 
 
                   </tbody>
               </table>
-              <div class="text-center"> {!! $companies->render() !!} </div>
+              <ul class="pagination">
+                  {{--<li><a href="#">&laquo;</a></li>--}}
+                  @foreach($paginationList as $index => $list)
+                      @if($activePage == $index)
+                        <li class="active">
+                      @else
+                          <li>
+                      @endif
+                      @if(isset($search))
+                          <a href="{{ URL::route("admin.companies.search") . "?page=" .  $index}}">
+                      @else
+                          <a href="{{ URL::route("admin.companies.index") . "?page=" .  $index}}">
+                      @endif
+                          {!! $index !!}</a>
+                      </li>
+                  @endforeach
+                  {{--<li><a href="#">&raquo;</a></li>--}}
+              </ul>
+              {{--<div class="text-center"> {!! $companies->render() !!} </div>--}}
           </div>
 
 
