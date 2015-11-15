@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Addresses;
 use App\Models\CommisionOrBonus;
 use App\Models\CompanyPreference;
 use App\Models\JobFamily;
@@ -12,7 +13,7 @@ use App\Models\Region;
 use App\Models\SupportedLanguages;
 use App\Models\TargetEndUser;
 use App\Models\Country;
-use App\Models\AvailabilityTerritory;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -29,26 +30,21 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::all()->sortBy("Job_Title");
+        $jobs = Jobs::where("Deleted", "=", NULL)->get()->sortBy("Job_Title");
         return view("admin.jobs.index", compact("jobs"));
     }
 
     private function passData($id = null)
     {
+        $jobs = new \App\Models\Jobs();
+
         if (!is_null($id)) {
             $jobs = Jobs::findOrNew($id);
-        } else {
-            $jobs = new \App\Models\Jobs();
+        }
 
-        }
-        if ($jobs->id_Company_Preference)
-        {
-            $companyPreference = CompanyPreference::where("id_Company_Preference", "=", $jobs->id_Company_Preference)->get()->first();
-        }
-        else
-        {
-            $companyPreference = new \App\Models\CompanyPreference();
-        }
+        $companyPreference = $jobs->getCompanyPreference() ? $jobs->getCompanyPreference() : new \App\Models\CompanyPreference();
+        $address = $jobs->address()->first() ? $jobs->address()->first() : new \App\Models\Addresses();
+
         $commOrBon = CommisionOrBonus::all()->sortBy("Commission_Or_Bonus")->toArray();
         $lns = SupportedLanguages::all()->sortBy("Language_Name")->toArray();
 
@@ -69,21 +65,18 @@ class JobsController extends Controller
         }
 
         $companies = Companies::getCompaniesOptions();
-        $regions = Region::getRegionsOptions();
-        $jobFamily = JobFamily::getJobsFamilyOptions();
-        $country = Country::getCountriesOptionsByRegion();
-        if (is_null($jobs->id_Job_Type))
-        {
-            $id_Job_Family = 1;
-            $jobTypes = JobType::getJobsTypesByJobFamilyOptions();
-        }
-        else {
-            $id_Job_Family = JobType::where("id_Job_Type", "=", $jobs->id_Job_Type)->get()->first()->id_Job_Family;
-            $jobTypes = JobType::getJobsTypesByJobFamilyOptions($id_Job_Family);
-        }
 
-        return compact("companies", "commisionOrBonus","targetEndUser","jobFamily","country", "regions", "languages", "jobs",
-                        "jobTypes", "id_Job_Family", "companyPreference");
+        $jobType = $jobs->getJobType();
+        $jobFamilyOptions = JobFamily::getJobsFamilyOptions();
+        $jobTypesOptions = JobType::getJobsTypesByJobFamilyOptions($jobType->id_Job_Family);
+
+        $countryModel = $address->getCountry();
+        $regionsOptions = Region::getRegionsOptions();
+        $countryOptions = Country::getCountriesOptionsByRegion($countryModel->id_Region);
+
+
+        return compact("companies", "commisionOrBonus","targetEndUser","jobFamilyOptions","regionsOptions", "countryOptions",
+                       "languages", "jobs", "companyPreference", "address", "jobTypesOptions");
     }
 
     /**
@@ -104,11 +97,12 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        $preferenceFields = $this->doValidation($request, CompanyPreference::getValidatorRules());
-        $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
-        $jobModel = Jobs::create($jobFields);
-        $jobModel->companyPreference()->create($preferenceFields);
-        $jobModel->fill(["id_Company_Preference" => $jobModel->companyPreference()->first()->id_Company_Preference])->save();
+        $jobModel = Jobs::create($this->doValidation($request, Jobs::getValidatorRules()));
+        $companyPreferenceModel = CompanyPreference::create($this->doValidation($request, CompanyPreference::getValidatorRules()));
+        $addressModel = Addresses::create($this->doValidation($request, Addresses::getValidatorRules()));
+        $jobModel->fill(["id_Company_Preference" => $companyPreferenceModel->id_Company_Preference,
+                         "AddressId" => $addressModel->AddressId])->save();
+
         return redirect(route('admin.jobs.index'))->with('flash', 'The Job was created');
     }
 
@@ -155,9 +149,19 @@ class JobsController extends Controller
     {
         $jobModel = Jobs::findOrNew($id);
         $companyPreferenceModel = CompanyPreference::findOrNew($jobModel->id_Company_Preference);
-        //dd($jobModel);
+
         $jobFields = $this->doValidation($request, Jobs::getValidatorRules());
         $companyPreferenceModel->fill($this->doValidation($request, CompanyPreference::getValidatorRules()))->save();
+
+        if ($jobModel->address()->first()) {
+            $jobModel->address()->first()->fill($this->doValidation($request, Addresses::getValidatorRules()))->save();
+        }
+        else
+        {
+            $adressModel = $jobModel->address()->create($this->doValidation($request, Addresses::getValidatorRules()));
+            $jobFields['AddressId'] = $adressModel->AddressId;
+        }
+
         $jobFields["id_Company_Preference"] = $companyPreferenceModel->id_Company_Preference;
         $jobModel->fill($jobFields)->save();
 
@@ -173,6 +177,8 @@ class JobsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jobs = Jobs::findOrFail($id);
+        $jobs->fill(["Deleted" => Carbon::now()])->save();
+        return redirect(route('admin.jobs.index'));
     }
 }

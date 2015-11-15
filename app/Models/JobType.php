@@ -8,6 +8,8 @@ class JobType extends Model
 {
     protected $table = 'Job_Type';
     protected $primaryKey ='id_Job_Type';
+
+
     protected function getJobsTypesByJobFamilyOptions($jobFamily = 1)
     {
         $jobTypes = [];
@@ -18,4 +20,5 @@ class JobType extends Model
         }
         return $jobTypes;
     }
+
 }

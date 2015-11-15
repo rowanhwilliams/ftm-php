@@ -24,22 +24,22 @@
               <thead>
               <tr>
                   <th>First Name</th>
-                  <th>Last Name</th>
                   <th>Employee Type</th>
+                  <th></th>
               </tr>
               </thead>
               <tbody>
                   @if ($people->count() > 0)
                       @foreach ($people as $id => $person)
                           <tr>
-                              <td class="text-left">{!! $person->First_Name !!}</td>
-                              <td class="text-left">{!! $person->Surname !!}</td>
-                              <td class="text-left"></td>
+                              <td class="text-left">{!! link_to(URL::route("admin.employee.edit", $person->id_People), $person->First_Name . " " . $person->Surname) !!}</td>
+                              <td class="text-left">{!! $person->employee()->first()->employeeType()->first()->Type_Name !!}</td>
                               <td class="text-center">
-                                  <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.employee.edit", $person->id_People) }}" role="button">Edit</a>
-                              </td>
-                              <td class="text-center">
-                                  <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.employee.destroy", $person->id_People) }}" role="button">Delete</a>
+                                  {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.employee.destroy', $person->id_People], 'class' => 'pull-right']) !!}
+                                  {!! Form::hidden('_method', 'DELETE') !!}
+                                  {!! Form::hidden('_object', '_company') !!}
+                                  {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}
+                                  {!! Form::close() !!}
                               </td>
                           </tr>
                       @endforeach

@@ -35,7 +35,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::all();
+        $products = Products::where("Deleted", "=", NULL)->get()->sortBy("Product_Title");;
         Session::forget('ProductAttachments');
         Session::forget('ProductAssetsClass');
         Session::forget('ProductTargetMarket');
@@ -420,6 +420,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Products::findOrFail($id);
+        $product->fill(["Deleted" => Carbon::now()])->save();
+        return redirect(route('admin.products.index'));
     }
 }

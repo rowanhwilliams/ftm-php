@@ -20,7 +20,7 @@ class People extends Model
     }
     public function employee()
     {
-        return $this->hasOne('App\Models\Employee', 'id_People');
+        return $this->hasOne('App\Models\Employee', 'id_People', 'id_People');
     }
     public function address()
     {

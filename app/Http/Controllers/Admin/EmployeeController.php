@@ -34,7 +34,8 @@ class EmployeeController extends Controller
     {
         Session::forget('UniversityHistory');
         Session::forget('CareerHistory');
-        $people = People::all()->sortBy("First_Name");
+
+        $people = People::where("Deleted", "=", NULL)->get()->sortBy("First_Name");
         return view("admin.employee.index", compact("people"));
     }
 
@@ -58,8 +59,8 @@ class EmployeeController extends Controller
             $people = People::findOrNew($id);
             $universityHisttory = $people->universityHistory()->get();
             $careerHistory = $people->careerHistory()->get();
-            $employee = $people->employee()->get()->first();
-            if ($people->address()->get()->first()) {
+            $employee = $people->employee()->first();
+            if ($people->address()->first()) {
                 $address = $people->address()->get()->first();
             }
         }
@@ -80,19 +81,16 @@ class EmployeeController extends Controller
         }
 
         $pTitle = PeopleTitle::all()->sortBy("Title_Name")->toArray();
-        $eType = EmployeeType::all()->sortBy("Type_Name")->toArray();
 
-        foreach ($eType as $emType) {
-            $employeeType[$emType["id_Employee_Type"]] = $emType["Type_Name"];
-        }
         foreach ($pTitle as $peopTitle) {
             $peopleTitle[$peopTitle["id_People_Title"]] = $peopTitle["Title_Name"];
         }
+        $employeeType = EmployeeType::getEmployeeTypeOptions();
+        $countryModel = $address->getCountry();
+        $regionsOptions = Region::getRegionsOptions();
+        $countryOptions = Country::getCountriesOptionsByRegion($countryModel->id_Region);
 
-        $regions = Region::getRegionsOptions();
-        $country = Country::getCountriesOptionsByRegion();
-
-        return compact("country", "regions", "employeeType", "people", "peopleTitle", "universityHisttory",
+        return compact("countryOptions", "regionsOptions", "employeeType", "people", "peopleTitle", "universityHisttory",
                         "careerHistory", "employee", "address");
     }
 
@@ -298,6 +296,8 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $peoples = People::findOrFail($id);
+        $peoples->fill(["Deleted" => Carbon::now()])->save();
+        return redirect(route('admin.employee.index'));
     }
 }

@@ -33,7 +33,11 @@
                           <td class="text-left">{!! $productFocusTypeList[$product->id_Product] !!}</td>
                           <td class="text-left">{!! $productFocusSubTypeList[$product->id_Product] !!}</td>
                           <td class="text-left" width="1%">
-                              <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.products.destroy", $product->id_Product) }}" role="button">Delete</a>
+                              {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.products.destroy", $product->id_Product], 'class' => 'pull-right']) !!}
+                              {!! Form::hidden('_method', 'DELETE') !!}
+                              {!! Form::hidden('_object', '_company') !!}
+                              {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}
+                              {!! Form::close() !!}
                           </td>
                       </tr>
                   @endforeach

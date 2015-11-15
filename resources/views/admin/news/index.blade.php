@@ -22,9 +22,25 @@
               </tr>
               </thead>
               <tbody>
-                <tr>
-                    <td colspan="3" class="text-center">No records found</td>
-                </tr>
+                  @if ($news->count() > 0)
+                      @foreach ($news as $id => $newsItem)
+                          <tr>
+                              <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
+                              <td class="text-left"></td>
+                              <td class="text-center">
+                                  {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.news.destroy", $newsItem->id_News], 'class' => 'pull-right']) !!}
+                                  {!! Form::hidden('_method', 'DELETE') !!}
+                                  {!! Form::hidden('_object', '_news') !!}
+                                  {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}
+                                  {!! Form::close() !!}
+                              </td>
+                          </tr>
+                      @endforeach
+                  @else
+                      <tr>
+                          <td colspan="3" class="text-center">No records found</td>
+                      </tr>
+                  @endif
               </tbody>
           </table>
         </div>

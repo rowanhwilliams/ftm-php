@@ -18,27 +18,29 @@
               <tr>
                   <th nowrap="">Job Title</th>
                   <th nowrap="">Job Description</th>
-                  <th>Job type</th>
+                  <th nowrap="">Job type</th>
+                  <th nowrap=""></th>
               </tr>
               </thead>
               <tbody>
               @if ($jobs->count() > 0)
                   @foreach ($jobs as $id => $job)
                       <tr>
-                          <td class="text-left">{!! $job->Job_Title !!}</td>
+                          <td class="text-left">{!! link_to(URL::route("admin.jobs.edit", $job->id_Job), $job->Job_Title) !!}</td>
                           <td class="text-left">{!! $job->Job_Description !!}</td>
-                          <td class="text-left"></td>
+                          <td class="text-left">{!! $job->getJobType()->Job_Type !!}</td>
                           <td class="text-center">
-                              <a class="btn btn-warning btn-xs" href="{{ URL::route("admin.jobs.edit", $job->id_Job) }}" role="button">Edit</a>
-                          </td>
-                          <td class="text-center">
-                              <a class="btn btn-danger btn-xs" href="{{ URL::route("admin.jobs.destroy", $job->id_Job) }}" role="button">Delete</a>
+                              {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.jobs.destroy", $job->id_Job], 'class' => 'pull-right']) !!}
+                              {!! Form::hidden('_method', 'DELETE') !!}
+                              {!! Form::hidden('_object', '_company') !!}
+                              {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}
+                              {!! Form::close() !!}
                           </td>
                       </tr>
                   @endforeach
               @else
                   <tr>
-                      <td colspan="3" class="text-center">No records found</td>
+                      <td colspan="4" class="text-center">No records found</td>
                   </tr>
               @endif
               </tbody>

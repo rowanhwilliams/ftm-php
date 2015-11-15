@@ -38,11 +38,11 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('Job_Family', 'Job Family:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Job_Family', $jobFamily, $id_Job_Family, ['class' => 'form-control', "id" => "id_Job_Family"]) !!}</div>
+        <div>{!! Form::select('id_Job_Family', $jobFamilyOptions, null, ['class' => 'form-control', "id" => "id_Job_Family"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Job_Type', 'Job Type:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Job_Type', $jobTypes, null, ['class' => 'form-control', "id" => "id_Job_Type"]) !!}</div>
+        <div>{!! Form::select('id_Job_Type', $jobTypesOptions, null, ['class' => 'form-control', "id" => "id_Job_Type"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('Job_Title', 'Job Title:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -51,19 +51,19 @@
     <div style="font-size: 18px">Job Location</div>
       <div class="form-group">
         <div>{!! Form::label('id_Region', 'Region', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Region', $regions, null, ['class' => 'form-control', "id" => "id_Region"]) !!}</div>
+        <div>{!! Form::select('id_Region', $regionsOptions, $address->getCountry()->id_Region, ['class' => 'form-control', "id" => "id_Region"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Country', $country, null, ['class' => 'form-control', "id" => "id_Country"]) !!}</div>
+        <div>{!! Form::select('id_Country', $countryOptions, $address->id_Country, ['class' => 'form-control', "id" => "id_Country"]) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('state', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('state', null, ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::label('State', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('State', $address->State, ["class" => "form-control"]) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('City', null, ["class" => "form-control"]) !!}</div>
+        <div>{!! Form::text('City', $address->City, ["class" => "form-control"]) !!}</div>
     </div>
 </div>
 <div class="col-md-6">
