@@ -11,10 +11,11 @@
     @show @section('meta_author')
         <meta name="author" content="AY"/>
     @show
-
+    <script src="{{ asset('adm/js/jquery.js') }}"></script>
     <link href="{{ asset('adm/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('adm/css/bootstrap-theme.css') }}" rel="stylesheet">
     <script src="{{ asset('adm/js/bootstrap.js') }}"></script>
+
 
     @yield('styles')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
