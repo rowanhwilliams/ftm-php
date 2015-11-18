@@ -133,7 +133,8 @@ class CompaniesController extends Controller
 
             }
             else {
-                $activePage = "a";
+                $lChars = array_keys($paginationList);
+                $activePage = count($lChars) ? $lChars[0] : "a";
                 $companies = DB::table('Company')
                     ->where("Deleted", "=", NULL)
                     ->where($searchFilter, 'like', "%$search%")
