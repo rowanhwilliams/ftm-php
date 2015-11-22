@@ -102,7 +102,7 @@
                           {!! $index !!}</a>
                       </li>
                   @endforeach
-                  <li><a href="{{ URL::route("admin.companies.index") }}">All</a></li>
+                  <li><a href="{{ URL::route("admin.companies.index") . "?page=all" }}">All</a></li>
               </ul>
               {{--<div class="text-center"> {!! $companies->render() !!} </div>--}}
           </div>
