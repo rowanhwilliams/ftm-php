@@ -151,6 +151,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -203,6 +204,7 @@ return [
         'LaravelAnalytics'  => Spatie\LaravelAnalytics\LaravelAnalyticsFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

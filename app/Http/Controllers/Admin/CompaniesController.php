@@ -12,6 +12,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Redirect;
 
 use App\Http\Requests;
@@ -41,6 +42,101 @@ class CompaniesController extends Controller
         $searchFilter = "Company_Full_Name";
         $companiesList = Companies::all()->sortBy("Company_Full_Name");
         $paginationList  = [];
+        $data = 'data';
+        Excel::load('/storage/app/export.xlsx', function($reader) use($data){
+            $reader->each(function($sheet) {
+                $rowData = $sheet->toArray();
+//                if ($rowData['year_founded']) {
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $companyModel->fill(["Year_Founded"=>$rowData['year_founded']])->save();
+//                }
+//                if ($rowData['acquired_subsidiary'] != null)
+//                {
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $companyModel->fill(["Acquired_Subsidiary"=>1])->save();
+//                    $companyUltimateModel = Companies::where("Company_Full_Name","=",$rowData['ultimate_parent'])->first();
+//                    try{
+//                        if ($companyUltimateModel){
+//                            echo $companyUltimateModel->id_Company;
+//                            $companyModel->fill(["id_Ultimate_Parent"=>$companyUltimateModel->id_Company])->save();
+//                        }
+//                    }
+//                    catch (\Exception $e){
+//                        dd($companyUltimateModel);
+//                    }
+//
+//                }
+
+//                try
+//                {
+//                    $rowData['revenue_stage'] = $rowData['revenue_stage'] ? $rowData['revenue_stage'] : "Unknown";
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $revenueModel = RevenueStage::where("Revenue_Stage", "like", "%{$rowData['revenue_stage']}%")->first();
+//                    $companyModel->fill(["id_Revenue_Stage"=>$revenueModel->id_Revenue_Stage])->save();
+//                }
+//                catch (\Exception $e) {
+//                    echo $rowData['revenue_stage'];
+//                    dd($revenueModel);
+//                }
+//                try
+//                {
+//                    $rowData['ownership'] = $rowData['ownership'] ? $rowData['ownership'] : "Unknown";
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $ownerModel = Ownership::where("Ownership", "like", "%{$rowData['ownership']}%")->first();
+//                    $companyModel->fill(["id_Ownership"=>$ownerModel->id_Ownership])->save();
+//
+//                }
+//                catch (\Exception $e)
+//                {
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $companyModel->fill(["id_Ownership"=>1])->save();
+//                }
+//
+//                try
+//                {
+//                    $rowData['employee_size'] = $rowData['employee_size'] ? $rowData['employee_size'] : "1-50";
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $esizeModel = EmployeeSize::where("Employee_Size", "like", "%{$rowData['employee_size']}%")->first();
+//                    $companyModel->fill(["id_Employee_Size"=>$esizeModel->id_Employee_Size])->save();
+//
+//                }
+//                catch (\Exception $e)
+//                {
+//                    $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                    $companyModel->fill(["id_Employee_Size"=>1])->save();
+//                }
+                if ($rowData['headquarters']){
+                    try{
+                        $hdata = explode(",",$rowData['headquarters']);
+                        $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+                        $country = trim(str_replace("The", "", $hdata[1]));
+                        if (count($hdata) == 2){
+                            $countryModel = Country::where("Country", "=", "$country")->first();
+                            if ($countryModel){
+//                                $addressModel = Addresses::create(["id_Country"=>$countryModel->id_Country, "City"=>trim($hdata[0])]);
+//                                $companyModel->fill(["Headquarters_address"=>$addressModel->AddressId]);
+                            }
+                            else if (strlen(trim($hdata[1])) == 2) {
+                                $addressModel = Addresses::create(["id_Country"=>111, "City"=>trim($hdata[0]), "State"=>trim($hdata[1])]);
+                                $companyModel->fill(["Headquarters_address"=>$addressModel->AddressId]);
+                            }
+                        }
+                    }
+                    catch (\Exception $e){
+
+                    }
+                }
+
+
+
+
+
+                // Loop through all rows
+//                $sheet->each(function($row) {
+//                    echo $row;
+//                });
+            });
+        });
         foreach($companiesList as $company)
         {
             if (strlen($company->Company_Full_Name)) {
@@ -181,7 +277,7 @@ class CompaniesController extends Controller
         $rStage = RevenueStage::where('id_Revenue_Stage', '>', 1)->get()->toArray();
         $cType = CompanyType::all()->toArray();
         $csType = CompanySubType::all()->toArray();
-        $uParent = Companies::all()->sortBy('Company_Full_Name')->toArray();
+        $uParent = Companies::where("Deleted", "=", NULL)->get()->sortBy('Company_Full_Name')->toArray();
         $products = $company->products();
         foreach($products->get() as $product) {
             $productFocusTypeList[$product->id_Product] = [];
