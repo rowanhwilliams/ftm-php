@@ -84,8 +84,8 @@
         </div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label( 'First_Launched','First Launched:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::selectYear('First_Launched', 1985, 2015, null, ['class'=>'form-control']) !!}</div>
+        <div>{!! Form::label('First_Launched','First Launched:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('First_Launched', null, ['class'=>'form-control']) !!}</div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -99,7 +99,7 @@
                 @endforeach
             </ul>
         @endif
-        <div>{!! Form::select('id_Availability_Territory', $regions, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Availability_Territory', $regions, 8, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="row">
         <div class="pull-right">

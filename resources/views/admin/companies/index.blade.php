@@ -34,14 +34,10 @@
                       <li><a href="#" id="Company_About_Us">Company Description</a></li>
                   </ul>
                   {!! Form::hidden('search-filter', $searchFilter,['id' => 'search-filter']) !!}
-                  {!! Form::submit('Search', array('class'=>'btn btn-xs')) !!}
-              </div>
-              {!! Form::close() !!}
-
-
-              <div class="col-md-1 text-align-right">
+                  {!! Form::submit('Search', array('class'=>'btn btn-default btn-xs')) !!}
                   <a class="btn btn-success btn-xs" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
               </div>
+              {!! Form::close() !!}
 
           </div>
 
@@ -109,6 +105,10 @@
                           {!! $index !!}</a>
                       </li>
                   @endforeach
+
+              </ul>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <ul class="pagination">
                   <li class="{!! $activePage == "all" ? "active" : "" !!}"><a href="{{ URL::route("admin.companies.index") . "?page=all" }}">All</a></li>
               </ul>
               {{--<div class="text-center"> {!! $companies->render() !!} </div>--}}
