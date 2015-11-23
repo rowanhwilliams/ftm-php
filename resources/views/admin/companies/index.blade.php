@@ -3,6 +3,11 @@
 @section('content')
     <section class="content">
         <script type="text/javascript">
+            $(document).ready(function()
+                {
+                    $("#list-table_mc").tablesorter();
+                }
+            );
             $(document).ready(function() {
                 $("#search-property li > a").click(function () {
                     $("#search-property-title").text($(this).text());
@@ -18,7 +23,7 @@
           <div class="row col-md-11">
               {!! Form::open(['method'=>'POST', 'route' => ['admin.companies.search'], 'class'=>'form navbar-form searchform']) !!}
               <div class="dropdown">
-                  {!! Form::text('search', $search, array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
+                  {!! Form::text('search', isset($search) ? $search : "", array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <span id="search-property-title">Company Name</span>
                       <span class="caret"></span>
@@ -47,6 +52,7 @@
                       <th nowrap="">Company Name</th>
                       <th nowrap="">Year Founded</th>
                       <th nowrap="">Employee Size</th>
+                      <th>Headquarters</th>
                       <th>Website</th>
                       <th nowrap="">Product Name </th>
                       <th colspan="2"></th>
@@ -57,9 +63,10 @@
                       @if ($companies->count() > 0)
                           @foreach ($companies->get() as $id => $company)
                             <tr>
-                                <td class="text-left">{!! sizeof($company->Company_Full_Name) ? link_to(URL::route("admin.companies.edit", $company->id_Company), $company->Company_Full_Name) : "-" !!}</td>
-                                <td class="text-center">{{ $company->Year_Founded > 0 ? $company->Year_Founded : "-"}}</td>
-                                <td class="text-left">{{ $company->id_Employee_Size ? $employeeSize->find($company->id_Employee_Size)->Employee_Size : "-" }}</td>
+                                <td class="text-left" nowrap="">{!! sizeof($company->Company_Full_Name) ? link_to(URL::route("admin.companies.edit", $company->id_Company), $company->Company_Full_Name) : "-" !!}</td>
+                                <td class="text-center">{{ $company->Year_Founded > 0 ? $company->Year_Founded : ""}}</td>
+                                <td class="text-left">{{ $company->id_Employee_Size ? $company->Employee_Size : "" }}</td>
+                                <td class="text-left" nowrap="">{!! implode(", ", array_filter([$company->City, $company->State, $company->Country])) !!}</td>
                                 <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website, $company->Website, ["target"=>"_blank"]) : "-" !!}</td>
                                 <td class="text-left" nowrap>
                                     @foreach ($products as $id => $product)
@@ -102,7 +109,7 @@
                           {!! $index !!}</a>
                       </li>
                   @endforeach
-                  <li><a href="{{ URL::route("admin.companies.index") . "?page=all" }}">All</a></li>
+                  <li class="{!! $activePage == "all" ? "active" : "" !!}"><a href="{{ URL::route("admin.companies.index") . "?page=all" }}">All</a></li>
               </ul>
               {{--<div class="text-center"> {!! $companies->render() !!} </div>--}}
           </div>

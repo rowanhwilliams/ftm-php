@@ -38,13 +38,59 @@ class CompaniesController extends Controller
 
     public function index(Request $request)
     {
-        $search = "";
         $searchFilter = "Company_Full_Name";
-
         $paginationList  = [];
 
-        $companiesList = Companies::all()->sortBy("Company_Full_Name");
+        $activePage = $request->page ? $request->page : "a";
 
+        $companiesList = Companies::all()->sortBy("Company_Full_Name");
+//        $data = "data";
+//        Excel::load('/storage/app/export.xlsx', function($reader) use($data){
+//            $reader->each(function($sheet) {
+//                $rowData = $sheet->toArray();
+//                if ($rowData['headquarters']){
+//                    try{
+//                        $hdata = explode(",",$rowData['headquarters']);
+//                        $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
+//                        //$companyModel->fill(["Headquarters_address"=>$hModel->Headquarters_address]);
+//                        $country = trim(str_replace("The", "", $hdata[1]));
+//                        if (count($hdata) == 2){
+//                            $countryModel = Country::where("Country", "=", "$country")->first();
+//                            if ($countryModel){
+//                                $addressModel = Addresses::create(["id_Country"=>$countryModel->id_Country, "City"=>trim($hdata[0])]);
+//                                $hModel = HeadquartersInformation::create(["AddressId"=>$addressModel->AddressId, "id_Company"=>$companyModel->id_Company]);
+//                                $companyModel->fill(["Headquarters_address"=>$hModel->id_Headquarters_Information])->save();
+//                            }
+//                            else if (strlen(trim($hdata[1])) == 2) {
+//                                $addressModel = Addresses::create(["id_Country"=>111, "City"=>trim($hdata[0]), "State"=>trim($hdata[1])]);
+//                                $hModel = HeadquartersInformation::create(["AddressId"=>$addressModel->AddressId, "id_Company"=>$companyModel->id_Company]);
+//                                $companyModel->fill(["Headquarters_address"=>$hModel->id_Headquarters_Information])->save();
+//                            }
+//                        }
+//                    }
+//                    catch (\Exception $e){
+//
+//                    }
+//                }
+//            });
+//        });
+
+
+        $companies = DB::table('Company')
+            ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
+                     'Employee_Size.Employee_Size', 'Addresses.City', 'Addresses.State', 'Country.Country')
+            ->leftJoin('Employee_Size', 'Company.id_Employee_Size', '=', 'Employee_Size.id_Employee_Size')
+            ->leftJoin('Headquarters_Information', 'Company.id_Company', '=', 'Headquarters_Information.id_Company')
+            ->leftJoin('Addresses', 'Headquarters_Information.AddressId', '=', 'Addresses.AddressId')
+            ->leftJoin('Country', 'Addresses.id_Country', '=', 'Country.id_Country')
+            ->whereNull("Deleted")
+            ->orderBy('Company_Full_Name', 'asc');
+
+        if ($activePage != "all")
+        {
+            $companies->where("Company_Full_Name", "like", "$activePage%");
+        }
+        //dd($companies->get());
         foreach($companiesList as $company)
         {
             if (strlen($company->Company_Full_Name)) {
@@ -55,34 +101,6 @@ class CompaniesController extends Controller
                 }
                 $paginationList[$firstChar] += 1;
             }
-        }
-
-        if ($request->page)
-        {
-            $activePage = $request->page;
-            if ($activePage == "all")
-            {
-                $companies = DB::table('Company')
-                    ->where("Deleted", "=", NULL)
-                    ->orderBy('Company_Full_Name', 'asc');
-            }
-            else {
-                $companies = DB::table('Company')
-                    ->where("Deleted", "=", NULL)
-                    ->where("Company_Full_Name", "like", "$activePage%")
-                    ->orderBy('Company_Full_Name', 'asc');
-            }
-
-
-        }
-        else {
-            $activePage = "a";
-            $companies = DB::table('Company')
-                ->where("Deleted", "=", NULL)
-                ->where("Company_Full_Name", "like",  "$activePage%")
-                ->orderBy('Company_Full_Name', 'asc');
-
-
         }
 
         $products = Products::all();
@@ -109,7 +127,6 @@ class CompaniesController extends Controller
 
     public function search(Request $request)
     {
-
         $paginationList = [];
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
         $searchFilter = Session::get('SearchFilter') ? Session::get('SearchFilter') : "Company_Full_Name";
@@ -134,25 +151,22 @@ class CompaniesController extends Controller
                     $paginationList[$firstChar] += 1;
                 }
             }
+            $FirstChars = array_keys($paginationList);
+            $activePage = $request->page ? $request->page : (count($FirstChars) ? $FirstChars[0] : "a");
+            $companies = DB::table('Company')
+                ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
+                    'Employee_Size.Employee_Size', 'Addresses.City', 'Addresses.State', 'Country.Country')
+                ->leftJoin('Employee_Size', 'Company.id_Employee_Size', '=', 'Employee_Size.id_Employee_Size')
+                ->leftJoin('Headquarters_Information', 'Company.id_Company', '=', 'Headquarters_Information.id_Company')
+                ->leftJoin('Addresses', 'Headquarters_Information.AddressId', '=', 'Addresses.AddressId')
+                ->leftJoin('Country', 'Addresses.id_Country', '=', 'Country.id_Country')
+                ->whereNull("Deleted")
+                ->where($searchFilter, 'like', "%$search%")
+                ->orderBy('Company_Full_Name', 'asc');
 
-            if ($request->page)
+            if ($activePage != "all")
             {
-                $activePage = $request->page;
-                $companies = DB::table('Company')
-                    ->where("Deleted", "=", NULL)
-                    ->where($searchFilter, 'like', "%$search%")
-                    ->where("Company_Full_Name", "like", "$activePage%")
-                    ->orderBy('Company_Full_Name', 'asc');
-
-            }
-            else {
-                $lChars = array_keys($paginationList);
-                $activePage = count($lChars) ? $lChars[0] : "a";
-                $companies = DB::table('Company')
-                    ->where("Deleted", "=", NULL)
-                    ->where($searchFilter, 'like', "%$search%")
-                    ->where("Company_Full_Name", "like",  "$activePage%")
-                    ->orderBy('Company_Full_Name', 'asc');
+                $companies->where("Company_Full_Name", "like", "$activePage%");
             }
         }
         else {
