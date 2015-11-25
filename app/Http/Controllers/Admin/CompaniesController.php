@@ -118,12 +118,20 @@ class CompaniesController extends Controller
         Session::set('CompanySearch', $search);
         Session::set('SearchFilters', $searchFilters);
 
+        $searchFilters = array_keys($searchFilters);
+
         $companiesList = DB::table('Company')
                 ->where("Deleted", "=", NULL)
                 ->orderBy('Company_Full_Name', 'asc');
-        foreach(array_keys($searchFilters) as $searchFilter)
-        {
-            $companiesList->where($searchFilter, 'like', "%$search%");
+        if (count($searchFilters)) {
+            $companiesList->where(
+                function ($query) use ($searchFilters, $search) {
+                    foreach($searchFilters as $searchFilter)
+                    {
+                        $query->where($searchFilter, 'like', "%$search%", "OR");
+                    }
+                }
+            );
         }
 
         if ($companiesList->count()) {
@@ -151,11 +159,16 @@ class CompaniesController extends Controller
                 ->groupBy("Headquarters_Information.AddressId")
                 ->groupBy("Company.id_Company")
                 ->orderBy('Company_Full_Name', 'asc');
-            $searchFilters = array_keys($searchFilters);
-            foreach($searchFilters as $searchFilter)
-            {
-                $companies->where($searchFilter, 'like', "%$search%");
+
+            if (count($searchFilters)) {
+                $companies->where(function ($query) use ($searchFilters, $search) {
+                    foreach($searchFilters as $searchFilter)
+                    {
+                        $query->where($searchFilter, 'like', "%$search%", "OR");
+                    }
+                });
             }
+
             if ($activePage != "all")
             {
                 $companies->where("Company_Full_Name", "like", "$activePage%");
