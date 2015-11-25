@@ -23,19 +23,18 @@
           <div class="row col-md-11">
               {!! Form::open(['method'=>'POST', 'route' => ['admin.companies.search'], 'class'=>'form navbar-form searchform']) !!}
               <div class="dropdown">
+
                   {!! Form::text('search', isset($search) ? $search : "", array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <span id="search-property-title">Company Name</span>
-                      <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="search-property">
-                      <li><a href="#" id="Company_Full_Name">Company Name</a></li>
-                      <li><a href="#" id="Year_Founded">Year Founded</a></li>
-                      <li><a href="#" id="Company_About_Us">Company Description</a></li>
-                  </ul>
-                  {!! Form::hidden('search-filter', $searchFilter,['id' => 'search-filter']) !!}
-                  {!! Form::submit('Search', array('class'=>'btn btn-default btn-xs')) !!}
-                  <a class="btn btn-success btn-xs" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
+                  {!! Form::submit('Search', array('class'=>'btn btn-default')) !!}
+                  <a class="btn btn-success" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
+              </div>
+              <div>&nbsp;</div>
+              <div class="btn-group" data-toggle="buttons">
+                  @foreach($companiesSearchBy as $searchBy)
+                      <label class="btn btn-default{!! in_array($searchBy->name, $searchFilters) ? " active" : "" !!}">
+                          <input type="checkbox" autocomplete="off" name="{{$searchBy->name}}"{!! in_array($searchBy->name, $searchFilters) ? " checked" : "" !!}>{{$searchBy->description}}
+                      </label>
+                  @endforeach
               </div>
               {!! Form::close() !!}
 
@@ -107,7 +106,9 @@
                   @endforeach
 
               </ul>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              @if (count($paginationList))
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              @endif
               <ul class="pagination">
                   <li class="{!! $activePage == "all" ? "active" : "" !!}"><a href="{{ URL::route("admin.companies.index") . "?page=all" }}">All</a></li>
               </ul>

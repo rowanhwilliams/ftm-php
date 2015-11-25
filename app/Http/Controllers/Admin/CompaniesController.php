@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Addresses;
 use App\Models\Phones;
 use App\Models\Products;
+use App\Models\Search;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use Redirect;
 
 use App\Http\Requests;
@@ -24,7 +24,6 @@ use App\Models\GrowthProfile;
 use App\Models\RevenueStage;
 use App\Models\CompanyType;
 use App\Models\CompanySubType;
-use App\Models\HeadquartersInformation;
 use App\Models\Country;
 use App\Models\ProductFocusType;
 
@@ -38,43 +37,12 @@ class CompaniesController extends Controller
 
     public function index(Request $request)
     {
-        $searchFilter = "Company_Full_Name";
+        $searchFilters = ["Company_Full_Name"];
         $paginationList  = [];
 
         $activePage = $request->page ? $request->page : "a";
 
-        $companiesList = Companies::all()->sortBy("Company_Full_Name");
-//        $data = "data";
-//        Excel::load('/storage/app/export.xlsx', function($reader) use($data){
-//            $reader->each(function($sheet) {
-//                $rowData = $sheet->toArray();
-//                if ($rowData['headquarters']){
-//                    try{
-//                        $hdata = explode(",",$rowData['headquarters']);
-//                        $companyModel = Companies::where("Company_Full_Name","=",$rowData["account_name"])->first();
-//                        //$companyModel->fill(["Headquarters_address"=>$hModel->Headquarters_address]);
-//                        $country = trim(str_replace("The", "", $hdata[1]));
-//                        if (count($hdata) == 2){
-//                            $countryModel = Country::where("Country", "=", "$country")->first();
-//                            if ($countryModel){
-//                                $addressModel = Addresses::create(["id_Country"=>$countryModel->id_Country, "City"=>trim($hdata[0])]);
-//                                $hModel = HeadquartersInformation::create(["AddressId"=>$addressModel->AddressId, "id_Company"=>$companyModel->id_Company]);
-//                                $companyModel->fill(["Headquarters_address"=>$hModel->id_Headquarters_Information])->save();
-//                            }
-//                            else if (strlen(trim($hdata[1])) == 2) {
-//                                $addressModel = Addresses::create(["id_Country"=>111, "City"=>trim($hdata[0]), "State"=>trim($hdata[1])]);
-//                                $hModel = HeadquartersInformation::create(["AddressId"=>$addressModel->AddressId, "id_Company"=>$companyModel->id_Company]);
-//                                $companyModel->fill(["Headquarters_address"=>$hModel->id_Headquarters_Information])->save();
-//                            }
-//                        }
-//                    }
-//                    catch (\Exception $e){
-//
-//                    }
-//                }
-//            });
-//        });
-
+        $companiesSearchBy = Companies::getCompaniesSearchBy();
 
         $companies = DB::table('Company')
             ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
@@ -84,14 +52,16 @@ class CompaniesController extends Controller
             ->leftJoin('Addresses', 'Headquarters_Information.AddressId', '=', 'Addresses.AddressId')
             ->leftJoin('Country', 'Addresses.id_Country', '=', 'Country.id_Country')
             ->whereNull("Deleted")
+            ->groupBy("Headquarters_Information.AddressId")
+            ->groupBy("Company.id_Company")
             ->orderBy('Company_Full_Name', 'asc');
 
         if ($activePage != "all")
         {
             $companies->where("Company_Full_Name", "like", "$activePage%");
         }
-        //dd($companies->get());
-        foreach($companiesList as $company)
+
+        foreach($companies->get() as $company)
         {
             if (strlen($company->Company_Full_Name)) {
                 $firstChar = strtolower(substr($company->Company_Full_Name, 0, 1));
@@ -109,10 +79,11 @@ class CompaniesController extends Controller
         //$companies = Paginator::make($companies, $companies->count(), 15);
         // empty session data
         Session::forget('CompanySearch');
-        Session::forget('SearchFilter');
+        Session::forget('SearchFilters');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilter", "paginationList", "activePage"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilters",
+                    "paginationList", "activePage", "companiesSearchBy"));
     }
 
     /**
@@ -128,16 +99,32 @@ class CompaniesController extends Controller
     public function search(Request $request)
     {
         $paginationList = [];
+
+        //$this->validate($request, Search::getValidatorRules());
+
+        $companiesSearchBy = Companies::getCompaniesSearchBy();
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
-        $searchFilter = Session::get('SearchFilter') ? Session::get('SearchFilter') : "Company_Full_Name";
-        $searchFilter = $request->get("search-filter") ? $request->get("search-filter") : $searchFilter;
+        $RequestSearchFilters = [];
+
+        foreach($companiesSearchBy as $searchBy)
+        {
+            if ($request->{$searchBy->name} == "on")
+            {
+                $RequestSearchFilters[$searchBy->name] = "";
+            }
+        }
+
+        $searchFilters = count($RequestSearchFilters) ? $RequestSearchFilters : Session::get('SearchFilters');
         Session::set('CompanySearch', $search);
-        Session::set('SearchFilter', $searchFilter  );
+        Session::set('SearchFilters', $searchFilters);
 
         $companiesList = DB::table('Company')
                 ->where("Deleted", "=", NULL)
-                ->where($searchFilter, 'like', "%$search%")
                 ->orderBy('Company_Full_Name', 'asc');
+        foreach(array_keys($searchFilters) as $searchFilter)
+        {
+            $companiesList->where($searchFilter, 'like', "%$search%");
+        }
 
         if ($companiesList->count()) {
             foreach($companiesList->get() as $company)
@@ -161,9 +148,14 @@ class CompaniesController extends Controller
                 ->leftJoin('Addresses', 'Headquarters_Information.AddressId', '=', 'Addresses.AddressId')
                 ->leftJoin('Country', 'Addresses.id_Country', '=', 'Country.id_Country')
                 ->whereNull("Deleted")
-                ->where($searchFilter, 'like', "%$search%")
+                ->groupBy("Headquarters_Information.AddressId")
+                ->groupBy("Company.id_Company")
                 ->orderBy('Company_Full_Name', 'asc');
-
+            $searchFilters = array_keys($searchFilters);
+            foreach($searchFilters as $searchFilter)
+            {
+                $companies->where($searchFilter, 'like', "%$search%");
+            }
             if ($activePage != "all")
             {
                 $companies->where("Company_Full_Name", "like", "$activePage%");
@@ -176,7 +168,8 @@ class CompaniesController extends Controller
 
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize","searchFilter","paginationList", "activePage"));
+        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize","searchFilters",
+                    "paginationList", "activePage","companiesSearchBy"));
     }
 
     private function passData($id = null)
