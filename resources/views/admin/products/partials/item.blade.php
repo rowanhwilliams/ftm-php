@@ -107,45 +107,6 @@
         </div>
     </div>
     <div class="form-group">
-         <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
-        @if ($productTargetMarket->count() > 0)
-            <ul>
-                @foreach($productTargetMarket->toArray() as $id => $tmarket)
-                    <li style="list-style: none" class="row small text-primary">
-                        {!! $tmarket['Target_Market'] !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-        <div>{!! Form::select('id_Target_Market', $targetMarket, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_target_market')) !!}
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
-        @if ($productTargetEndUser->count() > 0)
-            <ul>
-                @foreach($productTargetEndUser->toArray() as $id => $endUser)
-                    <li style="list-style: none" class="row small text-primary">
-                        {!! $endUser['Target_End_User'] !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-        <div>{!! Form::select('id_Target_End_User', $targetEndUser, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_target_end_user')) !!}
-        </div>
-    </div>
-    <div class="form-group">
         <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
         @if ($productAssetClass->count() > 0)
             <ul>
@@ -192,10 +153,37 @@
         <div>{!! Form::label('FTM_Product_Description', 'FTM Product Description', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('FTM_Product_Description',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
     </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit($submit_text, array('class' => 'btn btn-default btn-sm', 'name' => $submit_text)) !!}
-        </div>
+
+</div>
+<div class="col-md-3">
+    <div class="form-group">
+        <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
+        @foreach($targetEndUser as $TargetItem)
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input type="checkbox" name="{{$TargetItem->name}}" aria-label="" {!! in_array($TargetItem->description,$TargetEndUserSelection) ? "checked" : "" !!}>
+                </span>
+                <div class="form-control-static ">{{ $TargetItem->description }}</div>
+            </div><!-- /input-group -->
+        @endforeach
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="form-group">
+        <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
+        @foreach($targetMarket as $TargetMarketItem)
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input type="checkbox" name="{{$TargetMarketItem->name}}" aria-label="..." {!! in_array($TargetMarketItem->description,$TargetMarketSelection) ? "checked" : "" !!}>
+                </span>
+                <div class="form-control-static ">{{ $TargetMarketItem->description }}</div>
+            </div><!-- /input-group -->
+        @endforeach
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="pull-right">
+        {!! Form::submit($submit_text, array('class' => 'btn btn-default btn-sm', 'name' => $submit_text)) !!}
     </div>
 </div>

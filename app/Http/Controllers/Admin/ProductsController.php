@@ -74,19 +74,26 @@ class ProductsController extends Controller
     }
 
     private function passData($id = null) {
+        $products = new \App\Models\Products();
         if (!is_null($id)) {
             $products = Products::findOrNew($id);
+        }
+        $productTargetEndUser = $products->targetEndUser()->get();
+        $productTargetMarket = $products->targetMarket()->get();
+        $TargetEndUserSelection = [];
+        $TargetMarketSelection = [];
+        if (!is_null($id)) {
+
             $cProducts = Products::where("id_Product", "!=", $id)->get()->toArray();
             $attachments = $products->attachments()->get();
-            $productTargetMarket = $products->targetMarket()->get();
-            $productTargetEndUser = $products->targetEndUser()->get();
+
+
             $productAssetClass = $products->assetClass()->get();
             $territories = $products->territory()->get();
             $productFocusSubTypeList = $products->focusSubType()->get();
             $productCompetitors = $products->competitor()->get();
         }
         else {
-            $products = new \App\Models\Products();
             $cProducts = Products::all()->toArray();
             if (!Session::has('ProductAttachments')) {
                 Session::set('ProductAttachments', $products->attachments()->get());
@@ -111,25 +118,26 @@ class ProductsController extends Controller
                 Session::set('ProductAssetsClass', $products->assetClass()->get());
             }
             $productAssetClass = Session::get("ProductAssetsClass");
-
-            if (!Session::has('ProductTargetMarket')) {
-                Session::set('ProductTargetMarket', $products->targetMarket()->get());
-            }
-            $productTargetMarket = Session::get("ProductTargetMarket");
-
-            if (!Session::has('ProductTargetEndUser')) {
-                Session::set('ProductTargetEndUser', $products->targetEndUser()->get());
-            }
-            $productTargetEndUser = Session::get("ProductTargetEndUser");
         }
-
+        if ($productTargetEndUser->count() > 0)
+        {
+            foreach($productTargetEndUser as $id => $endUser)
+            {
+                $TargetEndUserSelection[] = $endUser->Target_End_User;
+            }
+        }
+        if ($productTargetMarket->count() > 0)
+        {
+            foreach($productTargetMarket as $id => $market)
+            {
+                $TargetMarketSelection[] = $market->Target_Market;
+            }
+        }
         $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
         $prType = ProductType::all()->toArray();
         $pFocus = ProductFocus::all();
         $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus ? $products->id_Product_Focus : 1)->get()->toArray();
         $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type ? $products->id_Product_Focus_Type : 1)->get()->toArray();
-        $tMarket  = TargetMarket::all()->toArray();
-        $tEndUser = TargetEndUser::all()->toArray();
         $cAssets = AssetClass::all()->toArray();
         $pRegions = AvailabilityTerritory::all()->toArray();
         $pPos = Positions::all()->toArray();
@@ -150,12 +158,6 @@ class ProductsController extends Controller
         foreach ($comps as $comp) {
             $companies[$comp["id_Company"]] = $comp["Company_Full_Name"];
         }
-        foreach ($tMarket as $tgMarket) {
-            $targetMarket[$tgMarket["id_Target_Market"]] = $tgMarket["Target_Market"];
-        }
-        foreach ($tEndUser as $tgEndUser) {
-            $targetEndUser[$tgEndUser["id_Target_End_User"]] = $tgEndUser["Target_End_User"];
-        }
         foreach ($cAssets as $clAssets) {
             $assetClass[$clAssets["id_Asset_Class"]] = $clAssets["Asset_Class"];
         }
@@ -169,10 +171,13 @@ class ProductsController extends Controller
             $positions[$prPos["id_Position"]] = $prPos["Position_Name"];
         }
 
+        $targetEndUser = TargetEndUser::getTargetEndUserCheckboxesModel();
+
+        $targetMarket = TargetMarket::getTargetMarketCheckboxesModel();
         return compact("productType", "productFocus", "productFocusType", "productFocusSubType", "companies", "targetMarket",
             "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions", "attachments",
             "productTargetEndUser", "productTargetMarket", "productAssetClass", "territories", "productFocusSubTypeList",
-            "productCompetitors");
+            "productCompetitors", "TargetEndUserSelection", "TargetMarketSelection");
     }
 
     private function StoreAttachment($parentID, Request $request) {
@@ -264,6 +269,20 @@ class ProductsController extends Controller
         return ["id_Competitor_Product" => $request->id_Competitor_Product];
     }
 
+    private function ListTargetEndUser(Request $request)
+    {
+        $targetEndUserList = [];
+        $targetEndUserModel = TargetEndUser::getTargetEndUserCheckboxesModel();
+        foreach($targetEndUserModel as $targetEndUser)
+        {
+            if ($request->{$targetEndUser->name} == "on")
+            {
+                $targetEndUserList[] = (integer) str_replace("Target_End_User_", "", $targetEndUser->name);
+            }
+        }
+        return $targetEndUserList;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -282,16 +301,16 @@ class ProductsController extends Controller
             Session::set('ProductAssetsClass', Session::get('ProductAssetsClass')->push(AssetClass::findOrNew($assetClassField["id_Asset_Class"])));
             return Redirect::back()->withInput($request->except(["add_asset_class"]));
         }
-        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
-            $tergetEndUserField = $this->addTargetEndUserValidator($request);
-            Session::set('ProductTargetEndUser', Session::get('ProductTargetEndUser')->push(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"])));
-            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
-        }
-        if (isset($request['add_target_market']) && $request['add_target_market']) {
-            $tergetEndUserField = $this->addTargetMarketValidator($request);
-            Session::set('ProductTargetMarket', Session::get('ProductTargetMarket')->push(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"])));
-            return Redirect::back()->withInput($request->except(["add_target_market"]));
-        }
+//        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
+//            $tergetEndUserField = $this->addTargetEndUserValidator($request);
+//            Session::set('ProductTargetEndUser', Session::get('ProductTargetEndUser')->push(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"])));
+//            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
+//        }
+//        if (isset($request['add_target_market']) && $request['add_target_market']) {
+//            $tergetEndUserField = $this->addTargetMarketValidator($request);
+//            Session::set('ProductTargetMarket', Session::get('ProductTargetMarket')->push(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"])));
+//            return Redirect::back()->withInput($request->except(["add_target_market"]));
+//        }
         if (isset($request['add_teritory']) && $request['add_teritory']) {
             $territoryField = $this->addTerritoryValidator($request);
             Session::set('ProductTerritory', Session::get('ProductTerritory')->push(AvailabilityTerritory::findOrNew($territoryField["id_Availability_Territory"])));
@@ -309,18 +328,19 @@ class ProductsController extends Controller
             return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
 
-
+        $targetEndUser = $this->ListTargetEndUser($request);
         $productsFields = $this->productValidator($request);
         $productsFields['Date_Created'] = Carbon::now();
         $productsModel = Products::create($productsFields);
+
         foreach(Session::get('ProductAttachments') as $atts){
             $productsModel->attachments()->save($atts);
         }
         foreach(Session::get('ProductAssetsClass') as $assetClass) {
             $productsModel->assetClass()->save($assetClass);
         }
-        foreach(Session::get('ProductTargetEndUser') as $endUserTrg) {
-            $productsModel->targetEndUser()->save($endUserTrg);
+        foreach($targetEndUser as $endUserTrgId) {
+            //$productsModel->targetEndUser()->save(TargetEndUser::findOrNew($endUserTrgId));
         }
         foreach(Session::get('ProductTargetMarket') as $marketTrg) {
             $productsModel->targetMarket()->save($marketTrg);
