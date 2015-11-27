@@ -27,7 +27,7 @@ class Companies extends Model
     {
         return $this->hasOne('App\Models\EmployeeSize', 'id_Employee_Size');
     }
-    protected function getCompaniesOptions()
+    protected function SelectOptionsModel()
     {
         $companies = [];
         $companiList = $this->all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name');

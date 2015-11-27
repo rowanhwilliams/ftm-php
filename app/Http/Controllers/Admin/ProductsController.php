@@ -37,10 +37,6 @@ class ProductsController extends Controller
     {
         $products = Products::where("Deleted", "=", NULL)->get()->sortBy("Product_Title");;
         Session::forget('ProductAttachments');
-        Session::forget('ProductAssetsClass');
-        Session::forget('ProductTargetMarket');
-        Session::forget('ProductTargetEndUser');
-        Session::forget('ProductTerritory');
         Session::forget('ProductCompetitors');
         Session::forget('ProductFocusSubType');
         $productFocusSubTypeList = [];
@@ -75,21 +71,15 @@ class ProductsController extends Controller
 
     private function passData($id = null) {
         $products = new \App\Models\Products();
+
         if (!is_null($id)) {
             $products = Products::findOrNew($id);
         }
-        $productTargetEndUser = $products->targetEndUser()->get();
-        $productTargetMarket = $products->targetMarket()->get();
-        $TargetEndUserSelection = [];
-        $TargetMarketSelection = [];
+
         if (!is_null($id)) {
 
             $cProducts = Products::where("id_Product", "!=", $id)->get()->toArray();
             $attachments = $products->attachments()->get();
-
-
-            $productAssetClass = $products->assetClass()->get();
-            $territories = $products->territory()->get();
             $productFocusSubTypeList = $products->focusSubType()->get();
             $productCompetitors = $products->competitor()->get();
         }
@@ -109,43 +99,14 @@ class ProductsController extends Controller
             }
             $productCompetitors = Session::get("ProductCompetitors");
 
-            if (!Session::has('ProductTerritory')) {
-                Session::set('ProductTerritory', $products->territory()->get());
-            }
-            $territories = Session::get("ProductTerritory");
+        }
 
-            if (!Session::has('ProductAssetsClass')) {
-                Session::set('ProductAssetsClass', $products->assetClass()->get());
-            }
-            $productAssetClass = Session::get("ProductAssetsClass");
-        }
-        if ($productTargetEndUser->count() > 0)
-        {
-            foreach($productTargetEndUser as $id => $endUser)
-            {
-                $TargetEndUserSelection[] = $endUser->Target_End_User;
-            }
-        }
-        if ($productTargetMarket->count() > 0)
-        {
-            foreach($productTargetMarket as $id => $market)
-            {
-                $TargetMarketSelection[] = $market->Target_Market;
-            }
-        }
-        $comps = Companies::all(["id_Company","Company_Full_Name"])->sortBy('Company_Full_Name')->toArray();
-        $prType = ProductType::all()->toArray();
         $pFocus = ProductFocus::all();
         $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus ? $products->id_Product_Focus : 1)->get()->toArray();
         $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type ? $products->id_Product_Focus_Type : 1)->get()->toArray();
-        $cAssets = AssetClass::all()->toArray();
-        $pRegions = AvailabilityTerritory::all()->toArray();
         $pPos = Positions::all()->toArray();
         $competitorProducts = [];
 
-        foreach ($prType as $pType){
-            $productType[$pType["id_Product_Type"]] = $pType["Product_Type"];
-        }
         foreach ($pFocus as $prFocus) {
             $productFocus[$prFocus["id_Product_Focus"]] = $prFocus["Product_Focus"];
         }
@@ -155,29 +116,28 @@ class ProductsController extends Controller
         foreach ($pfsType as $prfsFocus) {
             $productFocusSubType[$prfsFocus["id_Product_Focus_Sub_Type"]] = $prfsFocus["Product_Focus_Sub_Type"];
         }
-        foreach ($comps as $comp) {
-            $companies[$comp["id_Company"]] = $comp["Company_Full_Name"];
-        }
-        foreach ($cAssets as $clAssets) {
-            $assetClass[$clAssets["id_Asset_Class"]] = $clAssets["Asset_Class"];
-        }
         foreach ($cProducts as $cpProducts) {
             $competitorProducts[$cpProducts["id_Product"]] = $cpProducts["Product_Title"];
-        }
-        foreach ($pRegions as $prRegions) {
-            $regions[$prRegions["id_Availability_Territory"]] = $prRegions["Territory_Name"];
         }
         foreach ($pPos as $prPos) {
             $positions[$prPos["id_Position"]] = $prPos["Position_Name"];
         }
 
-        $targetEndUser = TargetEndUser::getTargetEndUserCheckboxesModel();
+        $Companies = Companies::SelectOptionsModel();
+        $TargetEndUser = TargetEndUser::CheckboxesModel();
+        $TargetMarket = TargetMarket::CheckboxesModel();
+        $AssetClass = AssetClass::CheckboxesModel();
+        $AvailabilityTerritory = AvailabilityTerritory::CheckboxesModel();
 
-        $targetMarket = TargetMarket::getTargetMarketCheckboxesModel();
-        return compact("productType", "productFocus", "productFocusType", "productFocusSubType", "companies", "targetMarket",
-            "targetEndUser","assetClass", "products", "competitorProducts", "regions", "positions", "attachments",
-            "productTargetEndUser", "productTargetMarket", "productAssetClass", "territories", "productFocusSubTypeList",
-            "productCompetitors", "TargetEndUserSelection", "TargetMarketSelection");
+        $TargetEndUserSelection = $products->TargetEndUserSelection();
+        $TargetMarketSelection = $products->TargetMarketSelection();
+        $ClassAssetsSelection = $products->ClassAssetsSelection();
+        $TerritorySelection = $products->TerritorySelection();
+
+        return compact("products", "productFocus", "productFocusType", "productFocusSubType", "Companies", "TargetMarket",
+            "TargetEndUser","AssetClass", "competitorProducts", "AvailabilityTerritory", "positions", "attachments",
+            "TerritorySelection", "TargetEndUserSelection", "TargetMarketSelection", "ClassAssetsSelection", "productFocusSubTypeList",
+            "productCompetitors");
     }
 
     private function StoreAttachment($parentID, Request $request) {
@@ -340,7 +300,7 @@ class ProductsController extends Controller
             $productsModel->assetClass()->save($assetClass);
         }
         foreach($targetEndUser as $endUserTrgId) {
-            //$productsModel->targetEndUser()->save(TargetEndUser::findOrNew($endUserTrgId));
+            $productsModel->targetEndUser()->save(TargetEndUser::findOrNew($endUserTrgId));
         }
         foreach(Session::get('ProductTargetMarket') as $marketTrg) {
             $productsModel->targetMarket()->save($marketTrg);
@@ -426,7 +386,7 @@ class ProductsController extends Controller
             $productModel->competitor()->save(Products::findOrNew($competitorProductField['id_Competitor_Product']));
             return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
-
+        dd($productModel->targetEndUser()->where("id_Target_End_User", "=", $productModel->id_Product)->delete());
         $productsFields = $this->productValidator($request);
         $productModel->fill($productsFields)->save();
         return redirect(route('admin.products.index'))->with('flash', 'The Product was updated');;

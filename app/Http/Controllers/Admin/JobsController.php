@@ -64,7 +64,7 @@ class JobsController extends Controller
             $languages[$langs["id_Language"]] = $langs["Language_Name"];
         }
 
-        $companies = Companies::getCompaniesOptions();
+        $companies = Companies::SelectOptionsModel();
 
         $jobType = $jobs->getJobType();
         $jobFamilyOptions = JobFamily::getJobsFamilyOptions();

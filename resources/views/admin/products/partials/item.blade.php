@@ -31,7 +31,7 @@
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Owner_Company', 'Owner:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Owner_Company', $companies, null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Owner_Company', $Companies, null, ['class' => 'form-control']) !!}</div>
     </div>
     <div style="border: solid 2px lightgrey; padding: 10px;">
         @if ($productFocusSubTypeList->count() > 0)
@@ -83,52 +83,7 @@
             {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_competitor')) !!}
         </div>
     </div>
-    <div class="form-group">
-        <div>{!! Form::label('First_Launched','First Launched:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('First_Launched', null, ['class'=>'form-control']) !!}</div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Availability_Territory', 'Product Availability Territory:', Array("style" => "font-size: 16px;")) !!}</div>
-        @if ($territories->count() > 0)
-            <ul>
-                @foreach($territories->toArray() as $id => $territory)
-                    <li style="list-style: none" class="row small text-primary">
-                        {!! $territory['Territory_Name'] !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-        <div>{!! Form::select('id_Availability_Territory', $regions, 8, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_teritory')) !!}
-        </div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Asset_Class', 'Asset Class:', Array("style" => "font-size: 16px;")) !!}</div>
-        @if ($productAssetClass->count() > 0)
-            <ul>
-                @foreach($productAssetClass->toArray() as $id => $productAssetCl)
-                    <li style="list-style: none" class="row small text-primary">
-                        {!! $productAssetCl['Asset_Class'] !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-        <div>{!! Form::select('id_Asset_Class', $assetClass, null, ['class' => 'form-control']) !!}</div>
-    </div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit('Add', array('class' => 'btn btn-default btn-sm', 'name' => 'add_asset_class')) !!}
-        </div>
-    </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Key_Decision_Maker', 'Key Decision Maker:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Key_Decision_Maker', $positions, null, ['class' => 'form-control']) !!}</div>
-    </div>
+
     <div style="font-size: 18px;">Product Attachments:</div>
     @if ($attachments->count() > 0)
         <ul>
@@ -149,36 +104,129 @@
             </div>
         </div>
     </div>
+
+
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <div>{!! Form::label('First_Launched','First Launched:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('First_Launched', null, ['class'=>'form-control']) !!}</div>
+    </div>
+    <div class="form-group">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTMarket">
+                    <div class="panel-title">
+                        <div>
+                            <div class="visible-lg-inline">
+                                Target Market:
+                            </div>
+                            <div class="visible-lg-inline">
+                                <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseTMarket" aria-expanded="true" aria-controls="collapseTMarket">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseTMarket" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTMarket">
+                    <div class="panel-body">
+                        @foreach($TargetMarket as $TargetMarketItem)
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" name="{{$TargetMarketItem->name}}" aria-label="..." {!! in_array($TargetMarketItem->description,$TargetMarketSelection) ? "checked" : "" !!}>
+                                </span>
+                                <div class="form-control-static ">{{ $TargetMarketItem->description }}</div>
+                            </div><!-- /input-group -->
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTEndUser">
+                    <div class="panel-title">
+                        <div>
+                            <div class="visible-lg-inline">
+                                Target End User:
+                            </div>
+                            <div class="visible-lg-inline">
+                                <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseTEndUser" aria-expanded="true" aria-controls="collapseTEndUser">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseTEndUser" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTEndUser">
+                    <div class="panel-body">
+                        @foreach($TargetEndUser as $TargetItem)
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" name="{{ $TargetItem->name }}" aria-label="" {!! in_array($TargetItem->description, $TargetEndUserSelection) ? "checked" : "" !!}>
+                                </span>
+                                <div class="form-control-static ">{{ $TargetItem->description }}</div>
+                            </div><!-- /input-group -->
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingAssetClass">
+                    <div class="panel-title">
+                        <div>
+                            <div class="visible-lg-inline">
+                                Asset Class:
+                            </div>
+                            <div class="visible-lg-inline">
+                                <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseAssetClass" aria-expanded="true" aria-controls="collapseAssetClass">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseAssetClass" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingAssetClass">
+                    <div class="panel-body">
+                        @foreach($AssetClass as $AssetClassItem)
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" name="{{$AssetClassItem->name}}" aria-label="" {!! in_array($AssetClassItem->description, $ClassAssetsSelection) ? "checked" : "" !!}>
+                                </span>
+                                <div class="form-control-static ">{{ $AssetClassItem->description }}</div>
+                            </div><!-- /input-group -->
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTerritory">
+                    <div class="panel-title">
+                        <div>
+                            <div class="visible-lg-inline">
+                                Product Availability Territory:
+                            </div>
+                            <div class="visible-lg-inline">
+                                <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseTerritory" aria-expanded="true" aria-controls="collapseTerritory">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseTerritory" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTerritory">
+                    <div class="panel-body">
+                        @foreach($AvailabilityTerritory as $Territory)
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" name="{{ $Territory->name }}" aria-label="" {!! in_array($Territory->description, $TerritorySelection) ? "checked" : "" !!}>
+                                </span>
+                                <div class="form-control-static ">{{ $Territory->description }}</div>
+                            </div><!-- /input-group -->
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('id_Key_Decision_Maker', 'Key Decision Maker:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Key_Decision_Maker', $positions, null, ['class' => 'form-control']) !!}</div>
+    </div>
     <div class="form-group">
         <div>{!! Form::label('FTM_Product_Description', 'FTM Product Description', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('FTM_Product_Description',null, ['size' => '30x2', 'class' => 'form-control']) !!}</div>
-    </div>
-
-</div>
-<div class="col-md-3">
-    <div class="form-group">
-        <div>{!! Form::label('id_Target_End_User', 'Target End User:', Array("style" => "font-size: 16px;")) !!}</div>
-        @foreach($targetEndUser as $TargetItem)
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <input type="checkbox" name="{{$TargetItem->name}}" aria-label="" {!! in_array($TargetItem->description,$TargetEndUserSelection) ? "checked" : "" !!}>
-                </span>
-                <div class="form-control-static ">{{ $TargetItem->description }}</div>
-            </div><!-- /input-group -->
-        @endforeach
-    </div>
-</div>
-<div class="col-md-3">
-    <div class="form-group">
-        <div>{!! Form::label('id_Target_Market', 'Target Market:', Array("style" => "font-size: 16px;")) !!}</div>
-        @foreach($targetMarket as $TargetMarketItem)
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <input type="checkbox" name="{{$TargetMarketItem->name}}" aria-label="..." {!! in_array($TargetMarketItem->description,$TargetMarketSelection) ? "checked" : "" !!}>
-                </span>
-                <div class="form-control-static ">{{ $TargetMarketItem->description }}</div>
-            </div><!-- /input-group -->
-        @endforeach
     </div>
 </div>
 <div class="row">&nbsp;</div>

@@ -31,4 +31,56 @@ class Products extends Model
     public function targetMarket() {
         return $this->belongsToMany('App\Models\TargetMarket','Product_Target_Market', 'id_Product', 'id_Target_Market');
     }
+    public function TargetEndUserSelection()
+    {
+        $TargetEndUserSelection = [];
+        $ProductTargetEndUser = $this->targetEndUser()->get();
+        if ($ProductTargetEndUser->count() > 0)
+        {
+            foreach($ProductTargetEndUser as $EndUser)
+            {
+                $TargetEndUserSelection[] = $EndUser->Target_End_User;
+            }
+        }
+        return  $TargetEndUserSelection;
+    }
+    public function TargetMarketSelection()
+    {
+        $TargetMarketSelection = [];
+        $ProductTargetMarket = $this->targetMarket()->get();
+        if ($ProductTargetMarket->count() > 0)
+        {
+            foreach($ProductTargetMarket as $Market)
+            {
+                $TargetMarketSelection[] = $Market->Target_Market;
+            }
+        }
+        return $TargetMarketSelection;
+    }
+    public function ClassAssetsSelection()
+    {
+        $ClassAssetsSelection = [];
+        $ProductAssetClass = $this->assetClass()->get();
+        if ($ProductAssetClass->count() > 0)
+        {
+            foreach ($ProductAssetClass as $AssetClassItem)
+            {
+                $ClassAssetsSelection[] = $AssetClassItem->Asset_Class;
+            }
+        }
+        return $ClassAssetsSelection;
+    }
+    public function TerritorySelection()
+    {
+        $TerritoriesSelection = [];
+        $Territories = $this->territory()->get();
+        if ($Territories->count() > 0)
+        {
+            foreach ($Territories as $Territory)
+            {
+                $TerritoriesSelection[] = $Territory->Territory_Name;
+            }
+        }
+        return $TerritoriesSelection;
+    }
 }
