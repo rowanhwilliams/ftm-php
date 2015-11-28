@@ -29,8 +29,17 @@ class TargetEndUser extends Model
         }
         return $TargetsEndUserList;
     }
-    protected function getSelected()
+    protected function getSelected($request)
     {
-
+        $targetEndUserList = [];
+        $targetEndUserModel = $this->CheckboxesModel();
+        foreach($targetEndUserModel as $targetEndUser)
+        {
+            if ($request->{$targetEndUser->name} == "on")
+            {
+                $targetEndUserList[] = (integer) str_replace("Target_End_User_", "", $targetEndUser->name);
+            }
+        }
+        return $targetEndUserList;
     }
 }

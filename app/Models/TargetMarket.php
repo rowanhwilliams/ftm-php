@@ -20,7 +20,7 @@ class TargetMarket extends Model
     protected function CheckboxesModel()
     {
         $TargetsMarketList = [];
-        $ProductTargetsMarket = $this->all()->sortBy("Target_End_User");
+        $ProductTargetsMarket = $this->all()->sortBy("Target_Market");
         foreach($ProductTargetsMarket as $TargetsMarket){
             $TargetsMarketList[] = (object) array(
                 'name' => "Target_Market_" . $TargetsMarket->id_Target_Market,
@@ -28,5 +28,18 @@ class TargetMarket extends Model
             );
         }
         return $TargetsMarketList;
+    }
+    protected function getSelected($request)
+    {
+        $TargetMarketList = [];
+        $TargetMarketModel = $this->CheckboxesModel();
+        foreach($TargetMarketModel as $TargetMarket)
+        {
+            if ($request->{$TargetMarket->name} == "on")
+            {
+                $TargetMarketList[] = (integer) str_replace("Target_Market_", "", $TargetMarket->name);
+            }
+        }
+        return $TargetMarketList;
     }
 }

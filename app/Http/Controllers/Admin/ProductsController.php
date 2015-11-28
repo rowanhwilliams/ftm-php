@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\AvailabilityTerritory;
-use App\Models\CompetitorProduct;
 use App\Models\Positions;
 use App\Models\Products;
-use App\Models\Region;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -16,7 +15,6 @@ use Redirect;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\ProductType;
 use App\Models\ProductFocus;
 use App\Models\ProductFocusType;
 use App\Models\ProductFocusSubType;
@@ -158,33 +156,6 @@ class ProductsController extends Controller
         return ["Attachment_File_Name" => $request->files->get("attached_file")->getClientOriginalName(),
             "Attachment_Storage_File_Name"=>$AttachmentFields["Attachment_Storage_File_Name"]];
     }
-    // Target Territory validator
-    private function addTerritoryValidator(Request $request) {
-        $territoryValidator = [
-            'id_Availability_Territory' => 'required|numeric'
-        ];
-
-        $this->validate($request, $territoryValidator);
-        return ["id_Availability_Territory" => $request->id_Availability_Territory];
-    }
-    // Target Asset Class validator
-    private function addClassAssetsValidator(Request $request) {
-        $classAssetsValidator = [
-            'id_Asset_Class' => 'required|numeric'
-        ];
-
-        $this->validate($request, $classAssetsValidator);
-        return ["id_Asset_Class" => $request->id_Asset_Class];
-    }
-    // Target end user validator
-    private function addTargetEndUserValidator(Request $request) {
-        $classAssetsValidator = [
-            'id_Target_End_User' => 'required|numeric'
-        ];
-
-        $this->validate($request, $classAssetsValidator);
-        return ["id_Target_End_User" => $request->id_Target_End_User];
-    }
     // Target end user validator
     private function addProducFocusSubTypeValidator(Request $request) {
         $classFocusSubTypeValidator = [
@@ -193,15 +164,6 @@ class ProductsController extends Controller
 
         $this->validate($request, $classFocusSubTypeValidator);
         return ["id_Product_Focus_Sub_Type" => $request->id_Product_Focus_Sub_Type];
-    }
-    // Target market validator
-    private function addTargetMarketValidator(Request $request) {
-        $classAssetsValidator = [
-            'id_Target_Market' => 'required|numeric'
-        ];
-
-        $this->validate($request, $classAssetsValidator);
-        return ["id_Target_Market" => $request->id_Target_Market];
     }
 
     private function productValidator(Request $request) {
@@ -229,18 +191,41 @@ class ProductsController extends Controller
         return ["id_Competitor_Product" => $request->id_Competitor_Product];
     }
 
-    private function ListTargetEndUser(Request $request)
+    private function storeRelatedData(Request $request, $productsModel)
     {
-        $targetEndUserList = [];
-        $targetEndUserModel = TargetEndUser::getTargetEndUserCheckboxesModel();
-        foreach($targetEndUserModel as $targetEndUser)
+        $TargetEndUserSelection = TargetEndUser::getSelected($request);
+        $AssetClassSelection = AssetClass::getSelected($request);
+        $TargetMarketSelection = TargetMarket::getSelected($request);
+        $AvailabilityTerritorySelection = AvailabilityTerritory::getSelected($request);
+
+        if (count($AssetClassSelection))
         {
-            if ($request->{$targetEndUser->name} == "on")
-            {
-                $targetEndUserList[] = (integer) str_replace("Target_End_User_", "", $targetEndUser->name);
+            DB::table('Product_Asset_Class')->where('id_Product', '=', $productsModel->id_Product)->delete();
+            foreach($AssetClassSelection as $AssetClassId) {
+                $productsModel->assetClass()->save(AssetClass::findOrNew($AssetClassId));
             }
         }
-        return $targetEndUserList;
+        if (count($TargetEndUserSelection)) {
+            DB::table('Product_Target_End_User')->where('id_Product', '=', $productsModel->id_Product)->delete();
+            foreach($TargetEndUserSelection as $targetEndUserSelected) {
+                $productsModel->targetEndUser()->save(TargetEndUser::findOrNew($targetEndUserSelected));
+            }
+        }
+        if (count($TargetMarketSelection))
+        {
+            DB::table('Product_Target_Market')->where('id_Product', '=', $productsModel->id_Product)->delete();
+            foreach($TargetMarketSelection as $TargetMarketId) {
+                $productsModel->targetMarket()->save(TargetMarket::findOrNew($TargetMarketId));
+            }
+        }
+
+        if (count($AvailabilityTerritorySelection))
+        {
+            DB::table('Product_Availability_Territory')->where('id_Product', '=', $productsModel->id_Product)->delete();
+            foreach($AvailabilityTerritorySelection as $AvailabilityTerritoryId) {
+                $productsModel->territory()->save(AvailabilityTerritory::findOrNew($AvailabilityTerritoryId));
+             }
+        }
     }
 
     /**
@@ -256,26 +241,7 @@ class ProductsController extends Controller
             Session::set('ProductAttachments', Session::get('ProductAttachments')->push(new \App\Models\Attachments($attachmentFields)));
             return Redirect::back()->withInput($request->except(["attached_file"]));
         }
-        if (isset($request['add_asset_class']) && $request['add_asset_class']) {
-            $assetClassField = $this->addClassAssetsValidator($request);
-            Session::set('ProductAssetsClass', Session::get('ProductAssetsClass')->push(AssetClass::findOrNew($assetClassField["id_Asset_Class"])));
-            return Redirect::back()->withInput($request->except(["add_asset_class"]));
-        }
-//        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
-//            $tergetEndUserField = $this->addTargetEndUserValidator($request);
-//            Session::set('ProductTargetEndUser', Session::get('ProductTargetEndUser')->push(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"])));
-//            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
-//        }
-//        if (isset($request['add_target_market']) && $request['add_target_market']) {
-//            $tergetEndUserField = $this->addTargetMarketValidator($request);
-//            Session::set('ProductTargetMarket', Session::get('ProductTargetMarket')->push(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"])));
-//            return Redirect::back()->withInput($request->except(["add_target_market"]));
-//        }
-        if (isset($request['add_teritory']) && $request['add_teritory']) {
-            $territoryField = $this->addTerritoryValidator($request);
-            Session::set('ProductTerritory', Session::get('ProductTerritory')->push(AvailabilityTerritory::findOrNew($territoryField["id_Availability_Territory"])));
-            return Redirect::back()->withInput($request->except(["add_teritory"]));
-        }
+
         if (isset($request['add_Product_Focus_Sub_type']) && $request['add_Product_Focus_Sub_type']) {
             $producFocusSubTypeField = $this->addProducFocusSubTypeValidator($request);
             Session::set('ProductFocusSubType', Session::get('ProductFocusSubType')->
@@ -288,26 +254,16 @@ class ProductsController extends Controller
             return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
 
-        $targetEndUser = $this->ListTargetEndUser($request);
         $productsFields = $this->productValidator($request);
         $productsFields['Date_Created'] = Carbon::now();
         $productsModel = Products::create($productsFields);
 
+        $this->storeRelatedData($request, $productsModel);
+
         foreach(Session::get('ProductAttachments') as $atts){
             $productsModel->attachments()->save($atts);
         }
-        foreach(Session::get('ProductAssetsClass') as $assetClass) {
-            $productsModel->assetClass()->save($assetClass);
-        }
-        foreach($targetEndUser as $endUserTrgId) {
-            $productsModel->targetEndUser()->save(TargetEndUser::findOrNew($endUserTrgId));
-        }
-        foreach(Session::get('ProductTargetMarket') as $marketTrg) {
-            $productsModel->targetMarket()->save($marketTrg);
-        }
-        foreach(Session::get('ProductTerritory') as $territory) {
-            $productsModel->territory()->save($territory);
-        }
+
         foreach(Session::get('ProductFocusSubType') as $focusSubType) {
             $productsModel->focusSubType()->save($focusSubType);
         }
@@ -355,27 +311,6 @@ class ProductsController extends Controller
             $productModel->attachments()->save(new \App\Models\Attachments($attachmentFields));
             return Redirect::back()->withInput($request->except(["attached_file"]));
         }
-
-        if (isset($request['add_asset_class']) && $request['add_asset_class']) {
-            $assetClassField = $this->addClassAssetsValidator($request);
-            $productModel->assetClass()->save(AssetClass::findOrNew($assetClassField["id_Asset_Class"]));
-            return Redirect::back()->withInput($request->except(["add_asset_class"]));
-        }
-        if (isset($request['add_target_end_user']) && $request['add_target_end_user']) {
-            $tergetEndUserField = $this->addTargetEndUserValidator($request);
-            $productModel->targetEndUser()->save(TargetEndUser::findOrNew($tergetEndUserField["id_Target_End_User"]));
-            return Redirect::back()->withInput($request->except(["add_target_end_user"]));
-        }
-        if (isset($request['add_target_market']) && $request['add_target_market']) {
-            $tergetEndUserField = $this->addTargetMarketValidator($request);
-            $productModel->targetMarket()->save(TargetMarket::findOrNew($tergetEndUserField["id_Target_Market"]));
-            return Redirect::back()->withInput($request->except(["add_target_market"]));
-        }
-        if (isset($request['add_teritory']) && $request['add_teritory']) {
-            $territoryField = $this->addTerritoryValidator($request);
-            $productModel->territory()->save(AvailabilityTerritory::findOrNew($territoryField["id_Availability_Territory"]));
-            return Redirect::back()->withInput($request->except(["add_teritory"]));
-        }
         if (isset($request['add_Product_Focus_Sub_type']) && $request['add_Product_Focus_Sub_type']) {
             $producFocusSubTypeField = $this->addProducFocusSubTypeValidator($request);
             $productModel->focusSubType()->save(ProductFocusSubType::findOrNew($producFocusSubTypeField["id_Product_Focus_Sub_Type"]));
@@ -386,9 +321,11 @@ class ProductsController extends Controller
             $productModel->competitor()->save(Products::findOrNew($competitorProductField['id_Competitor_Product']));
             return Redirect::back()->withInput($request->except(["add_competitor"]));
         }
-        dd($productModel->targetEndUser()->where("id_Target_End_User", "=", $productModel->id_Product)->delete());
+
         $productsFields = $this->productValidator($request);
         $productModel->fill($productsFields)->save();
+
+        $this->storeRelatedData($request, $productModel);
         return redirect(route('admin.products.index'))->with('flash', 'The Product was updated');;
     }
 

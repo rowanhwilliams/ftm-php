@@ -30,4 +30,17 @@ class AssetClass extends Model
         }
         return $AssetClassList;
     }
+    protected function getSelected($request)
+    {
+        $AssetClassList = [];
+        $AssetClassListModel = $this->CheckboxesModel();
+        foreach($AssetClassListModel as $AssetClass)
+        {
+            if ($request->{$AssetClass->name} == "on")
+            {
+                $AssetClassList[] = (integer) str_replace("Asset_Class_", "", $AssetClass->name);
+            }
+        }
+        return $AssetClassList;
+    }
 }

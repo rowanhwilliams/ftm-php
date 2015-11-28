@@ -21,12 +21,25 @@ class AvailabilityTerritory extends Model
     protected function CheckboxesModel()
     {
         $AvailabilityTerritoryList = [];
-        $AvailabilityTerritory = $this->all()->sortBy("Asset_Class");
+        $AvailabilityTerritory = $this->all()->sortBy("Territory_Name");
         foreach($AvailabilityTerritory as $AvailabilityTerritoryItem){
             $AvailabilityTerritoryList[] = (object) array(
                 'name' => "Availability_Territory_" . $AvailabilityTerritoryItem->id_Availability_Territory,
                 'description' => $AvailabilityTerritoryItem->Territory_Name
             );
+        }
+        return $AvailabilityTerritoryList;
+    }
+    protected function getSelected($request)
+    {
+        $AvailabilityTerritoryList = [];
+        $AvailabilityTerritoryListtModel = $this->CheckboxesModel();
+        foreach($AvailabilityTerritoryListtModel as $AvailabilityTerritory)
+        {
+            if ($request->{$AvailabilityTerritory->name} == "on")
+            {
+                $AvailabilityTerritoryList[] = (integer) str_replace("Availability_Territory_", "", $AvailabilityTerritory->name);
+            }
         }
         return $AvailabilityTerritoryList;
     }
