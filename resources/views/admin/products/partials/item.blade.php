@@ -22,6 +22,18 @@
                 $("#id_Product_Focus_Sub_Type").trigger("change");
             });
         });
+        $(".item-to-remove").click(function() {
+            $.ajax({
+                url: $(this).attr("action-route"),
+                type: "post",
+                data: {'_token': $('input[name=_token]').val(), 'id_Product':"{!! $products->id_Product !!}", 'container':$(this).attr("item-id")+"_"+$(this).attr("item-type")},
+                success: function(data){
+                   var responseData = JSON.parse(data);
+                   $("#"+responseData.container).remove();
+                }
+            });
+            return false;
+        });
     });
 </script>
 <div class="col-md-6">
@@ -35,14 +47,15 @@
     </div>
     <div style="border: solid 2px lightgrey; padding: 10px;">
         @if ($productFocusSubTypeList->count() > 0)
-            <ul>
-                @foreach($productFocusSubTypeList->toArray() as $id => $FocusSubType)
-                    <li style="list-style: none" class="row small text-primary">
+            <ul class="list-unstyled">
+                @foreach($productFocusSubTypeList as $id => $FocusSubType)
+                    <li class="small" id="{{$FocusSubType->id_Product_Focus_Sub_Type}}_productFocusSubType">
                         {!! \App\Models\ProductFocus::findOrNew(\App\Models\ProductFocusType::
-                            findOrNew($FocusSubType['id_Product_Focus_Type'])->id_Product_Focus)->Product_Focus !!},
-                        {!! \App\Models\ProductFocusType::findOrNew($FocusSubType['id_Product_Focus_Type'])->Product_Focus_Type !!},
-                        {!! $FocusSubType['Product_Focus_Sub_Type'] !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                            findOrNew($FocusSubType->id_Product_Focus_Type)->id_Product_Focus)->Product_Focus !!},
+                        {!! \App\Models\ProductFocusType::findOrNew($FocusSubType->id_Product_Focus_Type)->Product_Focus_Type !!},
+                        {!! $FocusSubType->Product_Focus_Sub_Type !!}
+                        <a href='#' class="btn btn-danger btn-xs item-to-remove" item-id="{{$FocusSubType->id_Product_Focus_Sub_Type}}"
+                           action-route="{{ URL::route("admin.products.delete", [$FocusSubType->id_Product_Focus_Sub_Type, "productFocusSubType"]) }}" item-type="productFocusSubType">Delete</a>
                     </li>
                 @endforeach
             </ul>
@@ -67,11 +80,12 @@
     <div class="form-group" style="padding-top: 15px;">
         <div>{!! Form::label('id_Competitor_Product', 'Competitor Product:', Array("style" => "font-size: 16px;")) !!}</div>
         @if ($productCompetitors->count() > 0)
-            <ul>
+            <ul class="list-unstyled">
                 @foreach($productCompetitors as $id => $productComp)
-                    <li style="list-style: none" class="row small text-primary">
+                    <li class="small" id="{{$productComp->id_Product}}_competitor">
                         {!! $productComp->Product_Title !!}
-                        {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+                        <a href='#' class="btn btn-danger btn-xs item-to-remove" item-id="{{$productComp->id_Product}}"
+                                    action-route="{{ URL::route("admin.products.delete", [$productComp->id_Product, "competitor"]) }}" item-type="competitor">Delete</a>
                     </li>
                 @endforeach
             </ul>
@@ -86,11 +100,12 @@
 
     <div style="font-size: 18px;">Product Attachments:</div>
     @if ($attachments->count() > 0)
-        <ul>
-            @foreach($attachments->toArray() as $id => $attachment)
-                <li style="list-style: none" class="row small text-primary">
-                    {!! $attachment['Attachment_File_Name'] !!}
-                    {!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs', 'name' => "del_attachment_$id")) !!}
+        <ul class="list-unstyled">
+            @foreach($attachments as $id => $attachment)
+                <li class="small" id="{{$attachment->id_Attachments ? $attachment->id_Attachments : $id}}_file">
+                    {!! $attachment->Attachment_File_Name !!}
+                    <a href='#' class="btn btn-danger btn-xs item-to-remove" item-id="{{$attachment->id_Attachments ? $attachment->id_Attachments : $id}}"
+                       action-route="{{ URL::route("admin.products.delete", [$attachment->id_Attachments ? $attachment->id_Attachments : $id, "file"]) }}" item-type="file">Delete</a>
                 </li>
             @endforeach
         </ul>
@@ -132,7 +147,7 @@
                         @foreach($TargetMarket as $TargetMarketItem)
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="{{$TargetMarketItem->name}}" aria-label="..." {!! in_array($TargetMarketItem->description,$TargetMarketSelection) ? "checked" : "" !!}>
+                                    {!! Form::checkbox($TargetMarketItem->name, null, in_array($TargetMarketItem->description, $TargetMarketSelection)) !!}
                                 </span>
                                 <div class="form-control-static ">{{ $TargetMarketItem->description }}</div>
                             </div><!-- /input-group -->
@@ -158,7 +173,7 @@
                         @foreach($TargetEndUser as $TargetItem)
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="{{ $TargetItem->name }}" aria-label="" {!! in_array($TargetItem->description, $TargetEndUserSelection) ? "checked" : "" !!}>
+                                    {!! Form::checkbox($TargetItem->name, null, in_array($TargetItem->description, $TargetEndUserSelection)) !!}
                                 </span>
                                 <div class="form-control-static ">{{ $TargetItem->description }}</div>
                             </div><!-- /input-group -->
@@ -184,7 +199,7 @@
                         @foreach($AssetClass as $AssetClassItem)
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="{{$AssetClassItem->name}}" aria-label="" {!! in_array($AssetClassItem->description, $ClassAssetsSelection) ? "checked" : "" !!}>
+                                    {!! Form::checkbox($AssetClassItem->name, null, in_array($AssetClassItem->description, $ClassAssetsSelection)) !!}
                                 </span>
                                 <div class="form-control-static ">{{ $AssetClassItem->description }}</div>
                             </div><!-- /input-group -->
@@ -210,7 +225,7 @@
                         @foreach($AvailabilityTerritory as $Territory)
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="{{ $Territory->name }}" aria-label="" {!! in_array($Territory->description, $TerritorySelection) ? "checked" : "" !!}>
+                                    {!! Form::checkbox($Territory->name, null, in_array($Territory->description, $TerritorySelection)) !!}
                                 </span>
                                 <div class="form-control-static ">{{ $Territory->description }}</div>
                             </div><!-- /input-group -->

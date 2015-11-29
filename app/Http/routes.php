@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::post('companies/search', ['as' => 'admin.companies.search', 'uses' => 'CompaniesController@search']);
     Route::get('companies/search', 'CompaniesController@search');
     Route::resource('companies', 'CompaniesController');
+    Route::post('products/{id}/{type}/delete', ['as' => 'admin.products.delete', 'uses' => 'ProductsController@delete']);
     Route::resource('products', 'ProductsController');
     Route::resource('jobs', 'JobsController');
     Route::resource('news', 'NewsController');

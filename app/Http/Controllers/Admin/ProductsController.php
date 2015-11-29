@@ -76,13 +76,13 @@ class ProductsController extends Controller
 
         if (!is_null($id)) {
 
-            $cProducts = Products::where("id_Product", "!=", $id)->get()->toArray();
+            $cProducts = Products::where("id_Product", "!=", $id)->whereNull("Deleted")->orderBy('Product_Title')->get()->toArray();
             $attachments = $products->attachments()->get();
             $productFocusSubTypeList = $products->focusSubType()->get();
             $productCompetitors = $products->competitor()->get();
         }
         else {
-            $cProducts = Products::all()->toArray();
+            $cProducts = Products::whereNull("Deleted")->orderBy('Product_Title')->get()->toArray();
             if (!Session::has('ProductAttachments')) {
                 Session::set('ProductAttachments', $products->attachments()->get());
             }
@@ -98,7 +98,7 @@ class ProductsController extends Controller
             $productCompetitors = Session::get("ProductCompetitors");
 
         }
-
+        //dd($productFocusSubTypeList);
         $pFocus = ProductFocus::all();
         $pfType = ProductFocusType::where("id_Product_Focus", "=", $products->id_Product_Focus ? $products->id_Product_Focus : 1)->get()->toArray();
         $pfsType = ProductFocusSubType::where("id_Product_Focus_Type", "=", $products->id_Product_Focus_Type ? $products->id_Product_Focus_Type : 1)->get()->toArray();
@@ -340,5 +340,57 @@ class ProductsController extends Controller
         $product = Products::findOrFail($id);
         $product->fill(["Deleted" => Carbon::now()])->save();
         return redirect(route('admin.products.index'));
+    }
+
+    public function delete($id, $type, Request $request)
+    {
+        $ItemsList = [(object) array("id" => "competitor", "session" => "ProductCompetitors", "PKey" => ""),
+                    (object) array("id" => "file", "session"=>"ProductAttachments"),
+                    (object) array("id" => "productFocusSubType", "session"=>"ProductFocusSubType")];
+        $LocalId = $id;
+        foreach ($ItemsList as $List)
+        {
+            $SelectedItemSession = Session::get($List->session);
+            if ($List->id == $type && count($SelectedItemSession))
+            {
+                foreach ($SelectedItemSession as $SId => $SessionItem)
+                {
+                    if ($SessionItem->id_Product == $id)
+                    {
+                        $LocalId = $SId;
+                    }
+                }
+                if (isset($SelectedItemSession[$LocalId]))
+                {
+                    unset($SelectedItemSession[$LocalId]);
+                }
+                Session::set($List->session, $SelectedItemSession);
+                return json_encode((object) array("Result" => "Sucess", "container" => $request->container));
+            }
+        }
+
+        switch ($type)
+        {
+            case 'competitor':
+                DB::table("Product_Competitor_Product")
+                    ->where("id_Product", "=", $id)
+                    ->where("id_Competitor_Product", "=", $request->id_Product)
+                    ->delete();
+                break;
+            case 'file':
+                DB::table("Product_Attachments")
+                    ->where("id_Product", "=", $request->id_Product)
+                    ->where("id_Attachments", "=", $id)
+                    ->delete();
+                break;
+            case 'productFocusSubType':
+                DB::table("Product_Product_Focus_Sub_Type")
+                    ->where("id_Product", "=", $request->id_Product)
+                    ->where("id_Product_Focus_Sub_Type", "=", $id)
+                    ->delete();
+                break;
+
+        }
+        return json_encode((object) array("Result" => "Sucess", "container" => $request->container));
     }
 }
