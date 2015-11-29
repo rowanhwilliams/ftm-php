@@ -344,9 +344,9 @@ class ProductsController extends Controller
 
     public function delete($id, $type, Request $request)
     {
-        $ItemsList = [(object) array("id" => "competitor", "session" => "ProductCompetitors", "PKey" => ""),
-                    (object) array("id" => "file", "session"=>"ProductAttachments"),
-                    (object) array("id" => "productFocusSubType", "session"=>"ProductFocusSubType")];
+        $ItemsList = [(object) array("id" => "competitor", "session" => "ProductCompetitors", "PKey" => "id_Product"),
+                    (object) array("id" => "file", "session"=>"ProductAttachments", "PKey" => "id_Attachments"),
+                    (object) array("id" => "productFocusSubType", "session"=>"ProductFocusSubType", "PKey" => "id_Product_Focus_Sub_Type")];
         $LocalId = $id;
         foreach ($ItemsList as $List)
         {
@@ -355,7 +355,7 @@ class ProductsController extends Controller
             {
                 foreach ($SelectedItemSession as $SId => $SessionItem)
                 {
-                    if ($SessionItem->id_Product == $id)
+                    if ($SessionItem->{$List->PKey} == $id)
                     {
                         $LocalId = $SId;
                     }
