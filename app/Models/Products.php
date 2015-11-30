@@ -83,4 +83,14 @@ class Products extends Model
         }
         return $TerritoriesSelection;
     }
+    protected function SelectOptionsModel()
+    {
+        $products = [];
+        $productsList = $this->all(["id_Product","Product_Title"])->sortBy('Product_Title');
+
+        foreach ($productsList as $product) {
+            $products[$product->id_Product] = $product->Product_Title;
+        }
+        return $products;
+    }
 }

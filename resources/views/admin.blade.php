@@ -12,7 +12,10 @@
         <meta name="author" content="AY"/>
     @show
     <script src="{{ asset('adm/js/jquery.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css ') }}">
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <link href="{{ asset('adm/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('adm/css/bootstrap-theme.css') }}" rel="stylesheet">
     <script src="{{ asset('adm/js/bootstrap.js') }}"></script>

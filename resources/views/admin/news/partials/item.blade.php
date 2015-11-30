@@ -1,3 +1,36 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(function () {
+            $('#datetimepicker').datetimepicker({
+                        useCurrent:true,
+                        defaultDate:"{!! $news->Story_Date !!}",
+                        showClear:true,
+                        showClose: true
+
+            });
+        });
+        $("#NewsOpjectCategory").change(function() {
+            $.getJSON("{{ URL::to("admin/news") }}" +"/" + $("#NewsOpjectCategory").val() + "/options", function(data) {
+                var $NewsObjectItems = $("#NewsObjectItems");
+                $NewsObjectItems.empty();
+                $.each(data, function(index, value) {
+                    switch ($("#NewsOpjectCategory").val()){
+                        case 'People':
+                            $NewsObjectItems.append('<option value="' + value.id_People +'">' + value.First_Name + '</option>');
+                            break;
+                        case 'Products':
+                            $NewsObjectItems.append('<option value="' + value.id_Product +'">' + value.Product_Title + '</option>');
+                            break;
+                        case 'Companies':
+                            $NewsObjectItems.append('<option value="' + value.id_Company +'">' + value.Company_Full_Name + '</option>');
+                            break;
+                    }
+
+                });
+            });
+        });
+    });
+</script>
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('id_News_Type', 'News Type:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -10,19 +43,21 @@
     </div>
 
     <div class="form-group">
-        <div>{!! Form::label('Story Time', 'Story Time:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::label('Story_Date_Time', 'Story Date and Time:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>
-            <span class="col-md-6">Hour: {!! Form::selectRange('Story_Hour',00,24, $Story_Date->hour, ["class" => "form-control"]) !!}</span>
-            <span class="col-md-6">Minute: {!! Form::selectRange('Story_Minutes',00,60,$Story_Date->minute,["class" => "form-control"]) !!}</span>
-        </div>
-    </div>
+            <div class="row">
+                <div class='col-sm-6'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker'>
+                            {!! Form::text('Story_Date',$news->Story_Date, array('id' => 'datepicker','class'=>'form-control')) !!}
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div>{!! Form::label('Story_Date', 'Story Date:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>
-            <span class="col-md-4">{!! Form::selectRange('Story_Day',01,31,$Story_Date->day,["class" => "form-control"]) !!}</span>
-            <span class="col-md-4">{!! Form::selectMonth('Story_Month',$Story_Date->month,["class" => "form-control"]) !!}</span>
-            <span class="col-md-4">{!! Form::selectYear('Story_Year', 2015, 2020,$Story_Date->year,["class" => "form-control"]) !!}</span>
         </div>
     </div>
 
@@ -44,15 +79,14 @@
     </div>
 
     <div class="form-group">
-        <div>{!! Form::label('id_News_Type', 'Attached to:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_News_Type', array('1' => 'People', '2' => 'Companies ', '3' => ' Vertical', '4' => ' Products',
-            '5' => ' Events '), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::label('id_News_Group', 'Attached to:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::select('id_Object_Group', array('Companies' => 'Companies', 'People' => 'People',
+         'Vertical' => 'Vertical', 'Products' => 'Products', 'Events' => 'Events'), $IdObjectGroup,
+          ['class' => 'form-control', 'id'=>'NewsOpjectCategory']) !!}</div>
     </div>
-
     <div class="form-group">
         <div>{!! Form::label('Attached to', 'Attached to(object name):', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('Attached to', array('1' => '', '2' => ' ', '3' => ' ', '4' => ' ',
-            '5' => '  '), null, ['class' => 'form-control']) !!}</div>
+        <div>{!! Form::select('id_Object_Item', $IdObjectItems, $IdObjectItemSelected, ['class' => 'form-control', 'id'=>'NewsObjectItems']) !!}</div>
     </div>
 
     <div class="row">&nbsp;</div>

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Companies;
 use App\Models\News;
 use App\Models\NewsType;
+use App\Models\People;
+use App\Models\Products;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
@@ -20,7 +24,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::where("Deleted", "=", NULL)->get()->sortBy("Story_Headline");
+        $news = News::whereNull("Deleted")->get()->sortBy("Story_Date");
+
         return view("admin.news.index", compact("news"));
     }
 
@@ -37,9 +42,25 @@ class NewsController extends Controller
     private function passData($id = null)
     {
         $news = new \App\Models\News();
+        $IdObjectGroup = "Companies";
+        $IdObjectItems = Companies::SelectOptionsModel();
+        $IdObjectItemSelected = null;
         if ($id)
         {
             $news = News::findOrNew($id);
+            $companyRelation = $news->company();
+            $productRelation = $news->product();
+            //dd($companyRelation->count());
+            if ($companyRelation->count() > 0){
+                $IdObjectGroup = "Companies";
+                $IdObjectItems = Companies::SelectOptionsModel();
+                $IdObjectItemSelected = $companyRelation->first()->id_Company;
+            }
+            if ($productRelation->count() > 0){
+                $IdObjectGroup = "Products";
+                $IdObjectItems = Products::SelectOptionsModel();
+                $IdObjectItemSelected = $productRelation->first()->id_Product;
+            }
         }
         if ($news->Story_Date)
         {
@@ -48,10 +69,9 @@ class NewsController extends Controller
         else {
             $Story_Date = Carbon::now();
         }
-
         $newsTypesOptions = NewsType::getNewsTypeOptions();
         //dd($Story_Date->minute);
-        return compact("news", "newsTypesOptions","Story_Date");
+        return compact("news", "newsTypesOptions","Story_Date", "IdObjectItems", "IdObjectGroup", "IdObjectItemSelected");
     }
 
     public function doValidation(Request $request, $validateRules)
@@ -72,10 +92,36 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
+
         $newsFields = $this->doValidation($request, News::getValidatorRules());
-        $newsFields["Story_Date"] = Carbon::create($newsFields["Story_Year"], $newsFields["Story_Month"],$newsFields["Story_Day"],$newsFields["Story_Hour"], $newsFields["Story_Minutes"]);
+        $timeToSave = Carbon::now();
+        $timeToSave->timestamp(strtotime($newsFields["Story_Date"]));
+        $newsFields["Story_Date"] = $timeToSave;
+        //dd($newsFields);
         $newsModel = News::create($newsFields);
+        $this->saveObjectRelation($request, $newsModel);
         return redirect(route('admin.news.index'))->with('flash', 'The News was created');
+    }
+
+    public function saveObjectRelation(Request $request, $newsModel)
+    {
+        DB::table('News_Company')->where("id_News", "=", $newsModel->id_News)->delete();
+        DB::table('News_Product')->where("id_News", "=", $newsModel->id_News)->delete();
+        switch ($request->id_Object_Group){
+            case 'Companies':
+                $newsModel->company()->save(Companies::findOrNew($request->id_Object_Item));
+                break;
+            case 'People':
+                break;
+            case 'Vertical':
+                break;
+            case 'Products':
+                $newsModel->product()->save(Products::findOrNew($request->id_Object_Item));
+                break;
+            case 'Events':
+                break;
+        }
     }
 
     /**
@@ -111,8 +157,9 @@ class NewsController extends Controller
     {
         $newsModel = News::findOrNew($id);
         $newsFields = $this->doValidation($request, News::getValidatorRules());
-        $newsFields["Story_Date"] = Carbon::create($newsFields["Story_Year"], $newsFields["Story_Month"],$newsFields["Story_Day"],$newsFields["Story_Hour"], $newsFields["Story_Minutes"]);
+        $newsFields["Story_Date"] = strtotime($newsFields["Story_Date"]);
         $newsModel->fill($newsFields)->save();
+        $this->saveObjectRelation($request, $newsModel);
         return redirect(route('admin.news.index'))->with('flash', 'The News was updated');
     }
 
@@ -127,5 +174,22 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         $news->fill(["Deleted" => Carbon::now()])->save();
         return redirect(route('admin.news.index'));
+    }
+
+    public function objectOptions($category)
+    {
+        switch ($category)
+        {
+            case 'Companies':
+                return Companies::whereNull("Deleted")->orderBy('Company_Full_Name','asc')->get(['id_Company','Company_Full_Name'])->toJson();
+            case 'People':
+                return People::whereNull("Deleted")->orderBy('First_Name','asc')->get(['id_People','First_Name'])->toJson();
+            case 'Vertical':
+                return Companies::whereNull("Deleted")->get(['id_Company','Company_Full_Name'])->toJson();
+            case 'Products':
+                return Products::whereNull("Deleted")->orderBy('Product_Title','asc')->get(['id_Product','Product_Title'])->toJson();
+            case 'Events':
+                return Companies::whereNull("Deleted")->get(['id_Company','Company_Full_Name'])->toJson();
+        }
     }
 }

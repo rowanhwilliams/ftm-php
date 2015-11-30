@@ -16,17 +16,19 @@
           <table class="table table-striped" id="list-table_mc">
               <thead>
               <tr>
-                  <th nowrap="">News Description</th>
+                  <th nowrap="">Date</th>
+                  <th nowrap="">Time</th>
+                  <th nowrap="">Headline</th>
                   <th nowrap=""></th>
-                  <th></th>
               </tr>
               </thead>
               <tbody>
                   @if ($news->count() > 0)
                       @foreach ($news as $id => $newsItem)
                           <tr>
+                              <td class="text-left">{!! date("m-d-Y", strtotime($newsItem->Story_Date)) !!}</td>
+                              <td class="text-left">{!! date("h:i A", strtotime($newsItem->Story_Date)) !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
-                              <td class="text-left"></td>
                               <td class="text-center">
                                   {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.news.destroy", $newsItem->id_News], 'class' => 'pull-right']) !!}
                                   {!! Form::hidden('_method', 'DELETE') !!}
@@ -38,7 +40,7 @@
                       @endforeach
                   @else
                       <tr>
-                          <td colspan="3" class="text-center">No records found</td>
+                          <td colspan="4" class="text-center">No records found</td>
                       </tr>
                   @endif
               </tbody>
