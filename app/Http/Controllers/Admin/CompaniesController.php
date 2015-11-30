@@ -39,10 +39,25 @@ class CompaniesController extends Controller
     {
         $searchFilters = ["Company_Full_Name"];
         $paginationList  = [];
-
-        $activePage = $request->page ? $request->page : "a";
+        
+        $activePage = $request->page ? $request->page : null;
 
         $companiesSearchBy = Companies::getCompaniesSearchBy();
+        $companiesList = DB::table('Company')
+            ->where("Deleted", "=", NULL)
+            ->orderBy('Company_Full_Name', 'asc');
+
+        foreach($companiesList->get() as $company)
+        {
+            if (strlen($company->Company_Full_Name)) {
+                $firstChar = strtolower(substr($company->Company_Full_Name, 0, 1));
+                if(!isset($paginationList[$firstChar]))
+                {
+                    $paginationList[$firstChar] = 0;
+                }
+                $paginationList[$firstChar] += 1;
+            }
+        }
 
         $companies = DB::table('Company')
             ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
@@ -56,22 +71,12 @@ class CompaniesController extends Controller
             ->groupBy("Company.id_Company")
             ->orderBy('Company_Full_Name', 'asc');
 
-        if ($activePage != "all")
+        if (!is_null($activePage) && $activePage != "all")
         {
             $companies->where("Company_Full_Name", "like", "$activePage%");
         }
 
-        foreach($companies->get() as $company)
-        {
-            if (strlen($company->Company_Full_Name)) {
-                $firstChar = strtolower(substr($company->Company_Full_Name, 0, 1));
-                if(!isset($paginationList[$firstChar]))
-                {
-                    $paginationList[$firstChar] = 0;
-                }
-                $paginationList[$firstChar] += 1;
-            }
-        }
+
 
         $products = Products::all();
         $employeeSize = EmployeeSize::all();
@@ -102,23 +107,10 @@ class CompaniesController extends Controller
 
         //$this->validate($request, Search::getValidatorRules());
 
-        $companiesSearchBy = Companies::getCompaniesSearchBy();
+        $searchFilters = Companies::getCompaniesSearchBy();
         $search = $request->get("search") ? $request->get("search") : Session::get('CompanySearch');
-        $RequestSearchFilters = [];
 
-        foreach($companiesSearchBy as $searchBy)
-        {
-            if ($request->{$searchBy->name} == "on")
-            {
-                $RequestSearchFilters[$searchBy->name] = "";
-            }
-        }
-
-        $searchFilters = count($RequestSearchFilters) ? $RequestSearchFilters : Session::get('SearchFilters');
         Session::set('CompanySearch', $search);
-        Session::set('SearchFilters', $searchFilters);
-
-        $searchFilters = array_keys($searchFilters);
 
         $companiesList = DB::table('Company')
                 ->where("Deleted", "=", NULL)
@@ -146,8 +138,7 @@ class CompaniesController extends Controller
                     $paginationList[$firstChar] += 1;
                 }
             }
-            $FirstChars = array_keys($paginationList);
-            $activePage = $request->page ? $request->page : (count($FirstChars) ? $FirstChars[0] : "a");
+            $activePage = $request->page ? $request->page : null;
             $companies = DB::table('Company')
                 ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
                     'Employee_Size.Employee_Size', 'Addresses.City', 'Addresses.State', 'Country.Country')
@@ -169,7 +160,7 @@ class CompaniesController extends Controller
                 });
             }
 
-            if ($activePage != "all")
+            if (!is_null($activePage) && $activePage != "all")
             {
                 $companies->where("Company_Full_Name", "like", "$activePage%");
             }

@@ -5,7 +5,9 @@
         <script type="text/javascript">
             $(document).ready(function()
                 {
-                    $("#list-table_mc").tablesorter();
+                    $("#list-table_mc").tablesorter({
+                        sortList: [[1,0],[2,0]]
+                    });
                 }
             );
             $(document).ready(function() {
@@ -19,23 +21,38 @@
         <style>
             #list-table_mc td {padding:1px}
             #list-table_mc .btn-xs {padding:1px 2px}
+            table.tablesorter .tablesorter-headerAsc {
+                background-image: url("{{ asset('images/icons/up.png') }}");
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+            table.tablesorter .tablesorter-headerDesc {
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+            table.tablesorter .tablesorter-headerUnSorted {
+                cursor: pointer;
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+            table.tablesorter .without-sort {
+                background-image: none !important;
+            }
         </style>
-          <div class="row col-md-11">
+          <div class="row">
               {!! Form::open(['method'=>'POST', 'route' => ['admin.companies.search'], 'class'=>'form navbar-form searchform']) !!}
-              <div class="dropdown">
-
+              <div class="dropdown pull-right">
                   {!! Form::text('search', isset($search) ? $search : "", array('required', 'class'=>'form-control', 'placeholder'=>'Search for a companies...')) !!}
                   {!! Form::submit('Search', array('class'=>'btn btn-default')) !!}
                   <a class="btn btn-success" href="{{ URL::route('admin.companies.create') }}" role="button">Add</a>
               </div>
               <div>&nbsp;</div>
-              <div class="btn-group" data-toggle="buttons">
-                  @foreach($companiesSearchBy as $searchBy)
-                      <label class="btn btn-default{!! in_array($searchBy->name, $searchFilters) ? " active" : "" !!}">
-                          <input type="checkbox" autocomplete="off" name="{{$searchBy->name}}"{!! in_array($searchBy->name, $searchFilters) ? " checked" : "" !!}>{{$searchBy->description}}
-                      </label>
-                  @endforeach
-              </div>
+              <div>&nbsp;</div>
               {!! Form::close() !!}
 
           </div>
@@ -50,7 +67,7 @@
                       <th>Headquarters</th>
                       <th>Website</th>
                       <th nowrap="">Product Name </th>
-                      <th colspan="2"></th>
+                      <th class="without-sort"></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -63,7 +80,7 @@
                                 <td class="text-left">{{ $company->id_Employee_Size ? $company->Employee_Size : "" }}</td>
                                 <td class="text-left" nowrap="">{!! implode(", ", array_filter([$company->City, $company->State, $company->Country])) !!}</td>
                                 <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website, $company->Website, ["target"=>"_blank"]) : "-" !!}</td>
-                                <td class="text-left" nowrap>
+                                <td class="text-left">
                                     @foreach ($products as $id => $product)
                                         @if($product->id_Owner_Company == $company->id_Company)
                                             {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title, ["target"=>"_blank"]) !!}
@@ -81,7 +98,7 @@
                           @endforeach
                       @else
                         <tr>
-                            <td colspan="6" class="text-center">No records found</td>
+                            <td colspan="7" class="text-center">No records found</td>
                         </tr>
                       @endif
 

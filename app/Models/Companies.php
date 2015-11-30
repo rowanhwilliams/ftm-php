@@ -38,20 +38,21 @@ class Companies extends Model
         return $companies;
     }
     protected function getCompaniesSearchBy(){
-        return [
-            (object) array(
-                'name' => 'Company_Full_Name',
-                'description' => 'Search by Company Name'
-            ),
-            (object) array(
-                'name' => 'Year_Founded',
-                'description' => 'Search by Year Founded'
-            ),
-            (object) array(
-                'name' => 'Company_About_Us',
-                'description' => 'Search by Company Description'
-            )
-        ];
+        return['Company_Full_Name', 'Company_About_Us'];
+//        return [
+//            (object) array(
+//                'name' => 'Company_Full_Name',
+//                'description' => 'Search by Company Name'
+//            ),
+//            (object) array(
+//                'name' => 'Year_Founded',
+//                'description' => 'Search by Year Founded'
+//            ),
+//            (object) array(
+//                'name' => 'Company_About_Us',
+//                'description' => 'Search by Company Description'
+//            )
+//        ];
     }
 
 }
