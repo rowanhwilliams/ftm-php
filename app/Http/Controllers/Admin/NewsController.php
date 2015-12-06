@@ -24,8 +24,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::whereNull("Deleted")->get()->sortBy("Story_Date");
-
+        $news = News::getNews();
         return view("admin.news.index", compact("news"));
     }
 
@@ -64,13 +63,14 @@ class NewsController extends Controller
         }
         if ($news->Story_Date)
         {
-            $Story_Date = Carbon::parse($news->Story_Date);
+            $Story_Date = Carbon::parse($news->Story_Date)->format("d-M-Y H:i:s");
         }
         else {
-            $Story_Date = Carbon::now();
+            $Story_Date = Carbon::now()->format("d-M-Y H:i:s");
         }
+
         $newsTypesOptions = NewsType::getNewsTypeOptions();
-        //dd($Story_Date->minute);
+
         return compact("news", "newsTypesOptions","Story_Date", "IdObjectItems", "IdObjectGroup", "IdObjectItemSelected");
     }
 
@@ -95,10 +95,7 @@ class NewsController extends Controller
         //dd($request);
 
         $newsFields = $this->doValidation($request, News::getValidatorRules());
-        $timeToSave = Carbon::now();
-        $timeToSave->timestamp(strtotime($newsFields["Story_Date"]));
-        $newsFields["Story_Date"] = $timeToSave;
-        //dd($newsFields);
+        $newsFields["Story_Date"] = Carbon::parse($newsFields["Story_Date"]);
         $newsModel = News::create($newsFields);
         $this->saveObjectRelation($request, $newsModel);
         return redirect(route('admin.news.index'))->with('flash', 'The News was created');
@@ -157,7 +154,7 @@ class NewsController extends Controller
     {
         $newsModel = News::findOrNew($id);
         $newsFields = $this->doValidation($request, News::getValidatorRules());
-        $newsFields["Story_Date"] = strtotime($newsFields["Story_Date"]);
+        $newsFields["Story_Date"] = Carbon::parse($newsFields["Story_Date"]);
         $newsModel->fill($newsFields)->save();
         $this->saveObjectRelation($request, $newsModel);
         return redirect(route('admin.news.index'))->with('flash', 'The News was updated');

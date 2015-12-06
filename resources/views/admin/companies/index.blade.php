@@ -6,17 +6,10 @@
             $(document).ready(function()
                 {
                     $("#list-table_mc").tablesorter({
-                        sortList: [[1,0],[2,0]]
+                        sortList: [[0,0]]
                     });
                 }
             );
-            $(document).ready(function() {
-                $("#search-property li > a").click(function () {
-                    $("#search-property-title").text($(this).text());
-                    $("#search-filter").val(this.id);
-                    return true;
-                })
-            });
         </script>
         <style>
             #list-table_mc td {padding:1px}
@@ -24,21 +17,24 @@
             table.tablesorter .tablesorter-headerAsc {
                 background-image: url("{{ asset('images/icons/up.png') }}");
                 background-size: 10px;
+                padding-left: 12px;
                 background-repeat: no-repeat;
-                background-position: center right;
+                background-position: center left;
             }
             table.tablesorter .tablesorter-headerDesc {
                 background-image: url("{{asset('images/icons/down.png')}}");
                 background-size: 10px;
+                padding-left: 12px;
                 background-repeat: no-repeat;
-                background-position: center right;
+                background-position: center left;
             }
             table.tablesorter .tablesorter-headerUnSorted {
                 cursor: pointer;
                 background-image: url("{{asset('images/icons/down.png')}}");
                 background-size: 10px;
+                padding-left: 12px;
                 background-repeat: no-repeat;
-                background-position: center right;
+                background-position: center left;
             }
             table.tablesorter .without-sort {
                 background-image: none !important;

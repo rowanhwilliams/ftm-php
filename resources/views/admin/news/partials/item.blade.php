@@ -2,11 +2,9 @@
     $(document).ready(function() {
         $(function () {
             $('#datetimepicker').datetimepicker({
-                        useCurrent:true,
-                        defaultDate:"{!! $news->Story_Date !!}",
                         showClear:true,
-                        showClose: true
-
+                        showClose: true,
+                        format: 'DD-MMM-YYYY HH:mm'
             });
         });
         $("#NewsOpjectCategory").change(function() {
@@ -49,7 +47,7 @@
                 <div class='col-sm-6'>
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker'>
-                            {!! Form::text('Story_Date',$news->Story_Date, array('id' => 'datepicker','class'=>'form-control')) !!}
+                            {!! Form::text('Story_Date',$Story_Date, array('id' => 'datepicker','class'=>'form-control')) !!}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

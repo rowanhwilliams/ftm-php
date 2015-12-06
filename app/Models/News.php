@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class News extends Model
 {
@@ -19,6 +20,13 @@ class News extends Model
     public function company() {
         return $this->belongsToMany('App\Models\Companies','News_Company', 'id_News', 'id_Company');
     }
+    protected function getNews(){
+        $news = $this
+            ->leftJoin('News_Type', 'News.id_News_Type', '=', 'News_Type.id_News_Type')
+            ->whereNull("Deleted")
+            ->orderBy('Story_Date', 'asc');
+        return $news->get();
+    }
 
 //    public function people() {
 //        return $this->belongsToMany('App\Models\People','News_Employee', 'id_News', 'id_People');
@@ -30,8 +38,6 @@ class News extends Model
         'Story_Date' => 'required|string',
         'id_Object_Group' => 'required|string',
         'id_Object_Item' => 'required|numeric',
-//        'Story_Month' => 'required|numeric',
-//        'Story_Year' => 'required|numeric',
         'Story_Description' => 'required|string',
     ];
 

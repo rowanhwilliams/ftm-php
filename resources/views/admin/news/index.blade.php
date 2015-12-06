@@ -2,9 +2,43 @@
 
 @section('content')
     <section class="content">
+        <script type="text/javascript">
+            $(document).ready(function()
+                    {
+                        $("#list-table_mc").tablesorter({
+                            sortList: [[3,0]]
+                        });
+                    }
+            );
+        </script>
         <style>
             #list-table_mc td {padding:1px}
             #list-table_mc .btn-xs {padding:1px 2px}
+            table.tablesorter .tablesorter-headerAsc {
+                background-image: url("{{ asset('images/icons/up.png') }}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .tablesorter-headerDesc {
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .tablesorter-headerUnSorted {
+                cursor: pointer;
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .without-sort {
+                background-image: none !important;
+            }
         </style>
         <div class="row">
           <div class="pull-right">
@@ -18,16 +52,18 @@
               <tr>
                   <th nowrap="">Date</th>
                   <th nowrap="">Time</th>
+                  <th nowrap="">News type</th>
                   <th nowrap="">Headline</th>
-                  <th nowrap=""></th>
+                  <th nowrap="" class="without-sort"></th>
               </tr>
               </thead>
               <tbody>
                   @if ($news->count() > 0)
                       @foreach ($news as $id => $newsItem)
                           <tr>
-                              <td class="text-left">{!! date("m-d-Y", strtotime($newsItem->Story_Date)) !!}</td>
-                              <td class="text-left">{!! date("h:i A", strtotime($newsItem->Story_Date)) !!}</td>
+                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y") !!}</td>
+                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("H:i") !!}</td>
+                              <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
                               <td class="text-center">
                                   {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.news.destroy", $newsItem->id_News], 'class' => 'pull-right']) !!}
