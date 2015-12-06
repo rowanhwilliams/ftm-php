@@ -13,34 +13,34 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="{{ (Request::is('/') ? 'active' : '') }}">
-                        <a href="{{ URL::to('/') }}"><i class="fa fa-home"></i> Home</a>
+                    <li class="{!!(Request::is('admin') ? 'active' : '')!!}">
+                        <a href="{{ URL::to('/admin/') }}"><i class="fa fa-1x fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/verticals') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/verticals') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/') }}">Verticals</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/companies') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/companies') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/companies') }}">Companies</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/news') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/news') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/news') }}">News</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/products') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/products') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/products') }}">Products</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/events') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/events') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/') }}">Events</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/indices') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/indices') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/') }}">Indices</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/jobs') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/jobs') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/jobs') }}">Jobs</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/employee') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/employee') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/employee') }}">People</a>
                     </li>
-                    <li class="{{ (Request::is('/admin/cities') ? 'active' : '') }}">
+                    <li class="{!!(Request::is('admin/cities') ? 'active' : '')!!}">
                         <a href="{{ URL::to('/admin/') }}">Cities</a>
                     </li>
 
