@@ -37,6 +37,11 @@
         //myApp.showPleaseWait();
     });
 </script>
+<div class="row">
+    <div class="pull-right">
+        {!! Form::submit($submit_text, array('class' => 'btn btn-success btn-sm', 'name' => $submit_text)) !!}
+    </div>
+</div>
 <div class="col-md-6">
     <div class="form-group">
         <div>{!! Form::label('Company_Full_Name', 'Company Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -206,11 +211,9 @@
         <div>{!! Form::label('Company_Description_FTM', 'Company Description:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('Company_Description_FTM',null, ['size' => '30x2', 'class' => 'form-control','placeholder'=>'Company Description']) !!}</div>
     </div>
-
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="pull-right">
-            {!! Form::submit($submit_text, array('class' => 'btn btn-success btn-sm', 'name' => $submit_text)) !!}
-        </div>
+</div>
+<div class="row">
+    <div class="pull-right">
+        {!! Form::submit($submit_text, array('class' => 'btn btn-success btn-sm', 'name' => $submit_text)) !!}
     </div>
 </div>

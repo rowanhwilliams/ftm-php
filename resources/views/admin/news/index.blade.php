@@ -6,7 +6,7 @@
             $(document).ready(function()
                     {
                         $("#list-table_mc").tablesorter({
-                            sortList: [[3,0]]
+                            sortList: [[0,1]]
                         });
                     }
             );
@@ -50,10 +50,10 @@
           <table class="table table-striped" id="list-table_mc">
               <thead>
               <tr>
-                  <th nowrap="">Date</th>
-                  <th nowrap="">Time</th>
+                  <th nowrap="">Date Time</th>
                   <th nowrap="">News type</th>
                   <th nowrap="">Headline</th>
+                  <th nowrap="">About</th>
                   <th nowrap="" class="without-sort"></th>
               </tr>
               </thead>
@@ -61,10 +61,10 @@
                   @if ($news->count() > 0)
                       @foreach ($news as $id => $newsItem)
                           <tr>
-                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y") !!}</td>
-                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("H:i") !!}</td>
+                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
                               <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
+                              <td class="text-left"></td>
                               <td class="text-center">
                                   {!! Form::open([ 'method'=>'DELETE', 'route' => ["admin.news.destroy", $newsItem->id_News], 'class' => 'pull-right']) !!}
                                   {!! Form::hidden('_method', 'DELETE') !!}

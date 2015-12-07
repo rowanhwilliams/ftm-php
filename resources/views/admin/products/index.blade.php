@@ -2,9 +2,43 @@
 
 @section('content')
     <section class="content">
+        <script type="text/javascript">
+            $(document).ready(function()
+                    {
+                        $("#list-table_mc").tablesorter({
+                            sortList: [[0,0]]
+                        });
+                    }
+            );
+        </script>
         <style>
             #list-table_mc td {padding:1px}
             #list-table_mc .btn-xs {padding:1px 2px}
+            table.tablesorter .tablesorter-headerAsc {
+                background-image: url("{{ asset('images/icons/up.png') }}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .tablesorter-headerDesc {
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .tablesorter-headerUnSorted {
+                cursor: pointer;
+                background-image: url("{{asset('images/icons/down.png')}}");
+                background-size: 10px;
+                padding-left: 12px;
+                background-repeat: no-repeat;
+                background-position: center left;
+            }
+            table.tablesorter .without-sort {
+                background-image: none !important;
+            }
         </style>
         <div class="row">
           <div class="pull-right">
@@ -20,8 +54,8 @@
                   <th nowrap="">Product Owner</th>
                   <th nowrap="">Product Focus Type</th>
                   <th nowrap="">Product Focus Sub Type</th>
-                  <th nowrap=""></th>
-                  <th nowrap=""></th>
+                  <th nowrap="" class="without-sort"></th>
+                  <th nowrap="" class="without-sort"></th>
               </tr>
               </thead>
               <tbody>
