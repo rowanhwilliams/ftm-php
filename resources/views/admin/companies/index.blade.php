@@ -4,12 +4,23 @@
     <section class="content">
         <script type="text/javascript">
             $(document).ready(function()
-                {
-                    $("#list-table_mc").tablesorter({
-                        sortList: [[0,0]]
-                    });
-                }
-            );
+            {
+                $("#list-table_mc").tablesorter({
+                    sortList: [[0,0]]
+                });
+//                $(".productsMore").hide();
+//                $(".extraMinus").hide();
+                $(".hideExtra").click(function() {
+                    $("#showExtra-"+$(this).attr("data-id")).show();
+                    $("#hideExtra-"+$(this).attr("data-id")).hide();
+                    $("#moreProducts-"+$(this).attr("data-id")).hide()
+                });
+                $(".showExtra").click(function() {
+                    $("#showExtra-"+$(this).attr("data-id")).hide();
+                    $("#hideExtra-"+$(this).attr("data-id")).show();
+                    $("#moreProducts-"+$(this).attr("data-id")).show()
+                });
+            });
         </script>
         <style>
             #list-table_mc td {padding:1px}
@@ -57,6 +68,7 @@
               <table class="table table-striped" id="list-table_mc">
                   <thead>
                   <tr>
+                      <th class="without-sort"> <i class="glyphicon glyphicon-tasks"></i></th>
                       <th nowrap="">Company Name</th>
                       <th nowrap="">Year Founded</th>
                       <th nowrap="">Employee Size</th>
@@ -64,14 +76,24 @@
                       <th>Headquarters</th>
                       <th>Website</th>
                       <th nowrap="">Product Name </th>
-                      <th class="without-sort"></th>
                   </tr>
                   </thead>
                   <tbody>
-
                       @if ($companies->count() > 0)
                           @foreach ($companies->get() as $id => $company)
                             <tr>
+                                <td class="text-center">
+                                    {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.companies.destroy', $company->id_Company], 'class' => 'pull-center']) !!}
+                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                    {!! Form::hidden('_object', '_company') !!}
+                                    <button class='btn btn-xs btn-danger center' type='button' data-toggle="modal" data-target="#confirmDelete"
+                                            data-title="Delete Company" data-message='Warning – You are about to delete {!! $company->Company_Full_Name !!}, please confirm?'
+                                            data-extra-confirm="Are you sure (Y/N)?">
+                                        <i class='glyphicon glyphicon-trash'></i>
+                                    </button>
+                                    {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}--}}
+                                    {!! Form::close() !!}
+                                </td>
                                 <td class="text-left" nowrap="">
                                     {!! sizeof($company->Company_Full_Name) ? link_to(URL::route("admin.companies.edit", $company->id_Company),
                                             substr($company->Company_Full_Name, 0, 30).(strlen($company->Company_Full_Name) > 29 ? "..." : "")) : "-" !!}
@@ -82,23 +104,20 @@
                                 <td class="text-left" nowrap="">{!! implode(", ", array_filter([$company->City, $company->State, $company->Country])) !!}</td>
                                 <td class="text-left">{!! sizeof($company->Website) > 0 ? link_to($company->Website, substr($company->Website, 0, 30).(strlen($company->Website) > 29 ? "..." : ""), ["target"=>"_blank"]) : "-" !!}</td>
                                 <td class="text-left">
-                                    @foreach ($products as $id => $product)
-                                        @if($product->id_Owner_Company == $company->id_Company)
-                                            {!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title, ["target"=>"_blank"]) !!}
-                                        @endif
-                                    @endforeach
+                                    @if (count($ProductsToShow[$company->id_Company]) > 0)
+                                        {!! link_to(URL::route("admin.products.edit", $ProductsToShow[$company->id_Company][0]["id"]), $ProductsToShow[$company->id_Company][0]["title"], ["target"=>"_blank"]) !!}
+                                    @endif
+                                    @if (count($ProductsToHide[$company->id_Company]) > 0)
+                                        <span id="showExtra-{!! $company->id_Company !!}"><a class="btn btn-xs btn-info showExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-plus "></i></a></span>
+                                        <span id="hideExtra-{!! $company->id_Company !!}" class="extraMinus" style="display: none;"><a class="btn btn-xs btn-danger hideExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-minus "></i></a></span>
+                                        <div id="moreProducts-{!! $company->id_Company !!}" class="productsMore" style="display: none;">
+                                        @foreach ($ProductsToHide[$company->id_Company] as $product)
+                                            {!! link_to(URL::route("admin.products.edit", $product["id"]), $product["title"], ["target"=>"_blank"]) !!}
+                                        @endforeach
+                                        </div>
+                                    @endif
                                 </td>
-                                <td class="text-center">
-                                    {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.companies.destroy', $company->id_Company], 'class' => 'pull-right']) !!}
-                                    {!! Form::hidden('_method', 'DELETE') !!}
-                                    {!! Form::hidden('_object', '_company') !!}
-                                    <button class='btn btn-xs btn-danger' type='button' data-toggle="modal" data-target="#confirmDelete"
-                                            data-title="Warning – You are about to delete {!! $company->Company_Full_Name !!}, please confirm?" data-message='Are you sure (Y/N)?'>
-                                        <i class='glyphicon glyphicon-trash'></i>
-                                    </button>
-                                    {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}--}}
-                                    {!! Form::close() !!}
-                                </td>
+
                             </tr>
                           @endforeach
                       @else

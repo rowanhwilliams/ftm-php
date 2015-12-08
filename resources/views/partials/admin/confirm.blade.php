@@ -1,20 +1,25 @@
 <!-- Dialog show event handler -->
 <script type="text/javascript">
-    $('#confirmDelete').on('show.bs.modal', function (e) {
-        message = $(e.relatedTarget).attr('data-message');
-        alert(message);
-        $(this).find('.modal-body p').text($message);
-        $title = $(e.relatedTarget).attr('data-title');
-        $(this).find('.modal-title').text($title);
+    $(document).ready(function()
+    {
+        $('#confirmDelete').on('show.bs.modal', function (e) {
+            $message = $(e.relatedTarget).attr('data-message');
+            $(this).find('.modal-body p').text($message);
+            $confirmMessage = $(e.relatedTarget).attr('data-extra-message');
+            $(this).find('.modal-body div').text($confirmMessage);
+            $title = $(e.relatedTarget).attr('data-title');
+            $(this).find('.modal-title').text($title);
 
-        // Pass form reference to modal for submission on yes/ok
-        var form = $(e.relatedTarget).closest('form');
-        $(this).find('.modal-footer #confirm').data('form', form);
-    });
+            // Pass form reference to modal for submission on yes/ok
+            var form = $(e.relatedTarget).closest('form');
+            $(this).find('.modal-footer #confirm').data('form', form);
+        });
 
-    <!-- Form confirm (yes/ok) handler, submits form -->
-    $('#confirmDelete').find('.modal-footer #confirm').on('click', function () {
-        $(this).data('form').submit();
+        <!-- Form confirm (yes/ok) handler, submits form -->
+        $('#confirmDelete').find('.modal-footer #confirm').on('click', function () {
+            console.log("test");
+            $(this).data('form').submit();
+        });
     });
 </script>
 <!-- Modal Dialog -->
@@ -26,7 +31,8 @@
                 <h4 class="modal-title">Delete</h4>
             </div>
             <div class="modal-body">
-                <p> Warning – You are about to delete Thomson Reuters, please confirm? Then…are you sure (Y/N)?</p>
+                <p> Warning – You are about to delete Company, please confirm?</p>
+                <div>Are you sure (Y/N)?</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

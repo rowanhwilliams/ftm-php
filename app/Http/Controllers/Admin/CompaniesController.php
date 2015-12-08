@@ -81,14 +81,33 @@ class CompaniesController extends Controller
         //$products = Products::all();
         $products = Products::whereNull("Deleted")->get();
         $employeeSize = EmployeeSize::all();
-
+        $ProductsToShow = [];
+        $ProductsToHide = [];
+        foreach ($companies->get() as $company) {
+            $ProductsToShow[$company->id_Company] = [];
+            $ProductsToHide[$company->id_Company] = [];
+            $itemQty = 0;
+            foreach ($products as $product) {
+                if ($product->id_Owner_Company == $company->id_Company)
+                {
+                    $itemQty++;
+                    if ($itemQty > 1) {
+                        $ProductsToHide[$company->id_Company][] = ["id" => $product->id_Product, "title" => $product->Product_Title];
+                        //link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title, ["target"=>"_blank"]);
+                    }
+                    else {
+                        $ProductsToShow[$company->id_Company][] = ["id" => $product->id_Product, "title" => $product->Product_Title];
+                    }
+                }
+            }
+        }
         //$companies = Paginator::make($companies, $companies->count(), 15);
         // empty session data
         Session::forget('CompanySearch');
         Session::forget('SearchFilters');
         Session::forget('MediaContacts');
         Session::forget('CompanyAttachments');
-        return view("admin.companies.index", compact('companies', "products", "search", "employeeSize", "searchFilters",
+        return view("admin.companies.index", compact('companies', "ProductsToHide", "ProductsToShow", "search", "employeeSize", "searchFilters",
                     "paginationList", "activePage", "companiesSearchBy"));
     }
 
