@@ -365,7 +365,7 @@ class CompaniesController extends Controller
     private function companyValidator(Request $request) {
         $CompanyValidator = [
             'Company_Full_Name' => 'required|string',
-            'Year_Founded' => 'required|numeric',
+            'Year_Founded' => 'numeric',
             'id_Employee_Size' => 'required|numeric',
             'id_Revenue_Stage' => 'required|numeric',
             'id_Growth_Profile' => 'required|numeric',
@@ -377,7 +377,7 @@ class CompaniesController extends Controller
             'Acquired_Subsidiary' => 'sometimes|accepted',
             'Graduate_Program' => 'sometimes|accepted',
             'Firm_Out_Of_Business' => 'sometimes|accepted',
-            'Company_About_Us' => 'required',
+            'Company_About_Us' => 'string',
             'Company_Description_FTM' => 'string'
         ];
         $this->validate($request,$CompanyValidator);

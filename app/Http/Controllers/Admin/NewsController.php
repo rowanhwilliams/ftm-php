@@ -42,24 +42,9 @@ class NewsController extends Controller
     {
         $news = new \App\Models\News();
         $IdObjectGroup = "Companies";
-        $IdObjectItems = Companies::SelectOptionsModel();
-        $IdObjectItemSelected = null;
         if ($id)
         {
             $news = News::findOrNew($id);
-            $companyRelation = $news->company();
-            $productRelation = $news->product();
-            //dd($companyRelation->count());
-            if ($companyRelation->count() > 0){
-                $IdObjectGroup = "Companies";
-                $IdObjectItems = Companies::SelectOptionsModel();
-                $IdObjectItemSelected = $companyRelation->first()->id_Company;
-            }
-            if ($productRelation->count() > 0){
-                $IdObjectGroup = "Products";
-                $IdObjectItems = Products::SelectOptionsModel();
-                $IdObjectItemSelected = $productRelation->first()->id_Product;
-            }
         }
         if ($news->Story_Date)
         {
@@ -70,8 +55,8 @@ class NewsController extends Controller
         }
 
         $newsTypesOptions = NewsType::getNewsTypeOptions();
-
-        return compact("news", "newsTypesOptions","Story_Date", "IdObjectItems", "IdObjectGroup", "IdObjectItemSelected");
+        $IdObjectItems = $news->Tags();
+        return compact("news", "newsTypesOptions","Story_Date", "IdObjectItems");
     }
 
     public function doValidation(Request $request, $validateRules)
@@ -92,8 +77,6 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         $newsFields = $this->doValidation($request, News::getValidatorRules());
         $newsFields["Story_Date"] = Carbon::parse($newsFields["Story_Date"]);
         $newsModel = News::create($newsFields);
@@ -105,19 +88,28 @@ class NewsController extends Controller
     {
         DB::table('News_Company')->where("id_News", "=", $newsModel->id_News)->delete();
         DB::table('News_Product')->where("id_News", "=", $newsModel->id_News)->delete();
-        switch ($request->id_Object_Group){
-            case 'Companies':
-                $newsModel->company()->save(Companies::findOrNew($request->id_Object_Item));
-                break;
-            case 'People':
-                break;
-            case 'Vertical':
-                break;
-            case 'Products':
-                $newsModel->product()->save(Products::findOrNew($request->id_Object_Item));
-                break;
-            case 'Events':
-                break;
+        foreach($newsModel->target as $relationTarget)
+        {
+            $matches =  preg_grep('/^'.$relationTarget."_*/i",array_keys($request->all()));
+            foreach ($matches as $targetItem)
+            {
+                if ($request->get($targetItem) == "on") {
+                    switch ($relationTarget){
+                        case 'Companies':
+                            $newsModel->company()->save(Companies::findOrNew(str_replace($relationTarget."_", "", $targetItem)));
+                            break;
+                        case 'People':
+                            break;
+                        case 'Vertical':
+                            break;
+                        case 'Products':
+                            $newsModel->product()->save(Products::findOrNew(str_replace($relationTarget."_", "", $targetItem)));
+                            break;
+                        case 'Events':
+                            break;
+                    }
+                }
+            }
         }
     }
 

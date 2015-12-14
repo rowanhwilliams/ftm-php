@@ -19,6 +19,7 @@
     <link href="{{ asset('adm/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('adm/css/bootstrap-theme.css') }}" rel="stylesheet">
     <script src="{{ asset('adm/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/underscore-min.js') }}"></script>
 
 
     @yield('styles')
@@ -29,7 +30,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{{{ asset('assets/site/ico/favicon.ico') }}}">
+    <link rel="shortcut icon" href="{{ asset('assets/site/ico/favicon.ico') }}">
 </head>
 <body>
 @include('partials.admin.nav')

@@ -31,16 +31,28 @@ class News extends Model
 //    public function people() {
 //        return $this->belongsToMany('App\Models\People','News_Employee', 'id_News', 'id_People');
 //    }
-
+    public $target = ["Companies", "People", "Vertical", "Products", "Events"];
     private $validatorRules = [
         'id_News_Type' => 'required|numeric',
         'Story_Headline' => 'required|string',
         'Story_Date' => 'required|string',
         'id_Object_Group' => 'required|string',
-        'id_Object_Item' => 'required|numeric',
+//        'id_Object_Item' => 'required|numeric',
         'Story_Description' => 'required|string',
     ];
-
+    public function Tags()
+    {
+        $tags = [];
+        foreach($this->company()->get() as $item)
+        {
+            $tags[] = (object)["target" => $this->target[0], "id" => $item->id_Company, "description"=>$item->Company_Full_Name];
+        }
+        foreach($this->product()->get() as $item)
+        {
+            $tags[] = (object)["target" => $this->target[3], "id" => $item->id_Product, "description"=>$item->Product_Title];
+        }
+        return $tags;
+    }
     protected function getValidatorRules()
     {
         return $this->validatorRules;

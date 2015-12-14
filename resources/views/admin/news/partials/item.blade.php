@@ -7,72 +7,43 @@
                         format: 'DD-MMM-YYYY HH:mm'
             });
         });
-        $("#NewsOpjectCategory").change(function() {
+        prepareSelection();
+        $("#NewsOpjectCategory").change(prepareSelection);
+
+        function prepareSelection() {
+            var $NewsObjectItems = $("#selectElements");
+            $NewsObjectItems.addClass('btn-disabled')
+            $NewsObjectItems.attr('disabled', 'disabled');
             $.getJSON("{{ URL::to("admin/news") }}" +"/" + $("#NewsOpjectCategory").val() + "/options", function(data) {
-                var $NewsObjectItems = $("#NewsObjectItems");
-                $NewsObjectItems.empty();
+                $NewsObjectItems.removeClass('btn-disabled');
+                $NewsObjectItems.removeAttr('disabled');
+                $NewsObjectItems.attr("data-title", "Select Attached to(object name) - " + $("#NewsOpjectCategory").val());
+                $NewsObjectItems.attr("data-parent-resource", $("#NewsOpjectCategory").val());
+                var $outData = [];
                 $.each(data, function(index, value) {
                     switch ($("#NewsOpjectCategory").val()){
                         case 'People':
-                            $NewsObjectItems.append('<option value="' + value.id_People +'">' + value.First_Name + '</option>');
+                            $outData.push({id:value.id_People, description:value.First_Name});
                             break;
                         case 'Products':
-                            $NewsObjectItems.append('<option value="' + value.id_Product +'">' + value.Product_Title + '</option>');
+                            $outData.push({id:value.id_Product, description:value.Product_Title});
                             break;
                         case 'Companies':
-                            $NewsObjectItems.append('<option value="' + value.id_Company +'">' + value.Company_Full_Name + '</option>');
+                            $outData.push({id:value.id_Company, description:value.Company_Full_Name});
                             break;
                     }
 
                 });
+                $NewsObjectItems.attr("modal-data", JSON.stringify($outData));
             });
-        });
-        $("#selectElements").click(function(){
-            $("#myModal").modal();
-            $('#myModal').on('shown.bs.modal', function(){
-                $('#myModal .load_modal').html(data);
-            });
-            $('#myModal').on('hidden.bs.modal', function(){
-                $('#myModal .modal-body').data('');
-            });
-        });
+        }
     });
 </script>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4>Attached to(object name):<span id="objectParent"></span></h4>
-            </div>
-            <div class="modal-body" id="modelBody">
-                {{--<form role="form">--}}
-                    {{--<div class="form-group">--}}
-                        {{--<label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>--}}
-                        {{--<input type="text" class="form-control" id="usrname" placeholder="Enter email">--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group">--}}
-                        {{--<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>--}}
-                        {{--<input type="text" class="form-control" id="psw" placeholder="Enter password">--}}
-                    {{--</div>--}}
-                    {{--<div class="checkbox">--}}
-                        {{--<label><input type="checkbox" value="" checked>Remember me</label>--}}
-                    {{--</div>--}}
-                    {{--<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>--}}
-                {{--</form>--}}
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
+<style>
+    #news-tags-list {
+        padding: 0 0 8px 0;
+    }
+</style>
 <div class="col-md-push-3 col-md-6">
     <div class="row">
         <div class="pull-right">
@@ -127,24 +98,32 @@
 
     <div class="form-group">
         <div>{!! Form::label('id_News_Group', 'Attached to:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div class="col-md-10">
-            {!! Form::select('id_Object_Group', array('Companies' => 'Companies', 'People' => 'People',
-                'Vertical' => 'Vertical', 'Products' => 'Products', 'Events' => 'Events'), $IdObjectGroup,
-                ['class' => 'form-control', 'id'=>'NewsOpjectCategory']) !!}
+        <div id="news-tags-list">
+            @foreach($IdObjectItems as $tag)
+                <label class="tag label label-primary">
+                    <span>{!! $tag->description !!}</span>
+                    <input type="hidden" name="{!! $tag->target."_".$tag->id !!}" value='on'>
+                    <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                </label>
+            @endforeach
         </div>
-        <div class="col-md-2">
-            <a class="btn btn-warning btn-sm" href="#" role="button" id="selectElements">Select Object</a>
+        <div class="clearfix">
+            <div class="col-md-9">
+                {!! Form::select('id_Object_Group', array('Companies' => 'Companies', 'People' => 'People',
+                    'Vertical' => 'Vertical', 'Products' => 'Products', 'Events' => 'Events'), null,
+                    ['class' => 'form-control', 'id'=>'NewsOpjectCategory']) !!}
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-warning btn-sm" href="#" role="button" id="selectElements" data-toggle="modal" data-target="#customModal"
+                   data-title="Select Attached to(object name) - Company" data-result-container="news-tags-list">Select Object</a>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div>{!! Form::label('Attached to', 'Attached to(object name):', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::select('id_Object_Item', $IdObjectItems, $IdObjectItemSelected, ['class' => 'form-control', 'id'=>'NewsObjectItems']) !!}</div>
-    </div>
-
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="pull-right">
             {!! Form::submit($submit_text, array('class' => 'btn btn-success btn-sm', 'name' => $submit_text)) !!}
         </div>
     </div>
+    @include('partials.admin.modals.checkbox-modal')
 </div>

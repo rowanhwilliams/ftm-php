@@ -3,10 +3,22 @@
 @section('content')
     <section class="content">
         <script type="text/javascript">
+
             $(document).ready(function()
                     {
+                        $.tablesorter.addParser({
+                            id: "date",
+                            is: function (s) {
+                                return false;
+                            },
+                            format: function (s, table) {
+                                return new Date(s).getTime() || '';
+                            },
+                            type: "numeric"
+                        })
                         $("#list-table_mc").tablesorter({
-                            sortList: [[0,1]]
+                            sortList: [[1,1]],
+                            headers: {1: {sorter:'date'}}
                         });
                     }
             );
@@ -76,7 +88,11 @@
                               <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
                               <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
-                              <td class="text-left"></td>
+                              <td class="text-left">
+                                  @foreach($newsItem->tags() as $tag)
+                                      <span class="label label-info">{!! $tag->target.":".$tag->description !!}</span>
+                                  @endforeach
+                              </td>
                           </tr>
                       @endforeach
                   @else
