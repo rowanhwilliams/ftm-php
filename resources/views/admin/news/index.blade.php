@@ -52,9 +52,22 @@
                 background-image: none !important;
             }
         </style>
+
+        <div class="row">
+            {!! Form::open(['method'=>'POST', 'route' => ['admin.news.search'], 'class'=>'form navbar-form searchform']) !!}
+            <div class="dropdown pull-right">
+                {!! Form::text('search', isset($search) ? $search : "", array('required', 'class'=>'form-control', 'placeholder'=>'Search for a news...')) !!}
+                {!! Form::submit('Search', array('class'=>'btn btn-default')) !!}
+                <a class="btn btn-success" href="{{ URL::route('admin.news.create') }}" role="button">Add</a>
+            </div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            {!! Form::close() !!}
+
+        </div>
         <div class="row">
           <div class="pull-right">
-              <a class="btn btn-success btn-xs" href="{{ URL::route('admin.news.create') }}" role="button">Add</a>
+
           </div>
         </div>
 
@@ -87,7 +100,7 @@
                                   {!! Form::close() !!}
                               </td>
                               <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
-                              <td class="text-left ">
+                              <td class="text-left" nowrap="">
                                   <strong>
                                     @foreach($newsItem->tags() as $tag)
                                         @if ($tag->target == "Companies")
@@ -107,7 +120,7 @@
                               <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
                               <td class="text-left">{!!  strlen($newsItem->Story_Description) > 30 ?
-                                    substr($newsItem->Story_Description,0, " ", 30). "..." : $newsItem->Story_Description !!}</td>
+                                    substr($newsItem->Story_Description,0, strpos($newsItem->Story_Description, " ", 30)). "..." : $newsItem->Story_Description !!}</td>
                           </tr>
                       @endforeach
                   @else

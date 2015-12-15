@@ -25,7 +25,7 @@ class News extends Model
         return $this->belongsToMany('App\Models\Employee','News_Employee', 'id_News', 'id_Employee');
     }
 
-    protected function getNews(){
+    protected function GetNews(){
         $news = $this
             ->leftJoin('News_Type', 'News.id_News_Type', '=', 'News_Type.id_News_Type')
             ->whereNull("Deleted")
@@ -33,6 +33,32 @@ class News extends Model
         return $news->get();
     }
 
+    protected function GetNewsSearchBy()
+    {
+        return ['News.Story_Headline', 'News.Story_Description', 'News_Type.News_Type_Name'];
+    }
+
+    protected function SearchNews($search)
+    {
+        $searchFilters = $this->GetNewsSearchBy();
+        $news = $this
+            ->leftJoin('News_Type', 'News.id_News_Type', '=', 'News_Type.id_News_Type')
+            ->whereNull("Deleted");
+            if (count($searchFilters)) {
+                $news->where(
+                    function ($query) use ($searchFilters, $search) {
+                        foreach($searchFilters as $searchFilter)
+                        {
+                            $query->where($searchFilter, 'like', "%$search%", "OR");
+                        }
+                    }
+                );
+            }
+        $news->orderBy('Story_Date', 'asc');
+
+        return $news->get();
+
+    }
 
     public $target = ["Companies", "People", "Vertical", "Products", "Events"];
     private $validatorRules = [
