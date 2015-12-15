@@ -130,6 +130,9 @@
                   @endif
               </tbody>
           </table>
+            <ul class="pagination">
+                <li class="{!! $activePage == "all" ? "active" : "" !!}"><a href="{{ URL::route("admin.news.index") }}">All</a></li>
+            </ul>
         </div>
         @include('partials.admin.confirm')
     </section>
