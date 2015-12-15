@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Companies;
+use App\Models\Employee;
 use App\Models\News;
 use App\Models\NewsType;
 use App\Models\People;
@@ -94,16 +95,20 @@ class NewsController extends Controller
             foreach ($matches as $targetItem)
             {
                 if ($request->get($targetItem) == "on") {
+                    $ObjectTrgetId = str_replace($relationTarget."_", "", $targetItem);
                     switch ($relationTarget){
                         case 'Companies':
-                            $newsModel->company()->save(Companies::findOrNew(str_replace($relationTarget."_", "", $targetItem)));
+                            $newsModel->company()->save(Companies::findOrNew($ObjectTrgetId));
                             break;
                         case 'People':
+                            $employeeModel = Employee::where("id_People", "=", $ObjectTrgetId)->first();
+                            //dd($employeeModel);
+                            $newsModel->employee()->save(Employee::findOrNew($employeeModel->id_Employee));
                             break;
                         case 'Vertical':
                             break;
                         case 'Products':
-                            $newsModel->product()->save(Products::findOrNew(str_replace($relationTarget."_", "", $targetItem)));
+                            $newsModel->product()->save(Products::findOrNew($ObjectTrgetId));
                             break;
                         case 'Events':
                             break;

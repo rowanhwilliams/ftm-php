@@ -64,9 +64,10 @@
               <tr>
                   <th class="without-sort"> <i class="glyphicon glyphicon-tasks"></i></th>
                   <th nowrap="">Date Time</th>
+                  <th class="without-sort">Tags</th>
                   <th nowrap="">News type</th>
-                  <th nowrap="">Headline</th>
-                  <th nowrap="">About</th>
+                  <th>Headline</th>
+                  <th>Body</th>
 
               </tr>
               </thead>
@@ -85,14 +86,28 @@
                                   </button>
                                   {!! Form::close() !!}
                               </td>
-                              <td class="text-left">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
+                              <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
+                              <td class="text-left ">
+                                  <strong>
+                                    @foreach($newsItem->tags() as $tag)
+                                        @if ($tag->target == "Companies")
+                                            <span class="text-info">
+                                        @elseif($tag->target == "Products")
+                                            <span class="text-success">
+                                        @elseif($tag->target == "People")
+                                            <span class="text-warning">
+                                        @else
+                                            <span class="text-default">
+                                        @endif
+                                                {!! $tag->description !!}
+                                            </span>
+                                  @endforeach
+                                  </strong>
+                              </td>
                               <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                               <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
-                              <td class="text-left">
-                                  @foreach($newsItem->tags() as $tag)
-                                      <span class="label label-info">{!! $tag->target.":".$tag->description !!}</span>
-                                  @endforeach
-                              </td>
+                              <td class="text-left">{!!  strlen($newsItem->Story_Description) > 30 ?
+                                    substr($newsItem->Story_Description,0, " ", 30). "..." : $newsItem->Story_Description !!}</td>
                           </tr>
                       @endforeach
                   @else

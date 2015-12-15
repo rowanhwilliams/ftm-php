@@ -15,4 +15,5 @@ class Employee extends Model
     {
         return $this->hasOne('App\Models\EmployeeType', 'id_Employee_Type', 'id_Employee_Type');
     }
+
 }

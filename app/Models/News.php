@@ -20,6 +20,11 @@ class News extends Model
     public function company() {
         return $this->belongsToMany('App\Models\Companies','News_Company', 'id_News', 'id_Company');
     }
+
+    public function employee() {
+        return $this->belongsToMany('App\Models\Employee','News_Employee', 'id_News', 'id_Employee');
+    }
+
     protected function getNews(){
         $news = $this
             ->leftJoin('News_Type', 'News.id_News_Type', '=', 'News_Type.id_News_Type')
@@ -28,9 +33,7 @@ class News extends Model
         return $news->get();
     }
 
-//    public function people() {
-//        return $this->belongsToMany('App\Models\People','News_Employee', 'id_News', 'id_People');
-//    }
+
     public $target = ["Companies", "People", "Vertical", "Products", "Events"];
     private $validatorRules = [
         'id_News_Type' => 'required|numeric',
@@ -50,6 +53,11 @@ class News extends Model
         foreach($this->product()->get() as $item)
         {
             $tags[] = (object)["target" => $this->target[3], "id" => $item->id_Product, "description"=>$item->Product_Title];
+        }
+        foreach($this->employee()->get() as $item)
+        {
+            $people = People::where("id_People", "=", $item->id_People)->first();
+            $tags[] = (object)["target" => $this->target[1], "id" => $item->id_People, "description"=>$people->First_Name];
         }
         return $tags;
     }
