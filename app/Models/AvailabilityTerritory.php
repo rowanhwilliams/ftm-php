@@ -22,7 +22,12 @@ class AvailabilityTerritory extends Model
     {
         $AvailabilityTerritoryList = [];
         $AvailabilityTerritory = $this->all()->sortBy("Territory_Name");
-        foreach($AvailabilityTerritory as $AvailabilityTerritoryItem){
+        $AvailabilityTerritoryList[] = (object) array(
+            'name' => "Availability_Territory_8",
+            'description' => "Global"
+        );
+        foreach($AvailabilityTerritory as $AvailabilityTerritoryItem) {
+            if ($AvailabilityTerritoryItem->Territory_Name != $AvailabilityTerritoryList[0]->description)
             $AvailabilityTerritoryList[] = (object) array(
                 'name' => "Availability_Territory_" . $AvailabilityTerritoryItem->id_Availability_Territory,
                 'description' => $AvailabilityTerritoryItem->Territory_Name

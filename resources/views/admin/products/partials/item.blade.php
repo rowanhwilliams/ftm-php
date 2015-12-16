@@ -34,6 +34,13 @@
             });
             return false;
         });
+        $("input[name='Availability_Territory_8']").click(function() {
+           $.each($("input[name^='Availability_Territory']"), function(index, item) {
+               if ($(item).attr("name") != "Availability_Territory_8") {
+                   $(item).prop("checked",$("input[name='Availability_Territory_8']").prop("checked"));
+               }
+           });
+        });
     });
 </script>
 <div class="col-md-6">

@@ -80,8 +80,6 @@
                   <th class="without-sort">Tags</th>
                   <th nowrap="">News type</th>
                   <th>Headline</th>
-                  <th>Body</th>
-
               </tr>
               </thead>
               <tbody>
@@ -118,14 +116,15 @@
                                   </strong>
                               </td>
                               <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
-                              <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News), $newsItem->Story_Headline) !!}</td>
-                              <td class="text-left">{!!  strlen($newsItem->Story_Description) > 30 ?
-                                    substr($newsItem->Story_Description,0, strpos($newsItem->Story_Description, " ", 30)). "..." : $newsItem->Story_Description !!}</td>
+                              <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
+                                  strlen($newsItem->Story_Headline) > 30 ?
+                                        substr($newsItem->Story_Headline,0, strpos($newsItem->Story_Headline, " ", 30)). "..." : $newsItem->Story_Headline) !!}
+                              </td>
                           </tr>
                       @endforeach
                   @else
                       <tr>
-                          <td colspan="4" class="text-center">No records found</td>
+                          <td colspan="5" class="text-center">No records found</td>
                       </tr>
                   @endif
               </tbody>

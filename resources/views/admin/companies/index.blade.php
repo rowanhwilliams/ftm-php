@@ -108,8 +108,8 @@
                                         {!! link_to(URL::route("admin.products.edit", $ProductsToShow[$company->id_Company][0]["id"]), $ProductsToShow[$company->id_Company][0]["title"], ["target"=>"_blank"]) !!}
                                     @endif
                                     @if (count($ProductsToHide[$company->id_Company]) > 0)
-                                        <span id="showExtra-{!! $company->id_Company !!}"><a class="btn btn-xs btn-info showExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-plus "></i></a></span>
-                                        <span id="hideExtra-{!! $company->id_Company !!}" class="extraMinus" style="display: none;"><a class="btn btn-xs btn-danger hideExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-minus "></i></a></span>
+                                        <span id="showExtra-{!! $company->id_Company !!}"><a class="btn btn-xs btn-primary showExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-plus "></i></a></span>
+                                        <span id="hideExtra-{!! $company->id_Company !!}" class="extraMinus" style="display: none;"><a class="btn btn-xs btn-primary hideExtra" data-id="{!! $company->id_Company !!}"><i class="glyphicon glyphicon-minus "></i></a></span>
                                         <div id="moreProducts-{!! $company->id_Company !!}" class="productsMore" style="display: none;">
                                         @foreach ($ProductsToHide[$company->id_Company] as $product)
                                             {!! link_to(URL::route("admin.products.edit", $product["id"]), $product["title"], ["target"=>"_blank"]) !!}
