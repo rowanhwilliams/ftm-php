@@ -1,6 +1,6 @@
-<div class="row bs-component">
-    <div class="navbar navbar-default">
-        <div class="container container-fluid">
+<div class="row">
+    <div class="col-md-12">
+        <div class="navbar brb" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1">
@@ -46,33 +46,33 @@
 
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Auth::guest())
-                        <li class="{{ (Request::is('auth/login') ? 'active' : '') }}"><a href="{{ URL::to('auth/login') }}"><i
-                                        class="fa fa-sign-in"></i> Login</a></li>
-                        <li class="{{ (Request::is('auth/register') ? 'active' : '') }}"><a
-                                    href="{{ URL::to('auth/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false"><i class="fa fa-user"></i> {{ Auth::user()->name }} <i
-                                        class="fa fa-caret-down"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                @if(Auth::check())
-                                    @if(Auth::user()->userType=='admin')
-                                        <li>
-                                            <a href="{{ URL::to('admin') }}"><i class="fa fa-tachometer"></i> Dashboard </a>
-                                        </li>
-                                    @endif
-                                    <li role="presentation" class="divider"></li>
-                                @endif
-                                <li>
-                                    <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
+                {{--<ul class="nav navbar-nav navbar-right">--}}
+                    {{--@if (Auth::guest())--}}
+                        {{--<li class="{{ (Request::is('auth/login') ? 'active' : '') }}"><a href="{{ URL::to('auth/login') }}"><i--}}
+                                        {{--class="fa fa-sign-in"></i> Login</a></li>--}}
+                        {{--<li class="{{ (Request::is('auth/register') ? 'active' : '') }}"><a--}}
+                                    {{--href="{{ URL::to('auth/register') }}">Register</a></li>--}}
+                    {{--@else--}}
+                        {{--<li class="dropdown">--}}
+                            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"--}}
+                               {{--aria-expanded="false"><i class="fa fa-user"></i> {{ Auth::user()->name }} <i--}}
+                                        {{--class="fa fa-caret-down"></i></a>--}}
+                            {{--<ul class="dropdown-menu" role="menu">--}}
+                                {{--@if(Auth::check())--}}
+                                    {{--@if(Auth::user()->userType=='admin')--}}
+                                        {{--<li>--}}
+                                            {{--<a href="{{ URL::to('admin') }}"><i class="fa fa-tachometer"></i> Dashboard </a>--}}
+                                        {{--</li>--}}
+                                    {{--@endif--}}
+                                    {{--<li role="presentation" class="divider"></li>--}}
+                                {{--@endif--}}
+                                {{--<li>--}}
+                                    {{--<a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout </a>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        {{--</li>--}}
+                    {{--@endif--}}
+                {{--</ul>--}}
             </div>
         </div>
     </div>

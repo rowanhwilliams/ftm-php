@@ -33,6 +33,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 {
     // GET
     Route::get('/', ['as' => 'admin.root', 'uses' => 'DashboardController@index']);
+    Route::get('dashboard/{month}/{year}/MonthStatistic', ['as' => 'admin.dashboard.monthStatistic', 'uses' => 'DashboardController@monthStatistic']);
+    Route::get('dashboard/EmployeeStatistic', ['as' => 'admin.dashboard.employeeStatistic', 'uses' => 'DashboardController@employeeStatistic']);
+    Route::get('dashboard/HQStatistic', ['as' => 'admin.dashboard.hqStatistic', 'uses' => 'DashboardController@hqStatistic']);
+
 //    Route::get('setting', ['as' => 'admin.setting.index', 'uses' => 'SettingController@getSettings']);
     // POST
 //    Route::post('language/change', ['as' => 'admin.language.change' , 'uses' => 'LanguageController@postChange']);
