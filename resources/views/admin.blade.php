@@ -73,7 +73,7 @@
 <body class="bg-img-num9">
     <div class="container theme-dark">
         @include('partials.admin.nav')
-        @yield('content')
+        @include('partials.admin.content')
         @include('partials.app.footer')
     </div>
 </body>

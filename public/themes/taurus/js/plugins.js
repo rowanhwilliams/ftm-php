@@ -57,8 +57,8 @@ $(document).ready(function(){
     /* EOF Datetimepicker */    
     
     /* Datatables */
-    if($("table.sortable_simple").length > 0)
-        $("table.sortable_simple").dataTable({"iDisplayLength": 5,"bLengthChange": false,"bFilter": false,"bInfo": false,"bPaginate": true});
+    //if($("table.sortable_simple").length > 0)
+    //    $("table.sortable_simple").dataTable({"iDisplayLength": 5,"bLengthChange": false,"bFilter": false,"bInfo": false,"bPaginate": true});
     
     if($("table.sortable_default").length > 0)
         $("table.sortable_default").dataTable({"iDisplayLength": 5, "sPaginationType": "full_numbers","bLengthChange": false,"bFilter": false,"bInfo": false,"bPaginate": true, "aoColumns": [ { "bSortable": false }, null, null, null, null]});

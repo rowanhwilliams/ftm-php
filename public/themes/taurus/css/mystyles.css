@@ -1,0 +1,5 @@
+.index-table thead>tr>th, .index-table tbody>tr>th, .index-table tfoot>tr>th,
+.index-table thead>tr>td, .index-table tbody>tr>td, .index-table tfoot>tr>td
+{
+    padding: 2px 6px !important;
+}
