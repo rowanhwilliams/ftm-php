@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row nm">
     <div class="col-md-12">
         <div class="navbar brb" role="navigation">
             <div class="navbar-header">

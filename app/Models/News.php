@@ -5,6 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+abstract class NewsCategories
+{
+    const All = "All";
+    const Comany = "Company";
+    const People = "People";
+    const Vertical = "Vertical";
+    const Products = "Products";
+    const Events = "Events";
+}
+
 class News extends Model
 {
     public $timestamps = false;
@@ -66,24 +76,28 @@ class News extends Model
         'Story_Headline' => 'required|string',
         'Story_Date' => 'required|string',
         'id_Object_Group' => 'required|string',
-//        'id_Object_Item' => 'required|numeric',
         'Story_Description' => 'required|string',
     ];
-    public function Tags()
+    public function Tags($categories = "All")
     {
         $tags = [];
-        foreach($this->company()->get() as $item)
-        {
-            $tags[] = (object)["target" => $this->target[0], "id" => $item->id_Company, "description"=>$item->Company_Full_Name];
+        if ($categories == NewsCategories::All || $categories == NewsCategories::Comany) {
+            foreach($this->company()->get() as $item)
+            {
+                $tags[] = (object)["target" => $this->target[0], "id" => $item->id_Company, "description"=>$item->Company_Full_Name];
+            }
         }
-        foreach($this->product()->get() as $item)
-        {
-            $tags[] = (object)["target" => $this->target[3], "id" => $item->id_Product, "description"=>$item->Product_Title];
+        if ($categories == NewsCategories::All || $categories == NewsCategories::Products) {
+            foreach($this->product()->get() as $item)
+            {
+                $tags[] = (object)["target" => $this->target[3], "id" => $item->id_Product, "description"=>$item->Product_Title];
+            }
         }
-        foreach($this->employee()->get() as $item)
-        {
-            $people = People::where("id_People", "=", $item->id_People)->first();
-            $tags[] = (object)["target" => $this->target[1], "id" => $item->id_People, "description"=>$people->First_Name];
+        if ($categories == NewsCategories::All || $categories == NewsCategories::People) {
+            foreach ($this->employee()->get() as $item) {
+                $people = People::where("id_People", "=", $item->id_People)->first();
+                $tags[] = (object)["target" => $this->target[1], "id" => $item->id_People, "description" => $people->First_Name];
+            }
         }
         return $tags;
     }

@@ -8,6 +8,7 @@ use App\Models\News;
 use App\Models\NewsType;
 use App\Models\People;
 use App\Models\Products;
+use App\Models\Vertical;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,7 @@ class NewsController extends Controller
         $activePage = "";
         return view("admin.news.index", compact("news", "activePage"));
     }
+
 
     public function search(Request $request)
     {
@@ -179,20 +181,28 @@ class NewsController extends Controller
         return redirect(route('admin.news.index'));
     }
 
-    public function objectOptions($category)
+    public function getTags($id) {
+        $news = News::findOrFail($id);
+        return json_encode($news->Tags());
+    }
+
+    public function getTagsList($category)
     {
         switch ($category)
         {
             case 'Companies':
-                return Companies::whereNull("Deleted")->orderBy('Company_Full_Name','asc')->get(['id_Company','Company_Full_Name'])->toJson();
+                return Companies::whereNull("Deleted")->orderBy('Company_Full_Name','asc')
+                        ->get(['id_Company as id','Company_Full_Name as description'])->toJson();
             case 'People':
-                return People::whereNull("Deleted")->orderBy('First_Name','asc')->get(['id_People','First_Name'])->toJson();
+                return People::whereNull("Deleted")->orderBy('First_Name','asc')
+                        ->get(['id_People as id','First_Name as description'])->toJson();
             case 'Vertical':
-                return Companies::whereNull("Deleted")->get(['id_Company','Company_Full_Name'])->toJson();
+                return Vertical::all(['id_Vertical as id','Main_Description as description'])->toJson();
             case 'Products':
-                return Products::whereNull("Deleted")->orderBy('Product_Title','asc')->get(['id_Product','Product_Title'])->toJson();
+                return Products::whereNull("Deleted")->orderBy('Product_Title','asc')
+                        ->get(['id_Product as id','Product_Title as description'])->toArray();
             case 'Events':
-                return Companies::whereNull("Deleted")->get(['id_Company','Company_Full_Name'])->toJson();
+                return Event::all(['id_Event as id','Event_Title as description'])->toJson();
         }
     }
 }

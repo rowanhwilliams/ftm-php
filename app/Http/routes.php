@@ -54,9 +54,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::post('products/{id}/{type}/delete', ['as' => 'admin.products.delete', 'uses' => 'ProductsController@delete']);
     Route::resource('products', 'ProductsController');
     Route::resource('jobs', 'JobsController');
-    Route::get('news/{type}/options', ['as' => 'admin.news.options', 'uses' => 'NewsController@objectOptions']);
-    Route::post('news/search', ['as' => 'admin.news.search', 'uses' => 'NewsController@search']);
-    Route::get('news/search', 'NewsController@search');
+    Route::get('news/{type}/options', ['as' => 'admin.news.options', 'uses' => 'NewsController@getTagsList']);
+    Route::get('news/{id}/selectedOptions', ['as' => 'admin.news.search', 'uses' => 'NewsController@getTags']);
     Route::resource('news', 'NewsController');
     Route::get('source/{id}/productFocusSubType', ['as' => 'admin.source.productFocusSubType', 'uses' => 'AjaxController@productFocusSubType']);
     Route::get('source/{id}/productFocusType', ['as' => 'admin.source.productFocusType', 'uses' => 'AjaxController@productFocusType']);
