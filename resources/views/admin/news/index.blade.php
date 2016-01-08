@@ -6,6 +6,9 @@
             $(document).ready(function()
                     {
                         $("#table-item-list").dataTable({
+                            "iDisplayLength": 50,
+                            "aLengthMenu": [25,50,100],
+                            "sPaginationType": "full_numbers",
                             "aoColumns": [
                                 { "bSortable": false },
                                 null,
@@ -71,7 +74,7 @@
                                           <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
                                           <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
                                               strlen($newsItem->Story_Headline) > 30 ?
-                                                    substr($newsItem->Story_Headline,0, strpos($newsItem->Story_Headline, " ", 30)). "..." : $newsItem->Story_Headline) !!}
+                                                    substr($newsItem->Story_Headline,0, 30). "..." : $newsItem->Story_Headline) !!}
                                           </td>
                                       </tr>
                                   @endforeach
