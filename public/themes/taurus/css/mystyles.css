@@ -28,3 +28,37 @@ html {
     max-width: 680px;
     padding: 0 15px;
 }
+
+
+ .modal-body {
+     overflow: auto;
+     max-height: 450px;
+ }
+.tag {
+    font-size: 10px;
+    padding: .3em .4em .4em;
+    margin: .3em .1em;
+}
+.tag a {
+    color: #bbb;
+    cursor: pointer;
+    opacity: 0.6;
+
+}
+.tag a:hover {
+    opacity: 1.0
+}
+.tag .remove {
+    vertical-align: bottom;
+    top: 0;
+}
+.tag a {
+    margin: 0 0 0 .3em;
+}
+.tag a .glyphicon-white {
+    color: #fff;
+    margin-bottom: 2px;
+}
+.label {
+    display: inline-block;
+}

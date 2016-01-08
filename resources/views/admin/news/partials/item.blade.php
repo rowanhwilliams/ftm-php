@@ -2,49 +2,15 @@
     $(document).ready(function() {
         $(function () {
             $('#datetimepicker').datetimepicker({
-                        showClear:true,
-                        showClose: true,
-                        format: 'DD-MMM-YYYY HH:mm'
+                showClear: true,
+                showClose: true,
+                format: 'DD-MMM-YYYY HH:mm'
             });
         });
-//        prepareSelection();
-//        $("#NewsOpjectCategory").change(prepareSelection);
-
-        function prepareSelection() {
-            var $NewsObjectItems = $("#selectElements");
-//            $NewsObjectItems.addClass('btn-disabled')
-            {{--$NewsObjectItems.attr('disabled', 'disabled');--}}
-            {{--$.getJSON("{{ URL::to("admin/news") }}" +"/" + $("#NewsOpjectCategory").val() + "/options", function(data) {--}}
-                {{--$NewsObjectItems.removeClass('btn-disabled');--}}
-                {{--$NewsObjectItems.removeAttr('disabled');--}}
-                {{--$NewsObjectItems.attr("data-title", "Select Attached to(object name) - " + $("#NewsOpjectCategory").val());--}}
-                {{--$NewsObjectItems.attr("data-parent-resource", $("#NewsOpjectCategory").val());--}}
-                {{--var $outData = [];--}}
-                {{--$.each(data, function(index, value) {--}}
-                    {{--switch ($("#NewsOpjectCategory").val()){--}}
-                        {{--case 'People':--}}
-                            {{--$outData.push({id:value.id_People, description:value.First_Name});--}}
-                            {{--break;--}}
-                        {{--case 'Products':--}}
-                            {{--$outData.push({id:value.id_Product, description:value.Product_Title});--}}
-                            {{--break;--}}
-                        {{--case 'Companies':--}}
-                            {{--$outData.push({id:value.id_Company, description:value.Company_Full_Name});--}}
-                            {{--break;--}}
-                    {{--}--}}
-
-                {{--});--}}
-                {{--$NewsObjectItems.attr("modal-data", JSON.stringify($outData));--}}
-            {{--});--}}
-        }
     });
 </script>
-{{--<style>--}}
-    {{--#news-tags-list {--}}
-        {{--padding: 0 0 8px 0;--}}
-    {{--}--}}
-{{--</style>--}}
-@include('partials.admin.modals.checkbox-modal')
+<script src="{{ asset('frontend/controllers/admin/adminModalSelect.js') }}"></script>
+<script src="{{ asset('frontend/controllers/admin/adminModalSelectCtrl.js') }}"></script>
 <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-lg-push-3 col-md-push-3 col-sm-push-3 col-xs-push-3" ng-controller="adminModalSelect">
         <div class="block">
@@ -117,18 +83,14 @@
                 </div>
                 <div class="form-row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="news-tags-list">
-                        {{--@foreach($IdObjectItems as $tag)--}}
-                            {{--<label class="tag label label-primary">--}}
-                                {{--<span>{!! $tag->description !!}</span>--}}
-                                {{--<input type="hidden" name="{!! $tag->target."_".$tag->id !!}" value='on'>--}}
-                                {{--<a><i class="remove icon-white icon-remove-sign"></i></a>--}}
-                            {{--</label>--}}
-                        {{--@endforeach--}}
                         <span data-ng-repeat="tagsCategories in selected">
-                            <label class="tag label label-primary" data-ng-repeat="tag in tagsCategories">
+                            <label class="tag label" data-ng-repeat="tag in tagsCategories"
+                               ng-class="{'label-primary':tag.target=='Companies','label-success':tag.target=='Products','label-warning':tag.target=='People'}">
                                 <span><% tag.description %></span>
                                 <input type="hidden" name="<% tag.target %>_<% tag.id %>" value="on">
-                                <a><i class="remove icon-white icon-remove-sign"></i></a>
+                                <a data-ng-really-title="Remove tag from <% tag.target %> catrgory"
+                                   data-ng-really-message="Do you want to remove <% tag.description %> tag from <% tag.target %> category?"
+                                   data-ng-really-click="remove(tag.target,tag.id)"><i class="remove icon-white icon-remove-sign"></i></a>
                             </label>
                         </span>
                     </div>

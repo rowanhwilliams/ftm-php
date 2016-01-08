@@ -100,6 +100,7 @@ class NewsController extends Controller
     {
         DB::table('News_Company')->where("id_News", "=", $newsModel->id_News)->delete();
         DB::table('News_Product')->where("id_News", "=", $newsModel->id_News)->delete();
+        DB::table('News_Employee')->where("id_News", "=", $newsModel->id_News)->delete();
         foreach($newsModel->target as $relationTarget)
         {
             $matches =  preg_grep('/^'.$relationTarget."_*/i",array_keys($request->all()));

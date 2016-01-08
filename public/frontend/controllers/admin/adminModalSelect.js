@@ -20,8 +20,6 @@ admin.controller('adminModalSelect', function($scope, $http, $location, $uibModa
                     angular.forEach(data, function(tag, index) {
                         $scope.selected[tag.target].push(tag);
                     });
-                    //$scope.selected = data;
-                    //$log.info($scope.selected);
                 });
         }
     };
@@ -76,9 +74,17 @@ admin.controller('adminModalSelect', function($scope, $http, $location, $uibModa
 
     };
 
+    $scope.remove = function(target, id) {
+        angular.forEach($scope.selected[target], function(tag, index){
+            if (tag.id == id) {
+                $scope.selected[target].splice(index, 1);
+            }
+        });
+    };
+
     $scope.preparation = function() {
         $scope.title = $scope.data.titleTemplate + $scope.data.tagParent;
-    }
+    };
 
     $scope.toggleAnimation = function () {
         $scope.animationsEnabled = !$scope.animationsEnabled;
@@ -111,6 +117,7 @@ admin.directive('pluginUniform',function() {
         // behaviors like forcing a scroll of the page. Since we have to watch
         // for ngModel value changes anyway, we'll defer our Uniform plugin
         // instantiation until after the first $watch() has fired.
+
         scope.$watch(attributes.ngModel, handleModelChange);
         // When the scope is destroyed, we have to teardown our jQuery plugin
         // to in order to make sure that it releases memory.
@@ -164,6 +171,7 @@ admin.directive('pluginUniform',function() {
         }
     }
 });
+
 admin.filter('custom', function() {
     return function(input, search) {
         if (!input) return input;
@@ -173,9 +181,62 @@ admin.filter('custom', function() {
         angular.forEach(input, function(value, key) {
             var actual = ('' + value.description).toLowerCase();
             if (actual.indexOf(expected) !== -1) {
-                result.push({id:value.id, description:value.description});
+                result.push(value);
             }
         });
         return result;
     };
 });
+
+admin.directive('ngReallyClick', ['$uibModal',
+        function($modal) {
+
+            var ModalInstanceCtrl = function($scope, $modalInstance) {
+                $scope.ok = function() {
+                    $modalInstance.close();
+                };
+
+                $scope.cancel = function() {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+
+            return {
+                restrict: 'A',
+                scope:{
+                    ngReallyClick:"&",
+                    item:"="
+                },
+                link: function(scope, element, attrs) {
+                    element.bind('click', function() {
+                        var message = attrs.ngReallyMessage || "Are you sure ?";
+                        var title = attrs.ngReallyTitle || "Remove item";
+                        /*
+                         //This works
+                         if (message && confirm(message)) {
+                         scope.$apply(attrs.ngReallyClick);
+                         }
+                         //*/
+
+                        //*This doesn't works
+                        var modalHtml = '<div class="modal-header clearfix"><h3 class="modal-title">' + title + '</h3></div><div class="modal-body">' + message + '</div>';
+                        modalHtml += '<div class="modal-footer"><button class="btn btn-success" ng-click="ok()">OK</button><button class="btn btn-danger" ng-click="cancel()">Cancel</button></div>';
+
+                        var modalInstance = $modal.open({
+                            template: modalHtml,
+                            controller: ModalInstanceCtrl
+                        });
+
+                        modalInstance.result.then(function() {
+                            scope.ngReallyClick({item:scope.item}); //raise an error : $digest already in progress
+                        }, function() {
+                            //Modal dismissed
+                        });
+                        //*/
+
+                    });
+
+                }
+            }
+        }
+    ]);

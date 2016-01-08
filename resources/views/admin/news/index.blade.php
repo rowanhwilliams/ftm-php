@@ -51,7 +51,7 @@
                                               {!! Form::close() !!}
                                           </td>
                                           <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
-                                          <td class="text-left" nowrap="">
+                                          <td class="text-left">
                                               <strong>
                                                 @foreach($newsItem->tags() as $tag)
                                                     @if ($tag->target == "Companies")
