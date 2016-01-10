@@ -17,10 +17,6 @@
                     }
             );
         </script>
-        {{--<style>--}}
-            {{--#table-item-list {padding:1px}--}}
-            {{--#table-item-list .btn-xs {padding:1px 2px}--}}
-        {{--</style>--}}
 
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">

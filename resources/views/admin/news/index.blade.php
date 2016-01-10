@@ -31,7 +31,7 @@
                         <table class="table index-table table-striped table-responsive display compact nowrap" id="table-item-list">
                             <thead>
                             <tr>
-                              <th class="without-sort"><i class="center-block icon-tasks"></i></th>
+                              <th><i class="center-block icon-tasks"></i></th>
                               <th nowrap="">Date Time</th>
                               <th class="without-sort">Tags</th>
                               <th nowrap="">News type</th>

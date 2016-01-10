@@ -1,7 +1,6 @@
 @extends('admin')
 
 @section('content')
-    @include('errors.list')
     <h2>New Job</h2>
 
    {!! Form::model($jobs, ['route' => ['admin.jobs.store'], 'class'=>'','files' => true]) !!}
