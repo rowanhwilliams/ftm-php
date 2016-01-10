@@ -366,7 +366,7 @@ class CompaniesController extends Controller
         $address = [
             'AddressLine1' => 'string',
             'AddressLine2' => 'string',
-            'City' => 'required|string',
+            'City' => 'string',
             'State' => 'string',
             'id_Country' => 'required|numeric',
             'PostalCode' => 'string'

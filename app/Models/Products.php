@@ -31,6 +31,10 @@ class Products extends Model
     public function targetMarket() {
         return $this->belongsToMany('App\Models\TargetMarket','Product_Target_Market', 'id_Product', 'id_Target_Market');
     }
+    public function owner()
+    {
+        return $this->hasOne('App\Models\Companies', 'id_Company', 'id_Owner_Company');
+    }
     public function TargetEndUserSelection()
     {
         $TargetEndUserSelection = [];

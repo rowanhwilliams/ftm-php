@@ -33,17 +33,15 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::where("Deleted", "=", NULL)->get()->sortBy("Product_Title");;
+        $products = Products::whereNull("Deleted")->get()->sortBy("Product_Title");;
         Session::forget('ProductAttachments');
         Session::forget('ProductCompetitors');
         Session::forget('ProductFocusSubType');
         $productFocusSubTypeList = [];
         $productFocusTypeList = [];
-        $productOwnerList = [];
         foreach($products as $product) {
             $productSubTypeList = [];
             $productTypeList = [];
-            $productOwnerList[$product->id_Product] = Companies::where('id_Company', '=', $product->id_Owner_Company)->get()->first();
             foreach($product->focusSubType()->get() as $productSubType) {
                 $productSubTypeList[] = $productSubType->Product_Focus_Sub_Type;
                 $productTypeListValues = ProductFocusType::where('id_Product_Focus_Type', '=', $productSubType->id_Product_Focus_Type)->get()->first();
@@ -54,7 +52,7 @@ class ProductsController extends Controller
             $productFocusTypeList[$product->id_Product] = implode(',', $productTypeList);
 
         }
-        return view("admin.products.index", compact("products", "productFocusSubTypeList", "productFocusTypeList", "productOwnerList"));
+        return view("admin.products.index", compact("products", "productFocusSubTypeList", "productFocusTypeList"));
     }
 
     /**

@@ -4,18 +4,20 @@
     <section class="content">
         <script type="text/javascript">
             $(document).ready(function()
-                    {
-                        $("#table-item-list").dataTable({
-                            "aoColumns": [
-                                { "bSortable": false },
-                                null,
-                                null,
-                                null,
-                                null
-                            ]
-                        });
-                    }
-            );
+            {
+                $("#table-item-list").dataTable({
+                    "iDisplayLength": 50,
+                    "aLengthMenu": [25,50,100],
+                    "sPaginationType": "full_numbers",
+                    "aoColumns": [
+                        { "bSortable": false },
+                        null,
+                        null,
+                        null,
+                        null
+                    ]
+                });
+            });
         </script>
 
         <div class="row">
@@ -29,7 +31,7 @@
                         <table class="table index-table table-striped table-responsive display compact nowrap" id="table-item-list">
                             <thead>
                             <tr>
-                                <th class="without-sort"><i class="center-block icon-tasks"></i></th>
+                                <th><i class="center-block icon-tasks"></i></th>
                                 <th nowrap="">Product Title</th>
                                 <th nowrap="">Product Owner</th>
                                 <th nowrap="">Product Focus Type</th>
@@ -53,9 +55,21 @@
                                             {!! Form::close() !!}
                                         </td>
                                         <td class="text-left">{!! link_to(URL::route("admin.products.edit", $product->id_Product), $product->Product_Title) !!}</td>
-                                        <td class="text-left">{!! $productOwnerList[$product->id_Product]['Company_Full_Name'] !!}</td>
-                                        <td class="text-left">{!! $productFocusTypeList[$product->id_Product] !!}</td>
-                                        <td class="text-left">{!! $productFocusSubTypeList[$product->id_Product] !!}</td>
+                                        <td class="text-left">{!! $product->owner()->first()->Company_Full_Name !!}</td>
+                                        <td class="text-left">
+                                            @foreach($product->focusSubType()->get() as $productFocusSubType )
+                                                <div>
+                                                    {!! $productFocusSubType->Product_Focus_Sub_Type !!}
+                                                </div>
+                                            @endforeach
+                                        </td>
+                                        <td class="text-left">
+                                            @foreach($product->focusSubType()->get() as $productFocusSubType )
+                                                <div>
+                                                    {!! $productFocusSubType->focusType()->first()->Product_Focus_Type !!}
+                                                </div>
+                                            @endforeach
+                                        </td>
                                     </tr>
                                 @endforeach
                             @else
