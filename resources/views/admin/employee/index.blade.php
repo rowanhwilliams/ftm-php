@@ -51,7 +51,11 @@
                                               {!! Form::close() !!}
                                           </td>
                                           <td class="text-left">{!! link_to(URL::route("admin.employee.edit", $person->id_People), $person->First_Name . " " . $person->Surname) !!}</td>
-                                          <td class="text-left">{!! $person->employee()->first()->employeeType()->first()->Type_Name !!}</td>
+                                          @if ($person->employee()->first()->employeeType()->first())
+                                            <td class="text-left">{!! $person->employee()->first()->employeeType()->first()->Type_Name !!}</td>
+                                          @else
+                                            <td class="text-left"></td>
+                                          @endif
                                       </tr>
                                   @endforeach
                               @else
