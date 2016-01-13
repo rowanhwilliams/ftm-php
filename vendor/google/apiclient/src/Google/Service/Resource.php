@@ -72,7 +72,7 @@ class Google_Service_Resource
   }
 
   /**
-   * TODO(ianbarber): This function needs simplifying.
+   * TODO: This function needs simplifying.
    * @param $name
    * @param $arguments
    * @param $expected_class - optional, the expected class name
@@ -115,10 +115,13 @@ class Google_Service_Resource
             $this->convertToArrayAndStripNulls($parameters['postBody']);
       }
       $postBody = json_encode($parameters['postBody']);
+      if ($postBody === false && $parameters['postBody'] !== false) {
+        throw new Google_Exception("JSON encoding failed. Ensure all strings in the request are UTF-8 encoded.");
+      }
       unset($parameters['postBody']);
     }
 
-    // TODO(ianbarber): optParams here probably should have been
+    // TODO: optParams here probably should have been
     // handled already - this may well be redundant code.
     if (isset($parameters['optParams'])) {
       $optParams = $parameters['optParams'];

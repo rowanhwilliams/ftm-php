@@ -95,7 +95,7 @@ Start main content
 
         <!-- Countdown - data-endDate format is DD/MM/YYYY -->
 
-        <div class="arcs row" data-endDate="11/11/2015" data-size="190" data-fontSize="50" data-stokewidth="30" data-innerStrokeColor="#fefefd" data-strokeColor="#0088cc" data-circleColor="" data-textColor="#fefefd">
+        <div class="arcs row" data-endDate="1/2/2016" data-size="190" data-fontSize="50" data-stokewidth="30" data-innerStrokeColor="#fefefd" data-strokeColor="#0088cc" data-circleColor="" data-textColor="#fefefd">
             <div class="onefourth row-fourty arc days"><span class="nosvg"></span><span>DAYS</span></div>
             <div class="onefourth row-fourty arc hours"><span class="nosvg"></span><span>HOURS</span></div>
             <div class="onefourth row-fourty arc minutes"><span class="nosvg"></span><span>MINUTES</span></div>

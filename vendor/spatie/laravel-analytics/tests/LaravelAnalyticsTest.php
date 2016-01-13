@@ -4,7 +4,6 @@ use Illuminate\Support\Collection;
 
 class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 {
-
     protected $client;
     protected $laravelAnalytics;
     protected $siteId;
@@ -18,7 +17,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getVisitorsAndPageViews()
+     * Test method getVisitorsAndPageViews().
      */
     public function testGetVisitorsAndPageViews()
     {
@@ -27,7 +26,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 
         $this->client
             ->shouldReceive('performQuery')
-            ->with($this->siteId, $startDate, $endDate, "ga:visits,ga:pageviews", ['dimensions' => 'ga:date'])
+            ->with($this->siteId, $startDate, $endDate, 'ga:visits,ga:pageviews', ['dimensions' => 'ga:date'])
             ->andReturn((object) ['rows' => [['20140101', 2, 3]]]);
 
         $googleResult = $this->laravelAnalytics->getVisitorsAndPageViews();
@@ -42,7 +41,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getTopKeywords()
+     * Test method getTopKeywords().
      */
     public function testGetTopKeywords()
     {
@@ -51,7 +50,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 
         $this->client
             ->shouldReceive('performQuery')
-            ->with($this->siteId, $startDate, $endDate, "ga:sessions", ['dimensions' => 'ga:keyword', 'sort' => '-ga:sessions', 'max-results' => 30, 'filters' => 'ga:keyword!=(not set);ga:keyword!=(not provided)'])
+            ->with($this->siteId, $startDate, $endDate, 'ga:sessions', ['dimensions' => 'ga:keyword', 'sort' => '-ga:sessions', 'max-results' => 30, 'filters' => 'ga:keyword!=(not set);ga:keyword!=(not provided)'])
             ->andReturn((object) ['rows' => [['first', 'second']]]);
 
         $googleResult = $this->laravelAnalytics->getTopKeyWords();
@@ -60,7 +59,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getTopReferrers()
+     * Test method getTopReferrers().
      */
     public function testGetTopReferrers()
     {
@@ -69,7 +68,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 
         $this->client
             ->shouldReceive('performQuery')
-            ->with($this->siteId, $startDate, $endDate, "ga:pageviews", ['dimensions' => 'ga:fullReferrer', 'sort' => '-ga:pageviews', 'max-results' => 20])
+            ->with($this->siteId, $startDate, $endDate, 'ga:pageviews', ['dimensions' => 'ga:fullReferrer', 'sort' => '-ga:pageviews', 'max-results' => 20])
             ->andReturn((object) ['rows' => [['foundUrl', '123']]]);
 
         $googleResult = $this->laravelAnalytics->getTopReferrers();
@@ -78,7 +77,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getTopReferrers()
+     * Test method getTopReferrers().
      */
     public function testGetTopBrowsers()
     {
@@ -87,7 +86,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 
         $this->client
             ->shouldReceive('performQuery')
-            ->with($this->siteId, $startDate, $endDate, "ga:sessions", ['dimensions' => 'ga:browser', 'sort' => '-ga:sessions'])
+            ->with($this->siteId, $startDate, $endDate, 'ga:sessions', ['dimensions' => 'ga:browser', 'sort' => '-ga:sessions'])
             ->andReturn((object) ['rows' => [['Google Chrome', '123']]]);
 
         $googleResult = $this->laravelAnalytics->getTopBrowsers();
@@ -96,7 +95,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getTopReferrers()
+     * Test method getTopReferrers().
      */
     public function testGetMostVisitedPages()
     {
@@ -105,7 +104,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
 
         $this->client
             ->shouldReceive('performQuery')
-            ->with($this->siteId, $startDate, $endDate, "ga:pageviews", ['dimensions' => 'ga:pagePath', 'sort' => '-ga:pageviews', 'max-results' => 20])
+            ->with($this->siteId, $startDate, $endDate, 'ga:pageviews', ['dimensions' => 'ga:pagePath', 'sort' => '-ga:pageviews', 'max-results' => 20])
             ->andReturn((object) ['rows' => [['visited url', '123']]]);
 
         $googleResult = $this->laravelAnalytics->getMostVisitedPages();
@@ -114,7 +113,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getSiteIdByUrl()
+     * Test method getSiteIdByUrl().
      */
     public function testGetSiteIdByUrl()
     {
@@ -129,7 +128,7 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method performQuery()
+     * Test method performQuery().
      */
     public function testPerformQuery()
     {
@@ -161,9 +160,9 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
         $disabledAnalytics = new \Spatie\LaravelAnalytics\LaravelAnalytics($this->client);
         $this->assertFalse($disabledAnalytics->isEnabled());
     }
-    
+
     /**
-     * Test method performRealTimeQuery()
+     * Test method performRealTimeQuery().
      */
     public function testPerformRealTimeQuery()
     {
@@ -183,14 +182,14 @@ class LaravelAnalyticsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test method getActiveUsers()
+     * Test method getActiveUsers().
      */
     public function testGetActiveUsers()
     {
-	$others = ['first', 'second'];
-	$metrics = 'rt:activeUsers';
+        $others = ['first', 'second'];
+        $metrics = 'rt:activeUsers';
 
-	$this->client
+        $this->client
             ->shouldReceive('performRealTimeQuery')
             ->with($this->siteId, $metrics, $others)
             ->andReturn((object) ['rows' => [[0, '500']]]);

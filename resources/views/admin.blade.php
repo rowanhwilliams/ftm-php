@@ -64,7 +64,6 @@
     @include('partials.admin.nav')
     @include('partials.admin.breadcrumb')
     <div class="container">
-        @include('errors.list')
         @include('partials.admin.content')
     </div>
     @include('partials.app.footer')

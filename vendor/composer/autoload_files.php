@@ -11,9 +11,10 @@ return array(
     $vendorDir . '/nikic/php-parser/lib/bootstrap.php',
     $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
     $vendorDir . '/psy/psysh/src/Psy/functions.php',
+    $vendorDir . '/paragonie/random_compat/lib/random.php',
     $vendorDir . '/danielstjules/stringy/src/Create.php',
-    $vendorDir . '/barryvdh/laravel-debugbar/src/helpers.php',
     $vendorDir . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
     $vendorDir . '/laravel/framework/src/Illuminate/Support/helpers.php',
     $vendorDir . '/illuminate/html/helpers.php',
+    $vendorDir . '/barryvdh/laravel-debugbar/src/helpers.php',
 );

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -34,6 +35,48 @@ class EmployeeController extends Controller
     {
         Session::forget('UniversityHistory');
         Session::forget('CareerHistory');
+
+
+        $data = 'data';
+        Excel::load('/storage/app/Medium1.xlsx', function($reader) use($data){
+            $reader->each(function($sheet) {
+                $rowData = $sheet->toArray();
+/*
+                foreach ($rowData as $row)
+                {
+                    echo "<pre>";
+                    print_r($row);
+                    echo "</pre>";
+                    //exit();
+
+                    $name = trim($row['name']);
+                    $title = trim($row['title']);
+                    $description = trim($row['description']);
+                    if (strlen($name) > 0) {
+                        $flname = explode(" ",$name);
+                        $firstName =
+                        $lastName = $flname[1];
+                        $peopleFields = [];
+                        $addressFields = [];
+                        $employeeFields = [];
+                        $addressModel = Addresses::create($addressFields);
+                        $peopleFields['First_Name'] = $flname[0];
+                        $peopleFields['Surname'] = $flname[1];
+                        $peopleFields['Career_Description'] = $description;
+                        $peopleFields['Date_Created'] = Carbon::now();
+                        $peopleFields['AddressId'] = $addressModel->AddressId;
+                        $peopleModel = People::create($peopleFields);
+                        $peopleModel->employee()->create($employeeFields);
+                    }
+
+                }*/
+
+                // Loop through all rows
+//                $sheet->each(function($row) {
+//                    echo $row;
+//                });
+            });
+        });
 
         $people = People::where("Deleted", "=", NULL)->get()->sortBy("First_Name");
         return view("admin.employee.index", compact("people"));

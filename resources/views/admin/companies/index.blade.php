@@ -26,14 +26,16 @@
                     ]
                 });
 
-                $(".productsMore").hide();
-                $(".extraMinus").hide();
+                //$(".productsMore").hide();
+                //$(".extraMinus").hide();
                 $(".hideExtra").click(function() {
-                    $("#showExtra-"+$(this).attr("data-id")).show();
-                    $("#hideExtra-"+$(this).attr("data-id")).hide();
-                    $("#moreProducts-"+$(this).attr("data-id")).hide()
+                alert(1);
+                    //$("#showExtra-"+$(this).attr("data-id")).show();
+                    //$("#hideExtra-"+$(this).attr("data-id")).hide();
+                    //$("#moreProducts-"+$(this).attr("data-id")).hide()
                 });
                 $(".showExtra").click(function() {
+                alert(2);
                     $("#showExtra-"+$(this).attr("data-id")).hide();
                     $("#hideExtra-"+$(this).attr("data-id")).show();
                     $("#moreProducts-"+$(this).attr("data-id")).show()
@@ -65,11 +67,11 @@
                           @if ($companies->count() > 0)
                               @foreach ($companies->get() as $id => $company)
                                   <tr>
-                                      <td class="text-center">
+                                      <td width="1%">
                                           {!! Form::open([ 'method'=>'DELETE', 'route' => ['admin.companies.destroy', $company->id_Company], 'class' => 'pull-center']) !!}
                                           {!! Form::hidden('_method', 'DELETE') !!}
                                           {!! Form::hidden('_object', '_company') !!}
-                                          <button class='btn btn-clean btn-danger center' type='button' data-toggle="modal" data-target="#confirmDelete"
+                                          <button class='btn btn-clean btn-danger center btn-xs' type='button' data-toggle="modal" data-target="#confirmDelete"
                                                   data-title="Delete Company" data-message='Warning – You are about to delete {!! $company->Company_Full_Name !!}, please confirm?'
                                                   data-extra-confirm="Are you sure (Y/N)?">
                                               <i class='icon-trash'></i>
@@ -91,7 +93,7 @@
                                               {!! link_to(URL::route("admin.products.edit", $ProductsToShow[$company->id_Company][0]["id"]), $ProductsToShow[$company->id_Company][0]["title"], ["target"=>"_blank"]) !!}
                                           @endif
                                           @if (count($ProductsToHide[$company->id_Company]) > 0)
-                                              <span id="showExtra-{!! $company->id_Company !!}"><a class="btn btn-xs btn-clean btn-primary showExtra" data-id="{!! $company->id_Company !!}"><i class="icon-plus-sign"></i></a></span>
+                                              <span id="showExtra-{!! $company->id_Company !!}"><a class="btn btn-xs btn-clean btn-primary showExtra" href="" data-id="{!! $company->id_Company !!}"><i class="icon-plus-sign"></i></a></span>
                                               <span id="hideExtra-{!! $company->id_Company !!}" class="extraMinus" style="display: none;"><a class="btn btn-xs btn-primary btn-clean hideExtra" data-id="{!! $company->id_Company !!}"><i class="icon-minus-sign"></i></a></span>
                                               <div id="moreProducts-{!! $company->id_Company !!}" class="productsMore" style="display: none;">
                                                   @foreach ($ProductsToHide[$company->id_Company] as $product)

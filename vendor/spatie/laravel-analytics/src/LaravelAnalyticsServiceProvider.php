@@ -1,4 +1,6 @@
-<?php namespace Spatie\LaravelAnalytics;
+<?php
+
+namespace Spatie\LaravelAnalytics;
 
 use Illuminate\Support\ServiceProvider;
 use Google_Client;
@@ -12,7 +14,7 @@ class LaravelAnalyticsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/laravel-analytics.php' =>  config_path('laravel-analytics.php'),
+            __DIR__.'/config/laravel-analytics.php' => config_path('laravel-analytics.php'),
         ]);
     }
 
@@ -21,7 +23,7 @@ class LaravelAnalyticsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('laravelAnalytics', function ($app) {
+        $this->app->bind('Spatie\LaravelAnalytics\LaravelAnalytics', function ($app) {
 
             $googleApiHelper = $this->getGoogleApiHelperClient();
 
@@ -29,6 +31,8 @@ class LaravelAnalyticsServiceProvider extends ServiceProvider
 
             return $laravelAnalytics;
         });
+
+        $this->app->alias('Spatie\LaravelAnalytics\LaravelAnalytics', 'laravelAnalytics');
     }
 
     /**
@@ -64,7 +68,7 @@ class LaravelAnalyticsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get a configured GoogleClient
+     * Get a configured GoogleClient.
      *
      * @return Google_Client
      */
@@ -76,7 +80,7 @@ class LaravelAnalyticsServiceProvider extends ServiceProvider
                 'use_objects' => true,
             ]
         );
-        
+
         $client->setClassConfig('Google_Cache_File', 'directory', storage_path('app/laravel-analytics-cache'));
 
         $client->setAccessType('offline');

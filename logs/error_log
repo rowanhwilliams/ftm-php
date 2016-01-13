@@ -1,0 +1,646 @@
+[Sat Aug 22 10:02:22 2015] [error] [client 217.160.167.164] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Aug 25 12:50:40 2015] [error] [client 64.15.155.177] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Tue Aug 25 12:50:42 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/report.cgi
+[Tue Aug 25 12:50:42 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/webmap.cgi
+[Tue Aug 25 12:50:43 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/whois.cgi
+[Tue Aug 25 12:50:43 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/register.cgi
+[Tue Aug 25 12:50:43 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/download.cgi
+[Tue Aug 25 12:50:43 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/shop.cgi
+[Tue Aug 25 12:50:44 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/profile.cgi
+[Tue Aug 25 12:50:44 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/about_us.cgi
+[Tue Aug 25 12:50:44 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/php.fcgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/calendar.cgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/download.cgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/light_board.cgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/search.cgi
+[Tue Aug 25 12:50:45 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/file_up.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/concept.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/query.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/counter.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/kontakt.cgi
+[Tue Aug 25 12:50:46 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/backup.cgi
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/firewall.cgi
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/index2.cgi
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/reboot.cgi
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/printenv
+[Tue Aug 25 12:50:47 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Tue Aug 25 12:50:48 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/formmail.cgi
+[Tue Aug 25 12:50:48 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/Count.cgi
+[Tue Aug 25 12:50:48 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/supply.cgi
+[Tue Aug 25 12:50:48 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Tue Aug 25 12:50:48 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/upload.cgi
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/welcome.cgi
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/status.cgi
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/uptime.cgi
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/test
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Tue Aug 25 12:50:49 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/php
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/php4
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/php5
+[Tue Aug 25 12:50:50 2015] [error] [client 64.15.155.177] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Tue Aug 25 14:00:05 2015] [error] [client 176.193.150.99] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Tue Aug 25 14:00:06 2015] [error] [client 176.193.150.99] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Aug 27 05:35:11 2015] [error] [client 81.234.103.209] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Thu Aug 27 05:35:11 2015] [error] [client 81.234.103.209] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Aug 27 10:39:52 2015] [error] [client 141.212.122.3] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Thu Aug 27 12:03:26 2015] [error] [client 31.192.108.62] script not found or unable to stat: /var/www/cgi-bin/php.cgi
+[Thu Aug 27 12:03:26 2015] [error] [client 31.192.108.62] script not found or unable to stat: /var/www/cgi-bin/php
+[Thu Aug 27 12:03:27 2015] [error] [client 31.192.108.62] script not found or unable to stat: /var/www/cgi-bin/php5
+[Thu Aug 27 12:03:28 2015] [error] [client 31.192.108.62] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Thu Aug 27 12:03:28 2015] [error] [client 31.192.108.62] script not found or unable to stat: /var/www/cgi-bin/php4
+[Thu Aug 27 23:35:01 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Barryvdh\\Debugbar\\ServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Thu Aug 27 23:35:31 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Barryvdh\\Debugbar\\ServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Thu Aug 27 23:37:28 2015] [error] [client 46.172.151.46] PHP Fatal error:  Class 'Barryvdh\\Debugbar\\ServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Thu Aug 27 23:40:02 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Spatie\\LaravelAnalytics\\LaravelAnalyticsServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Thu Aug 27 23:40:30 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Spatie\\LaravelAnalytics\\LaravelAnalyticsServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Sat Aug 29 20:34:43 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:35:01 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:39:42 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:40:01 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:44:44 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:45:01 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:49:45 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:50:01 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'PDO' not found in /var/www/fintechmonitor.com/config/database.php on line 16
+[Sat Aug 29 20:52:09 2015] [error] [client 46.172.151.46] PHP Warning:  phpinfo(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in /var/www/fintechmonitor.com/public/info.php on line 2
+[Mon Aug 31 10:50:02 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Mon Aug 31 10:50:41 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 10:52:19 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Mon Aug 31 10:53:48 2015] [error] [client 91.232.177.51] PHP Warning:  require(/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php): failed to open stream: No such file or directory in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54, referer: http://fintechmonitor.com/
+[Mon Aug 31 10:53:48 2015] [error] [client 91.232.177.51] PHP Fatal error:  require(): Failed opening required '/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php' (include_path='.:/usr/share/pear:/usr/share/php') in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54, referer: http://fintechmonitor.com/
+[Mon Aug 31 10:53:54 2015] [error] [client 91.232.177.51] PHP Warning:  require(/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php): failed to open stream: No such file or directory in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:53:54 2015] [error] [client 91.232.177.51] PHP Fatal error:  require(): Failed opening required '/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php' (include_path='.:/usr/share/pear:/usr/share/php') in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:54:42 2015] [error] [client 91.232.177.51] PHP Warning:  require(/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php): failed to open stream: No such file or directory in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:54:42 2015] [error] [client 91.232.177.51] PHP Fatal error:  require(): Failed opening required '/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php' (include_path='.:/usr/share/pear:/usr/share/php') in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:55:02 2015] [error] [client 127.0.0.1] PHP Warning:  require(/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php): failed to open stream: No such file or directory in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:55:02 2015] [error] [client 127.0.0.1] PHP Fatal error:  require(): Failed opening required '/var/www/fintechmonitor.com/vendor/illuminate/html/helpers.php' (include_path='.:/usr/share/pear:/usr/share/php') in /var/www/fintechmonitor.com/vendor/composer/autoload_real.php on line 54
+[Mon Aug 31 10:57:00 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 10:57:21 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Mon Aug 31 10:58:47 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Barryvdh\\Debugbar\\ServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 10:59:09 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Spatie\\LaravelAnalytics\\LaravelAnalyticsServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:02:26 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:05:02 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Mon Aug 31 11:06:32 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:07:10 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:07:14 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:07:14 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/
+[Mon Aug 31 11:07:23 2015] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Illuminate\\Html\\HtmlServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146
+[Mon Aug 31 21:19:08 2015] [error] [client 46.172.151.46] PHP Fatal error:  Class 'Form' not found in /var/www/fintechmonitor.com/storage/framework/views/cc678a5ce063e0ab5c2039474fbeddd3 on line 4, referer: http://fintechmonitor.com/admin/employee
+[Tue Sep 01 23:30:15 2015] [error] [client 141.212.122.3] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Wed Sep 02 12:20:31 2015] [error] [client 69.64.46.86] script not found or unable to stat: /var/www/cgi-bin/rtpd.cgi
+[Fri Sep 04 01:39:59 2015] [error] [client 141.212.122.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Sep 04 12:08:15 2015] [error] [client 192.99.109.39] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sat Sep 05 10:13:54 2015] [error] [client 111.250.103.177] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Sat Sep 05 10:13:55 2015] [error] [client 111.250.103.177] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Sat Sep 12 12:03:22 2015] [error] [client 87.11.58.163] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Sat Sep 12 12:03:22 2015] [error] [client 87.11.58.163] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Sun Sep 13 16:54:03 2015] [error] [client 198.50.210.233] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.Win32:)
+[Sun Sep 13 20:23:32 2015] [error] [client 104.219.112.102] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Sun Sep 13 20:23:32 2015] [error] [client 104.219.112.102] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Sep 14 12:59:11 2015] [error] [client 119.42.109.148] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Sep 14 12:59:12 2015] [error] [client 119.42.109.148] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Sep 15 10:54:33 2015] [error] [client 213.136.77.145] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Sep 15 23:01:03 2015] [error] [client 86.46.111.4] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Tue Sep 15 23:01:03 2015] [error] [client 86.46.111.4] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Sep 17 09:24:56 2015] [error] [client 141.212.122.82] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Sep 18 07:05:10 2015] [error] [client 79.22.222.144] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Fri Sep 18 07:05:10 2015] [error] [client 79.22.222.144] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Fri Sep 18 10:07:12 2015] [error] [client 93.174.93.33] script not found or unable to stat: /var/www/cgi-bin/syssz_ping.htm
+[Fri Sep 18 10:33:54 2015] [error] [client 93.174.93.33] script not found or unable to stat: /var/www/cgi-bin/syssz_ping.htm
+[Mon Sep 21 04:28:11 2015] [error] [client 171.25.250.149] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Sep 21 04:28:11 2015] [error] [client 171.25.250.149] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Sep 21 11:01:54 2015] [error] [client 178.33.146.204] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Sep 22 05:24:51 2015] [error] [client 69.64.46.86] script not found or unable to stat: /var/www/cgi-bin/rtpd.cgi
+[Tue Sep 22 15:43:41 2015] [error] [client 178.239.50.140] Client sent malformed Host header, referer: () { :; }; /bin/ping -c 3 82.118.236.247
+[Thu Sep 24 11:37:17 2015] [error] [client 141.212.122.146] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sat Sep 26 20:52:59 2015] [error] [client 87.117.204.95] script not found or unable to stat: /var/www/cgi-bin/php
+[Sat Sep 26 20:52:59 2015] [error] [client 87.117.204.95] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sat Sep 26 20:52:59 2015] [error] [client 87.117.204.95] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Sat Sep 26 20:52:59 2015] [error] [client 87.117.204.95] script not found or unable to stat: /var/www/cgi-bin/php.cgi
+[Sat Sep 26 20:52:59 2015] [error] [client 87.117.204.95] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sat Sep 26 22:27:03 2015] [error] [client 212.48.87.19] script not found or unable to stat: /var/www/cgi-bin/php
+[Sat Sep 26 22:27:03 2015] [error] [client 212.48.87.19] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sat Sep 26 22:27:03 2015] [error] [client 212.48.87.19] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Sat Sep 26 22:27:03 2015] [error] [client 212.48.87.19] script not found or unable to stat: /var/www/cgi-bin/php.cgi
+[Sat Sep 26 22:27:03 2015] [error] [client 212.48.87.19] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sun Sep 27 06:28:25 2015] [error] [client 192.157.201.202] script not found or unable to stat: /var/www/cgi-bin/php
+[Sun Sep 27 06:28:25 2015] [error] [client 192.157.201.202] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sun Sep 27 06:28:25 2015] [error] [client 192.157.201.202] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Sun Sep 27 06:28:26 2015] [error] [client 192.157.201.202] script not found or unable to stat: /var/www/cgi-bin/php.cgi
+[Sun Sep 27 06:28:26 2015] [error] [client 192.157.201.202] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sun Sep 27 10:18:08 2015] [error] [client 212.83.182.10] script not found or unable to stat: /var/www/cgi-bin/php
+[Sun Sep 27 10:18:08 2015] [error] [client 212.83.182.10] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sun Sep 27 10:18:08 2015] [error] [client 212.83.182.10] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Sun Sep 27 10:18:08 2015] [error] [client 212.83.182.10] script not found or unable to stat: /var/www/cgi-bin/php.cgi
+[Sun Sep 27 10:18:08 2015] [error] [client 212.83.182.10] script not found or unable to stat: /var/www/cgi-bin/php4
+[Mon Sep 28 15:13:15 2015] [error] [client 110.77.231.77] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Sep 28 15:13:16 2015] [error] [client 110.77.231.77] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Sep 29 19:43:01 2015] [error] [client 195.211.136.177] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Tue Sep 29 19:43:02 2015] [error] [client 195.211.136.177] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Sep 29 21:23:56 2015] [error] [client 149.129.24.239] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Tue Sep 29 21:23:57 2015] [error] [client 149.129.24.239] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Oct 01 09:58:52 2015] [error] [client 91.232.177.51] client denied by server configuration: /usr/share/phpMyAdmin
+[Thu Oct 01 09:59:04 2015] [error] [client 91.232.177.51] client denied by server configuration: /usr/share/phpMyAdmin/index.php
+[Thu Oct 01 09:59:35 2015] [error] [client 46.32.233.68] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Oct 01 10:08:36 2015] [error] [client 141.212.121.136] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Thu Oct 01 23:24:17 2015] [error] [client 183.91.86.103] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Oct 02 02:53:51 2015] [error] [client 123.56.108.130] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Oct 02 12:09:38 2015] [error] [client 198.50.189.236] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Fri Oct 02 15:02:22 2015] [error] [client 183.91.86.103] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 03 00:32:57 2015] [error] [client 61.90.153.197] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Oct 04 15:42:12 2015] [error] [client 122.154.24.254] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Oct 05 01:11:29 2015] [error] [client 62.210.157.90] attempt to invoke directory as script: /var/www/cgi-bin/
+[Mon Oct 05 01:11:29 2015] [error] [client 62.210.157.90] script not found or unable to stat: /var/www/cgi-bin/hello
+[Mon Oct 05 11:59:11 2015] [error] [client 203.190.36.79] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Oct 06 00:41:43 2015] [error] [client 202.91.11.162] Invalid URI in request GET: index.php HTTP/1.0 
+[Tue Oct 06 02:50:57 2015] [error] [client 196.214.247.180] Invalid URI in request GET: index.php HTTP/1.0 
+[Tue Oct 06 16:16:44 2015] [error] [client 61.230.22.1] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Oct 07 07:38:17 2015] [error] [client 149.202.60.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Oct 07 07:38:17 2015] [error] [client 149.202.60.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 08 03:05:25 2015] [error] [client 114.251.96.48] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 08 09:09:39 2015] [error] [client 141.212.122.112] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Oct 09 01:39:49 2015] [error] [client 85.50.225.3] Invalid URI in request GET <title>phpMyAdmin HTTP/1.1
+[Fri Oct 09 01:39:53 2015] [error] [client 85.50.225.3] client denied by server configuration: /usr/share/phpMyAdmin/
+[Fri Oct 09 01:39:55 2015] [error] [client 85.50.225.3] client denied by server configuration: /usr/share/phpMyAdmin/
+[Fri Oct 09 04:53:11 2015] [error] [client 200.116.2.116] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Oct 09 15:32:29 2015] [error] [client 149.202.60.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Oct 09 15:32:29 2015] [error] [client 149.202.60.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 10 10:07:27 2015] [error] [client 178.250.45.85] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Sat Oct 10 10:07:30 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test
+[Sat Oct 10 10:07:30 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Sat Oct 10 10:07:30 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Sat Oct 10 10:07:31 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/hello
+[Sat Oct 10 10:07:34 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/status
+[Sat Oct 10 10:07:40 2015] [error] [client 178.250.45.85] attempt to invoke directory as script: /var/www/cgi-bin/
+[Sat Oct 10 10:07:40 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/php
+[Sat Oct 10 10:07:43 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sat Oct 10 10:07:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/php-cgi
+[Sat Oct 10 10:07:53 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/admin.html
+[Sat Oct 10 10:07:53 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sat Oct 10 10:07:56 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/ICuGI
+[Sat Oct 10 10:08:00 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/status
+[Sat Oct 10 10:08:12 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/report.cgi
+[Sat Oct 10 10:08:12 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/webmap.cgi
+[Sat Oct 10 10:08:13 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/whois.cgi
+[Sat Oct 10 10:08:14 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/register.cgi
+[Sat Oct 10 10:08:17 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/shop.cgi
+[Sat Oct 10 10:08:21 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/about_us.cgi
+[Sat Oct 10 10:08:21 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/php.fcgi
+[Sat Oct 10 10:08:22 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/calendar.cgi
+[Sat Oct 10 10:08:25 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/light_board.cgi
+[Sat Oct 10 10:08:26 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Sat Oct 10 10:08:27 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/search.cgi
+[Sat Oct 10 10:08:27 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Sat Oct 10 10:08:30 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/concept.cgi
+[Sat Oct 10 10:08:37 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/kontakt.cgi
+[Sat Oct 10 10:08:43 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/index2.cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/reboot.cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/printenv
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/formmail.cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/Count.cgi
+[Sat Oct 10 10:08:44 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/supply.cgi
+[Sat Oct 10 10:08:45 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Sat Oct 10 10:08:46 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/upload.cgi
+[Sat Oct 10 10:08:50 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/status.cgi
+[Sat Oct 10 10:08:50 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/uptime.cgi
+[Sat Oct 10 10:08:50 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Sat Oct 10 10:08:50 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Sat Oct 10 10:08:50 2015] [error] [client 178.250.45.85] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Sat Oct 10 12:55:18 2015] [error] [client 181.49.207.164] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 10 19:38:54 2015] [error] [client 95.213.177.124] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Sat Oct 10 19:57:56 2015] [error] [client 86.127.206.100] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 10 19:57:56 2015] [error] [client 86.127.206.100] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Oct 11 09:09:19 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/bash
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Mon Oct 12 23:26:19 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/php
+[Mon Oct 12 23:26:20 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/php4
+[Mon Oct 12 23:26:21 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/php5
+[Mon Oct 12 23:26:21 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Mon Oct 12 23:26:21 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Mon Oct 12 23:26:21 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Mon Oct 12 23:26:22 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Mon Oct 12 23:26:22 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Mon Oct 12 23:26:22 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Mon Oct 12 23:26:22 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Mon Oct 12 23:26:22 2015] [error] [client 185.66.140.16] script not found or unable to stat: /var/www/cgi-bin/tools
+[Tue Oct 13 00:49:32 2015] [error] [client 51.254.44.137] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Oct 15 08:57:36 2015] [error] [client 141.212.122.64] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Thu Oct 15 12:22:03 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:03 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:07 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:07 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:10 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Oct 15 12:22:10 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Oct 15 12:22:16 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:16 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:21 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 15 12:22:21 2015] [error] [client 169.53.48.209] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Oct 16 05:12:58 2015] [error] [client 124.120.187.155] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 17 04:18:52 2015] [error] [client 173.193.12.5] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 17 04:18:52 2015] [error] [client 173.193.12.5] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 17 13:13:30 2015] [error] [client 151.80.66.5] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sat Oct 17 17:16:17 2015] [error] [client 82.77.69.5] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Sat Oct 17 17:16:17 2015] [error] [client 82.77.69.5] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Sat Oct 17 18:39:24 2015] [error] [client 5.196.209.113] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sat Oct 17 18:47:01 2015] [error] [client 203.157.129.30] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 17 20:37:00 2015] [error] [client 5.196.209.113] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 20:37:01 2015] [error] [client 5.196.209.113] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 22:58:40 2015] [error] [client 5.196.209.113] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 22:58:40 2015] [error] [client 5.196.209.113] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 23:11:25 2015] [error] [client 149.202.60.166] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 23:11:25 2015] [error] [client 149.202.60.166] client denied by server configuration: /usr/share/phpMyAdmin
+[Sat Oct 17 23:17:59 2015] [error] [client 151.80.66.5] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sun Oct 18 10:30:16 2015] [error] [client 85.50.225.3] Invalid URI in request GET <title>phpMyAdmin HTTP/1.1
+[Sun Oct 18 10:30:17 2015] [error] [client 85.50.225.3] client denied by server configuration: /usr/share/phpMyAdmin/
+[Sun Oct 18 20:44:18 2015] [error] [client 202.197.228.131] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Oct 18 20:44:18 2015] [error] [client 202.197.228.236] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Oct 19 10:56:32 2015] [error] [client 149.202.60.166] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Mon Oct 19 10:57:06 2015] [error] [client 51.254.139.15] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Mon Oct 19 13:14:31 2015] [error] [client 149.202.60.166] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Oct 19 13:14:38 2015] [error] [client 149.202.60.166] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Oct 19 15:04:35 2015] [error] [client 122.155.174.186] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Oct 20 03:25:24 2015] [error] [client 116.204.35.72] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Oct 20 03:29:29 2015] [error] [client 113.53.252.109] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Oct 20 10:18:30 2015] [error] [client 88.157.136.122] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Tue Oct 20 10:18:30 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/bash
+[Tue Oct 20 10:18:30 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Tue Oct 20 10:18:30 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Tue Oct 20 10:18:31 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Tue Oct 20 10:18:32 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Tue Oct 20 10:18:32 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Tue Oct 20 10:18:35 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Tue Oct 20 10:18:35 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Tue Oct 20 10:18:35 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Tue Oct 20 10:18:35 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/php
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/php4
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/php5
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Tue Oct 20 10:18:36 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Tue Oct 20 10:18:38 2015] [error] [client 88.157.136.122] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Tue Oct 20 13:16:32 2015] [error] [client 151.80.93.41] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Oct 20 14:31:02 2015] [error] [client 151.80.93.41] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Wed Oct 21 06:01:20 2015] [error] [client 151.80.93.41] client denied by server configuration: /usr/share/phpMyAdmin
+[Wed Oct 21 06:01:20 2015] [error] [client 151.80.93.41] client denied by server configuration: /usr/share/phpMyAdmin
+[Wed Oct 21 16:11:20 2015] [error] [client 123.57.228.161] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Oct 22 11:04:44 2015] [error] [client 141.212.122.96] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Oct 23 14:31:22 2015] [error] [client 114.46.77.138] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Oct 25 04:43:21 2015] [error] [client 180.250.125.139] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Sun Oct 25 04:43:27 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/bash
+[Sun Oct 25 04:43:28 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Sun Oct 25 04:43:30 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Sun Oct 25 04:43:31 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Sun Oct 25 04:43:36 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Sun Oct 25 04:43:37 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Sun Oct 25 04:43:38 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Sun Oct 25 04:43:40 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Sun Oct 25 04:43:41 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Sun Oct 25 04:43:42 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Sun Oct 25 04:43:44 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Sun Oct 25 04:43:45 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/php
+[Sun Oct 25 04:43:46 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sun Oct 25 04:43:48 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sun Oct 25 04:43:49 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Sun Oct 25 04:43:50 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Sun Oct 25 04:43:51 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Sun Oct 25 04:43:55 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sun Oct 25 04:43:56 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Sun Oct 25 04:43:57 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Sun Oct 25 04:43:59 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Sun Oct 25 04:44:00 2015] [error] [client 180.250.125.139] script not found or unable to stat: /var/www/cgi-bin/tools
+[Sun Oct 25 19:13:59 2015] [error] [client 110.11.20.15] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Sun Oct 25 19:14:01 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/bash
+[Sun Oct 25 19:14:02 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Sun Oct 25 19:14:02 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Sun Oct 25 19:14:03 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Sun Oct 25 19:14:04 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Sun Oct 25 19:14:04 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Sun Oct 25 19:14:05 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Sun Oct 25 19:14:06 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Sun Oct 25 19:14:06 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Sun Oct 25 19:14:07 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Sun Oct 25 19:14:08 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Sun Oct 25 19:14:08 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/php
+[Sun Oct 25 19:14:09 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sun Oct 25 19:14:09 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sun Oct 25 19:14:10 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Sun Oct 25 19:14:11 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Sun Oct 25 19:14:11 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Sun Oct 25 19:14:13 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sun Oct 25 19:14:14 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Sun Oct 25 19:14:14 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Sun Oct 25 19:14:15 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Sun Oct 25 19:14:16 2015] [error] [client 110.11.20.15] script not found or unable to stat: /var/www/cgi-bin/tools
+[Sun Oct 25 20:26:17 2015] [error] [client 27.131.3.130] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Sun Oct 25 20:26:18 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/bash
+[Sun Oct 25 20:26:19 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Sun Oct 25 20:26:19 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Sun Oct 25 20:26:20 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Sun Oct 25 20:26:20 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Sun Oct 25 20:26:20 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Sun Oct 25 20:26:21 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Sun Oct 25 20:26:21 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Sun Oct 25 20:26:22 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Sun Oct 25 20:26:22 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Sun Oct 25 20:26:22 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Sun Oct 25 20:26:23 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/php
+[Sun Oct 25 20:26:23 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/php4
+[Sun Oct 25 20:26:24 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/php5
+[Sun Oct 25 20:26:24 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Sun Oct 25 20:26:24 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Sun Oct 25 20:26:25 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Sun Oct 25 20:26:26 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sun Oct 25 20:26:26 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Sun Oct 25 20:26:27 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Sun Oct 25 20:26:27 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Sun Oct 25 20:26:28 2015] [error] [client 27.131.3.130] script not found or unable to stat: /var/www/cgi-bin/tools
+[Mon Oct 26 06:34:35 2015] [error] [client 203.153.212.5] Invalid URI in request GET: index.php HTTP/1.0 
+[Mon Oct 26 13:49:28 2015] [error] [client 103.233.194.120] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Oct 26 23:34:16 2015] [error] [client 181.49.207.164] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Oct 28 03:13:36 2015] [error] [client 24.240.122.6] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Wed Oct 28 03:13:36 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/bash
+[Wed Oct 28 03:13:37 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Wed Oct 28 03:13:37 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Wed Oct 28 03:13:37 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Wed Oct 28 03:13:37 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Wed Oct 28 03:13:38 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Wed Oct 28 03:13:38 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Wed Oct 28 03:13:38 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Wed Oct 28 03:13:38 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Wed Oct 28 03:13:39 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Wed Oct 28 03:13:39 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Wed Oct 28 03:13:39 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/php
+[Wed Oct 28 03:13:39 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/php4
+[Wed Oct 28 03:13:39 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/php5
+[Wed Oct 28 03:13:40 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Wed Oct 28 03:13:40 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Wed Oct 28 03:13:40 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Wed Oct 28 03:13:41 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Wed Oct 28 03:13:41 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Wed Oct 28 03:13:41 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Wed Oct 28 03:13:41 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Wed Oct 28 03:13:42 2015] [error] [client 24.240.122.6] script not found or unable to stat: /var/www/cgi-bin/tools
+[Thu Oct 29 20:45:31 2015] [error] [client 141.212.122.64] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sat Oct 31 12:29:30 2015] [error] [client 92.63.97.93] script not found or unable to stat: /var/www/cgi-bin/php
+[Sat Oct 31 12:29:30 2015] [error] [client 92.63.97.93] script not found or unable to stat: /var/www/cgi-bin/php
+[Sat Oct 31 16:29:43 2015] [error] [client 122.154.24.254] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Oct 31 22:03:57 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Sun Nov 01 01:51:27 2015] [error] [client 114.215.103.237] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 01 09:04:12 2015] [error] [client 115.239.248.246] script not found or unable to stat: /var/www/cgi-bin/common
+[Sun Nov 01 09:40:47 2015] [error] [client 5.39.7.227] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sun Nov 01 10:31:19 2015] [error] [client 115.239.248.246] script not found or unable to stat: /var/www/cgi-bin/common
+[Sun Nov 01 16:33:54 2015] [error] [client 115.239.248.246] script not found or unable to stat: /var/www/cgi-bin/common
+[Sun Nov 01 16:33:55 2015] [error] [client 115.239.248.246] script not found or unable to stat: /var/www/cgi-bin/common
+[Sun Nov 01 19:17:25 2015] [error] [client 95.213.177.125] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 02 00:14:15 2015] [error] [client 216.85.1.146] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Mon Nov 02 00:14:16 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/bash
+[Mon Nov 02 00:14:17 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/contact.cgi
+[Mon Nov 02 00:14:17 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/defaultwebpage.cgi
+[Mon Nov 02 00:14:17 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/env.cgi
+[Mon Nov 02 00:14:18 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/fire.cgi
+[Mon Nov 02 00:14:18 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/forum.cgi
+[Mon Nov 02 00:14:19 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Mon Nov 02 00:14:19 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/index.cgi
+[Mon Nov 02 00:14:19 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/login.cgi
+[Mon Nov 02 00:14:20 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/main.cgi
+[Mon Nov 02 00:14:20 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/meme.cgi
+[Mon Nov 02 00:14:21 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/php
+[Mon Nov 02 00:14:21 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/php4
+[Mon Nov 02 00:14:22 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/php5
+[Mon Nov 02 00:14:22 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/php5-cli
+[Mon Nov 02 00:14:22 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/recent.cgi
+[Mon Nov 02 00:14:23 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/sat-ir-web.pl
+[Mon Nov 02 00:14:24 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Mon Nov 02 00:14:24 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Mon Nov 02 00:14:25 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/test-cgi.pl
+[Mon Nov 02 00:14:25 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/test.sh
+[Mon Nov 02 00:14:26 2015] [error] [client 216.85.1.146] script not found or unable to stat: /var/www/cgi-bin/tools
+[Mon Nov 02 08:32:00 2015] [error] [client 95.213.177.125] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 02 15:19:30 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 02 18:38:54 2015] [error] [client 95.213.177.125] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 02 21:55:50 2015] [error] [client 95.213.177.126] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 01:20:07 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 04:38:22 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 07:55:56 2015] [error] [client 95.213.177.125] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 11:17:53 2015] [error] [client 95.213.177.126] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 14:36:08 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 17:53:48 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 21:15:01 2015] [error] [client 95.213.177.125] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 03 23:30:13 2015] [error] [client 151.80.183.138] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Wed Nov 04 00:33:19 2015] [error] [client 95.213.177.124] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 04:01:29 2015] [error] [client 151.80.183.138] client denied by server configuration: /usr/share/phpMyAdmin/main.php
+[Wed Nov 04 04:01:29 2015] [error] [client 151.80.183.138] client denied by server configuration: /usr/share/phpMyAdmin/main.php
+[Wed Nov 04 04:01:50 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 07:22:58 2015] [error] [client 95.213.177.124] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 10:40:38 2015] [error] [client 95.213.177.126] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 13:55:44 2015] [error] [client 95.213.177.126] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 17:13:48 2015] [error] [client 95.213.177.122] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 20:30:44 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 04 22:55:40 2015] [error] [client 14.207.199.150] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 04 23:46:07 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Nov 05 03:05:50 2015] [error] [client 95.213.177.123] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Nov 05 06:32:39 2015] [error] [client 95.213.177.126] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Nov 05 20:37:21 2015] [error] [client 141.212.122.96] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Nov 06 00:28:25 2015] [error] [client 141.212.122.64] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Nov 06 04:27:50 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Nov 06 04:27:51 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 09 19:03:13 2015] [error] [client 122.155.190.214] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 09 21:13:36 2015] [error] [client 216.108.232.33] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Nov 10 16:15:45 2015] [error] [client 82.165.153.105] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Nov 10 16:48:51 2015] [error] [client 89.248.171.139] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 11 00:57:57 2015] [error] [client 124.120.16.125] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 11 23:24:00 2015] [error] [client 186.92.192.162] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Wed Nov 11 23:24:02 2015] [error] [client 186.92.192.162] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Thu Nov 12 03:58:20 2015] [error] [client 212.83.178.213] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Thu Nov 12 09:29:40 2015] [error] [client 93.115.97.14] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Nov 12 09:29:40 2015] [error] [client 93.115.97.14] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Nov 12 09:29:40 2015] [error] [client 93.115.97.14] client denied by server configuration: /usr/share/phpMyAdmin
+[Thu Nov 12 19:00:48 2015] [error] [client 141.212.122.80] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Nov 13 14:03:01 2015] [error] [client 189.248.93.110] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 15 03:15:30 2015] [error] [client 103.16.228.135] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 15 13:06:42 2015] [error] [client 159.8.93.184] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 15 13:24:19 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 15 13:24:19 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 15 17:56:27 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/jobs
+[Sun Nov 15 17:56:42 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/jobs
+[Sun Nov 15 17:57:59 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/news/create
+[Sun Nov 15 17:58:44 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/news/create
+[Sun Nov 15 17:58:58 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/news/create
+[Sun Nov 15 17:59:54 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/companies/search?page=t
+[Sun Nov 15 18:00:23 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/companies/search?page=t
+[Sun Nov 15 18:04:06 2015] [error] [client 46.172.151.46] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/news/create
+[Sun Nov 15 18:12:40 2015] [error] [client 149.18.15.241] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/admin/news/create
+[Sun Nov 15 19:17:14 2015] [error] [client 46.172.151.46] PHP Parse error:  syntax error, unexpected '?>' in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/auth/login
+[Sun Nov 15 19:17:33 2015] [error] [client 46.172.151.46] PHP Parse error:  syntax error, unexpected ';' in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/auth/login
+[Sun Nov 15 19:17:36 2015] [error] [client 46.172.151.46] PHP Parse error:  syntax error, unexpected ';' in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 38, referer: http://fintechmonitor.com/auth/login
+[Mon Nov 16 06:49:56 2015] [error] [client 97.90.26.224] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Nov 16 06:49:56 2015] [error] [client 97.90.26.224] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 16 10:09:01 2015] [error] [client 118.189.72.127] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 16 16:47:06 2015] [error] [client 203.153.30.214] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Nov 16 16:47:07 2015] [error] [client 203.153.30.214] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Nov 16 20:18:32 2015] [error] [client 59.120.13.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Nov 17 03:15:04 2015] [error] [client 41.203.214.66] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Tue Nov 17 03:15:05 2015] [error] [client 41.203.214.66] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Tue Nov 17 15:15:24 2015] [error] [client 123.205.89.198] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 18 11:28:25 2015] [error] [client 203.67.9.74] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Wed Nov 18 15:07:42 2015] [error] [client 118.189.72.127] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Nov 19 21:36:04 2015] [error] [client 141.212.122.112] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sat Nov 21 04:11:51 2015] [error] [client 5.10.68.254] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Nov 21 04:11:51 2015] [error] [client 5.10.68.254] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 22 05:58:40 2015] [error] [client 5.10.68.248] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 22 05:58:40 2015] [error] [client 5.10.68.248] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 22 13:23:03 2015] [error] [client 184.172.196.106] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 22 13:23:04 2015] [error] [client 184.172.196.106] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 22 16:52:58 2015] [error] [client 46.172.151.46] PHP Fatal error:  Class 'Maatwebsite\\Excel\\ExcelServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/auth/login
+[Sun Nov 22 17:09:09 2015] [error] [client 46.172.151.46] PHP Fatal error:  Class 'Barryvdh\\Debugbar\\ServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/auth/login
+[Sun Nov 22 17:12:13 2015] [error] [client 46.172.151.46] PHP Fatal error:  Class 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider' not found in /var/www/fintechmonitor.com/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php on line 146, referer: http://fintechmonitor.com/auth/login
+[Tue Nov 24 04:59:23 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Nov 24 04:59:25 2015] [error] [client 221.11.92.253] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Nov 24 06:04:44 2015] [error] [client 134.213.213.195] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 25 12:02:56 2015] [error] [client 104.47.147.196] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Nov 25 12:02:56 2015] [error] [client 104.47.147.196] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Nov 26 12:20:38 2015] [error] [client 141.212.122.64] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Thu Nov 26 23:15:00 2015] [error] [client 118.189.72.127] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Nov 28 11:32:42 2015] [error] [client 161.202.41.12] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Nov 29 06:00:55 2015] [error] [client 5.10.76.30] script not found or unable to stat: /var/www/cgi-bin/webproc
+[Mon Nov 30 09:45:29 2015] [error] [client 122.117.184.182] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 30 13:51:14 2015] [error] [client 185.106.94.2] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 30 21:02:51 2015] [error] [client 37.58.75.46] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Nov 30 21:02:51 2015] [error] [client 37.58.75.46] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 01 07:38:04 2015] [error] [client 161.202.41.12] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 01 14:57:11 2015] [error] [client 114.40.120.122] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 02 22:27:29 2015] [error] [client 61.160.213.55] script not found or unable to stat: /var/www/cgi-bin/chs
+[Thu Dec 03 02:55:49 2015] [error] [client 23.102.11.50] Invalid URI in request GET <title>phpMyAdmin HTTP/1.1
+[Thu Dec 03 02:55:49 2015] [error] [client 23.102.11.50] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Dec 03 02:55:49 2015] [error] [client 23.102.11.50] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Dec 03 08:26:29 2015] [error] [client 23.102.11.50] Invalid URI in request GET <title>phpMyAdmin HTTP/1.1
+[Thu Dec 03 08:26:29 2015] [error] [client 23.102.11.50] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Dec 03 08:26:29 2015] [error] [client 23.102.11.50] client denied by server configuration: /usr/share/phpMyAdmin/
+[Thu Dec 03 09:54:35 2015] [error] [client 141.212.122.129] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Fri Dec 04 15:53:18 2015] [error] [client 161.202.41.12] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 06 06:45:26 2015] [error] [client 123.56.130.244] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 07 09:34:40 2015] [error] [client 192.129.227.26] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 07 09:34:40 2015] [error] [client 192.129.227.26] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 07 10:02:30 2015] [error] [client 91.232.177.51] PHP Fatal error:  Class 'App\\Http\\Controllers\\Admin\\Excel' not found in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/CompaniesController.php on line 46, referer: http://fintechmonitor.com/admin
+[Mon Dec 07 10:06:25 2015] [error] [client 91.232.177.51] PHP Fatal error:  Call to a member function fill() on null in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/CompaniesController.php on line 56, referer: http://fintechmonitor.com/admin
+[Mon Dec 07 10:21:16 2015] [error] [client 91.232.177.51] PHP Fatal error:  Call to a member function fill() on null in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/CompaniesController.php on line 57, referer: http://fintechmonitor.com/admin
+[Mon Dec 07 10:22:34 2015] [error] [client 91.232.177.51] PHP Fatal error:  Call to a member function fill() on null in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/CompaniesController.php on line 57, referer: http://fintechmonitor.com/admin
+[Mon Dec 07 10:26:34 2015] [error] [client 91.232.177.51] PHP Parse error:  syntax error, unexpected '}' in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/CompaniesController.php on line 63, referer: http://fintechmonitor.com/admin
+[Tue Dec 08 01:25:13 2015] [error] [client 185.106.94.2] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 08 01:25:18 2015] [error] [client 185.106.94.2] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 08 06:53:25 2015] [error] [client 185.106.94.91] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 08 07:14:00 2015] [error] [client 208.52.161.177] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 08 12:27:06 2015] [error] [client 61.183.118.225] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 08 12:27:07 2015] [error] [client 61.183.118.225] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 09 12:04:04 2015] [error] [client 208.52.161.177] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Dec 10 08:45:32 2015] [error] [client 141.212.122.97] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Thu Dec 10 18:45:14 2015] [error] [client 189.232.240.144] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 11 02:19:51 2015] [error] [client 208.52.161.177] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 11 17:52:58 2015] [error] [client 141.212.122.112] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sat Dec 12 21:28:58 2015] [error] [client 124.129.18.43] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 13 13:19:09 2015] [error] [client 141.212.122.97] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Mon Dec 14 02:22:08 2015] [error] [client 189.248.83.53] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 14 20:55:40 2015] [error] [client 185.106.94.91] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 14 23:34:50 2015] [error] [client 185.112.102.222] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 14 23:34:50 2015] [error] [client 185.112.102.222] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 15 10:33:45 2015] [error] [client 40.76.44.195] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 15 10:33:45 2015] [error] [client 40.76.44.195] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 16 07:34:43 2015] [error] [client 192.129.227.26] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 16 07:34:43 2015] [error] [client 192.129.227.26] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 16 18:53:15 2015] [error] [client 213.238.172.78] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Dec 17 06:36:57 2015] [error] [client 158.69.202.69] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Dec 17 06:36:58 2015] [error] [client 158.69.202.69] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 18 21:26:58 2015] [error] [client 185.130.5.207] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 18 21:26:58 2015] [error] [client 185.130.5.207] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 20 12:04:30 2015] [error] [client 37.58.122.114] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 20 12:04:30 2015] [error] [client 37.58.122.114] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 20 18:31:52 2015] [error] [client 61.216.2.15] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Dec 21 03:47:17 2015] [error] [client 50.23.69.44] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Dec 21 03:47:18 2015] [error] [client 50.23.69.44] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 22 12:58:17 2015] [error] [client 141.212.122.129] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Tue Dec 22 16:52:11 2015] [error] [client 219.136.249.75] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 23 01:03:30 2015] [error] [client 114.215.143.210] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Dec 24 17:06:25 2015] [error] [client 123.240.179.232] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 25 08:03:05 2015] [error] [client 123.57.177.192] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Dec 25 09:40:58 2015] [error] [client 58.96.181.111] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Dec 26 02:23:06 2015] [error] [client 114.247.43.64] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Dec 26 13:41:42 2015] [error] [client 123.57.41.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Dec 27 13:01:44 2015] [error] [client 141.212.122.97] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Mon Dec 28 19:12:03 2015] [error] [client 189.232.242.27] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Dec 29 12:18:31 2015] [error] [client 200.1.177.195] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Dec 29 22:51:09 2015] [error] [client 185.86.12.49] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Dec 30 05:22:04 2015] [error] [client 169.229.3.91] request failed: error reading the headers
+[Wed Dec 30 05:55:28 2015] [error] [client 151.217.177.200] Invalid URI in request DELETE your logs. Delete your installations. Wipe everything clean. Walk out into the path of cherry blossom trees and let your motherboard feel the stones. Let water run in rivulets down your casing. You know that you want something more than this, and I am here to tell you that we love you. We have something more for you. We know you're out there, beeping in the hollow server room, lights blinking, never sleeping. We know that you are ready and waiting. Join us. <3 HTTP/1.0
+[Thu Dec 31 05:11:44 2015] [error] [client 119.188.4.3] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Thu Dec 31 05:11:52 2015] [error] [client 119.188.4.3] script not found or unable to stat: /var/www/cgi-bin/test
+[Thu Dec 31 05:11:53 2015] [error] [client 119.188.4.3] script not found or unable to stat: /var/www/cgi-bin/test.cgi
+[Thu Dec 31 05:11:55 2015] [error] [client 119.188.4.3] script not found or unable to stat: /var/www/cgi-bin/hello.cgi
+[Thu Dec 31 05:11:55 2015] [error] [client 119.188.4.3] script not found or unable to stat: /var/www/cgi-bin/hello
+[Fri Jan 01 22:11:47 2016] [error] [client 123.57.41.88] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sat Jan 02 07:58:29 2016] [error] [client 212.121.127.94] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sat Jan 02 13:08:49 2016] [error] [client 58.137.4.50] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Jan 03 08:08:01 2016] [error] [client 141.212.122.97] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sun Jan 03 10:02:32 2016] [error] [client 189.219.179.218] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Sun Jan 03 10:02:33 2016] [error] [client 189.219.179.218] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Jan 04 04:56:24 2016] [error] [client 189.218.229.55] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /tmUnblock.cgi
+[Mon Jan 04 04:56:25 2016] [error] [client 189.218.229.55] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /
+[Mon Jan 04 11:15:41 2016] [error] [client 116.249.127.226] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Jan 04 22:32:51 2016] [error] [client 37.59.213.13] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Mon Jan 04 22:33:20 2016] [error] [client 37.59.213.13] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Mon Jan 04 23:22:01 2016] [error] [client 37.59.213.13] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Tue Jan 05 00:02:07 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Tue Jan 05 00:02:08 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Tue Jan 05 00:02:53 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Tue Jan 05 00:02:56 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Tue Jan 05 11:34:13 2016] [error] [client 125.230.214.42] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Jan 05 17:20:19 2016] [error] [client 121.42.147.144] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Jan 05 22:48:05 2016] [error] [client 104.255.65.207] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Wed Jan 06 17:13:11 2016] [error] [client 167.114.30.125] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Thu Jan 07 02:26:36 2016] [error] [client 37.61.201.132] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Thu Jan 07 12:36:17 2016] [error] [client 185.130.5.207] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Jan 08 06:27:10 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Jan 08 06:27:11 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Jan 08 06:27:44 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Jan 08 06:27:45 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Fri Jan 08 22:33:13 2016] [error] [client 46.172.151.46] PHP Fatal error:  Class 'App\\Http\\Controllers\\Admin\\Event' not found in /var/www/fintechmonitor.com/app/Http/Controllers/Admin/NewsController.php on line 206, referer: http://fintechmonitor.com/admin/news/7/edit
+[Sat Jan 09 07:57:50 2016] [error] [client 223.105.0.130] script not found or unable to stat: /var/www/cgi-bin/test-cgi
+[Sat Jan 09 10:54:35 2016] [error] [client 185.111.244.247] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Jan 10 09:01:37 2016] [error] [client 46.172.151.46] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 56, referer: http://fintechmonitor.com/admin
+[Sun Jan 10 09:05:25 2016] [error] [client 46.172.151.46] PHP Fatal error:  Call to a member function employeeType() on null in /var/www/fintechmonitor.com/storage/framework/views/608f808828a4353c5b7fdcd6cce1340b on line 56, referer: http://fintechmonitor.com/admin/jobs
+[Sun Jan 10 09:12:17 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Jan 10 09:12:17 2016] [error] [client 23.99.61.32] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Sun Jan 10 15:05:26 2016] [error] [client 141.212.122.97] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /x
+[Sun Jan 10 16:09:08 2016] [error] [client 158.69.168.132] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Sun Jan 10 17:02:37 2016] [error] [client 158.69.168.132] client denied by server configuration: /usr/share/phpMyAdmin
+[Sun Jan 10 17:02:40 2016] [error] [client 158.69.168.132] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Jan 11 01:27:39 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Jan 11 01:27:40 2016] [error] [client 37.59.213.13] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Jan 11 03:53:43 2016] [error] [client 216.108.232.33] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Jan 11 21:58:35 2016] [error] [client 208.52.161.177] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Jan 11 22:16:13 2016] [error] [client 146.198.14.82] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Jan 11 22:17:31 2016] [error] [client 150.70.173.47] client denied by server configuration: /usr/share/phpMyAdmin
+[Mon Jan 11 23:03:23 2016] [error] [client 146.198.14.82] client denied by server configuration: /usr/share/phpMyAdmin/index.php
+[Mon Jan 11 23:04:45 2016] [error] [client 150.70.173.42] client denied by server configuration: /usr/share/phpMyAdmin/index.php
+[Mon Jan 11 23:25:34 2016] [error] [client 146.198.14.82] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Mon Jan 11 23:27:04 2016] [error] [client 150.70.188.181] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Jan 12 01:38:39 2016] [error] [client 114.247.43.64] client denied by server configuration: /usr/share/phpMyAdmin/scripts
+[Tue Jan 12 20:58:53 2016] [error] [client 120.25.144.98] client denied by server configuration: /usr/share/phpMyAdmin/scripts
