@@ -10,10 +10,11 @@ use \App\Models\Companies;
 use \App\Models\Region;
 use \App\Models\Country;
 use App\Models\PeopleTitle;
-use \App\Models\Positions;
+use \App\Models\CareerHistory;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Mockery\Exception;
 use Redirect;
 
 use Illuminate\Http\Request;
@@ -38,46 +39,98 @@ class EmployeeController extends Controller
 
 
         $data = 'data';
-        Excel::load('/storage/app/Medium2.xlsx', function($reader) use($data){
-            $reader->each(function($sheet) {
-                $rowData = $sheet->toArray();
-//                foreach ($rowData as $row)
-//                {
-//                    echo "<pre>";
-//                    print_r($row);
-//                    echo "</pre>";
-//                    //exit();
-//
-//                    $name = trim($row['name']);
-//                    $title = trim($row['title']);
-//                    $description = trim($row['description']);
-//                    if (strlen($name) > 0) {
-//                        $flname = explode(" ",$name);
-//                        $firstName =
-//                        $lastName = $flname[1];
-//                        $peopleFields = [];
-//                        $addressFields = [];
-//                        $employeeFields = [];
-//                        $addressModel = Addresses::create($addressFields);
-//                        $peopleFields['First_Name'] = $flname[0];
-//                        $peopleFields['Surname'] = $flname[1];
-//                        $peopleFields['Career_Description'] = $description;
-//                        $peopleFields['Date_Created'] = Carbon::now();
-//                        $peopleFields['AddressId'] = $addressModel->AddressId;
-//                        $peopleModel = People::create($peopleFields);
-//                        $peopleModel->employee()->create($employeeFields);
-//                    }
-//
-//                }
+        $employeeType = EmployeeType::all(["Type_Name"])->toArray();
 
-                // Loop through all rows
+        Excel::load('/storage/app/MicroCompanies3.xlsx', function($reader) use($data) {
+            $existsData = [];
+            $reader->each(function($sheet) use ($existsData) {
+                $company = $sheet->getTitle();
+                $companyModel = Companies::where("Company_Full_Name", "like", "%$company%")->first();
+
+                $rowData = $sheet->toArray();
+                foreach ($rowData as $row)
+                {
+                    if (isset($row) && count($row)) {
+                        $name = isset($row['name']) ? trim($row['name']) : "";
+
+                        if (!strlen($name) && in_array(strtolower($name), $existsData)) {
+                            continue;
+                        }
+                        $title = isset($row['title']) ? trim($row['title']) : "";
+                        $description = isset($row['description']) ? trim($row['description']) : "";
+
+                        $employeeType = EmployeeType::all(["Type_Name"])->toArray();
+
+                        $present = [];
+                        foreach ($employeeType as $aType) {
+                            if (!in_array($aType["Type_Name"], $present)) $present[] = strtolower($aType["Type_Name"]);
+                        }
+//                        echo "<pre>";
+//                        print_r($present);
+//                        echo "</pre>";
+                        $Employee_types = [];
+
+                        $ptitle = explode(",", $title);
+
+                        foreach ($ptitle as $part) {
+                            $title_part = trim(strtolower($part));
+                            if (strlen($title_part) == 0) {
+                                continue;
+                            }
+                            $created = false;
+                            foreach ($present as $item) {
+                                $sameLatters = similar_text(strtolower($item), $title_part, $per);
+                                if ($per < 80 && !in_array($title_part, $present)) {
+                                    $created = true;
+                                    $present[] = $title_part;
+                                    $Employee_types[] = EmployeeType::create(["Type_Name" => ucwords($title_part)]);
+                                }
+                            }
+                            if (!$created) {
+                                $Employee_types[] = EmployeeType::where("Type_Name", 'like', "%" . ucwords($title_part) . "%")->get()->first();
+                            }
+
+                        }
+
+                        $flname = explode(" ", $name);
+                        $peopleFields = [];
+                        $addressFields = [];
+                        $employeeFields = [];
+                        $peopleFields['First_Name'] = is_array($flname) && isset($flname[0]) && strlen($flname[0]) ? $flname[0] : "";
+                        $peopleFields['Surname'] = is_array($flname) && isset($flname[1]) && strlen($flname[1]) ? $flname[1] : "";
+
+                        if ($peopleFields['First_Name'] && $peopleFields['First_Name'] || ($peopleFields['First_Name'])) {
+                            $addressModel = Addresses::create($addressFields);
+                            $peopleFields['Career_Description'] = $description;
+                            $peopleFields['Date_Created'] = Carbon::now();
+                            $peopleFields['AddressId'] = $addressModel->AddressId;
+                            $peopleModel = People::create($peopleFields);
+                            if ($companyModel) {
+                                $peopleModel->careerHistory()->save(new \App\Models\CareerHistory([
+                                    "Position_Name" => $title, "Company_Name" => $companyModel->Company_Full_Name,
+                                    "Current_Position_Status" => 1
+                                ]));
+                            }
+                            $employeeModel = $peopleModel->employee()->create($employeeFields);
+                            foreach ($Employee_types as $EmployeeType) {
+                                $employeeModel->employeeType()->save($EmployeeType);
+                            }
+
+                        }
+                        $existsData[] = strtolower($name);
+                    }
+//
+//
+//                     Loop through all rows
 //                $sheet->each(function($row) {
 //                    echo $row;
 //                });
+
+                }
             });
         });
 
-        $people = People::where("Deleted", "=", NULL)->get()->sortBy("First_Name");
+        $people = People::whereNull("Deleted")->get()->sortBy("First_Name");
         return view("admin.employee.index", compact("people"));
     }
 

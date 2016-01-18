@@ -13,7 +13,7 @@ class Employee extends Model
 
     public function employeeType()
     {
-        return $this->hasOne('App\Models\EmployeeType', 'id_Employee_Type', 'id_Employee_Type');
+        return $this->belongsToMany('App\Models\EmployeeType','Employee_Employee_Types','id_Employee','id_Employee_Type');
     }
 
 }
