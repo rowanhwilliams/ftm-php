@@ -76,7 +76,7 @@
                                           <button class='btn btn-clean btn-danger center btn-xs' type='button' data-toggle="modal" data-target="#confirmDelete"
                                                   data-title="Delete Company" data-message='Warning – You are about to delete {!! $company->Company_Full_Name !!}, please confirm?'
                                                   data-extra-confirm="Are you sure (Y/N)?">
-                                              <i class='icon-trash'></i>
+                                              <i class='glyphicon glyphicon-trash'></i>
                                           </button>
                                           {{--{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-xs')) !!}--}}
                                           {!! Form::close() !!}
