@@ -22,7 +22,8 @@
                         null,
                         null,
                         null,
-                        null
+                        null,
+						null
                     ]
                 });
 
@@ -53,14 +54,15 @@
                           <table class="table index-table table-striped table-responsive display compact nowrap" id="table-item-list">
                           <thead>
                               <tr>
-                                  <th> <i class="glyphicon glyphicon-tasks"></i></th>
+                                  <th> <i class="icon-list"></i></th>
                                   <th nowrap="">Company Name</th>
                                   <th nowrap="">Year Founded</th>
                                   <th nowrap="">Employee Size</th>
                                   <th nowrap="">Revenue stage</th>
                                   <th>Headquarters</th>
                                   <th>Website</th>
-                                  <th nowrap="">Product Name </th>
+                                  <th>Product Name </th>
+								  <th nowrap="">Approved</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -102,7 +104,13 @@
                                               </div>
                                           @endif
                                       </td>
-
+									  <td class=text-center">
+										@if($company->Is_Published == 1)
+											<i class="icon-ok"></i>
+										@else
+											<i class="icon-ban"></span>
+										@endif
+									  </td>
                                   </tr>
                               @endforeach
                           @else

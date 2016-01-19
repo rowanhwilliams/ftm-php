@@ -211,6 +211,9 @@
         <div>{!! Form::label('Company_Description_FTM', 'Company Description:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('Company_Description_FTM',null, ['size' => '30x2', 'class' => 'form-control','placeholder'=>'Company Description']) !!}</div>
     </div>
+	<div class="form-group">
+        <div>{!! Form::checkbox('Is_Published') !!} {!!  Form::label('Is_Published', 'Approved', Array("style" => "font-size: 16px;")) !!} </div>
+    </div>
 </div>
 <div class="row">
     <div class="pull-right">
