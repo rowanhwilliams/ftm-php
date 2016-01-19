@@ -138,11 +138,11 @@
 
 </div>
 <div class="col-md-6">
-
+    @if ($company->Acquired_Subsidiary == 1)
         <div class="form-group">
-            Subsidiary of {!! $ultimateParent !!}
+            Subsidiary of {!! $company->Ultimate_Parent !!}
         </div>
-    
+    @endif
     <div style="font-size: 18px">Media Contact Information</div>
     <div style="border: solid 2px lightgrey; padding: 10px;">
         @if ($mediaContacts->count() > 0)
