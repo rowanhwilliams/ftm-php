@@ -400,7 +400,8 @@ class CompaniesController extends Controller
             'Graduate_Program' => 'sometimes|accepted',
             'Firm_Out_Of_Business' => 'sometimes|accepted',
             'Company_About_Us' => 'string',
-            'Company_Description_FTM' => 'string'
+            'Company_Description_FTM' => 'string',
+			'Is_Published' => 'sometimes|accepted',
         ];
         $this->validate($request,$CompanyValidator);
         foreach(array_keys($CompanyValidator) as $key){
