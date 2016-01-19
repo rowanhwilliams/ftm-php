@@ -138,6 +138,10 @@
 
 </div>
 <div class="col-md-6">
+
+        <div class="form-group">
+            Subsidiary of {!! $ultimateParent !!}
+        </div>
     
     <div style="font-size: 18px">Media Contact Information</div>
     <div style="border: solid 2px lightgrey; padding: 10px;">
