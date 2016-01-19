@@ -44,6 +44,9 @@
 </div>
 <div class="col-md-6">
     <div class="form-group">
+        <div>{!! Form::checkbox('Is_Published') !!} {!!  Form::label('Is_Published', 'Approved', Array("style" => "font-size: 16px;")) !!} </div>
+    </div>
+    <div class="form-group">
         <div>{!! Form::label('Company_Full_Name', 'Company Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('Company_Full_Name', null, Array('class'=>'form-control','placeholder'=>'Company Full Name')) !!}</div>
     </div>
@@ -54,6 +57,24 @@
     <div class="form-group">
         <div>{!! Form::label('id_Employee_Size', 'Employee Size:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::select('id_Employee_Size', $employeeSize, null, ['class' => 'form-control']) !!}</div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('Website', 'Website:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('Website', null, ["class" => "form-control",'placeholder'=>'Website']) !!}</div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::text('City', $HQAddresses->City, ["class" => "form-control",'placeholder'=>'City']) !!}</div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('Company_About_Us', 'Company About Us:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>{!! Form::textarea('Company_About_Us',null, ['size' => '30x15', 'class' => 'form-control','placeholder'=>'Company About Us']) !!}</div>
+    </div>
+    <div class="form-group">
+        <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
+        <div>
+            <div>{!! Form::select('id_Country', $country, $HQAddresses->id_Country, ['class' => 'form-control']) !!}</div>
+        </div>
     </div>
     <div class="form-group">
         <div>{!! Form::label('id_Revenue_Stage', 'Revenue Stage:', Array("style" => "font-size: 16px;")) !!}</div>
@@ -102,10 +123,6 @@
         <div class="form-group">No product found for <b>{!! $company->Company_Full_Name !!}</b></div>
     @endif
     <div class="form-group">
-        <div>{!! Form::label('Website', 'Website:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('Website', null, ["class" => "form-control",'placeholder'=>'Website']) !!}</div>
-    </div>
-    <div class="form-group">
         <div>{!! Form::checkbox('Acquired_Subsidiary') !!} {!!  Form::label('Acquired_Subsidiary', 'Acquired/Subsidiory', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
     <div class="form-group" id="UltimateParent">
@@ -121,6 +138,11 @@
 
 </div>
 <div class="col-md-6">
+    @if ($company->Acquired_Subsidiary == 1)
+        <div class="form-group">    
+        Subsidiary of {!! $ultimateParent !!}
+        </div>
+    @endif
     <div style="font-size: 18px">Media Contact Information</div>
     <div style="border: solid 2px lightgrey; padding: 10px;">
         @if ($mediaContacts->count() > 0)
@@ -161,20 +183,9 @@
         <div>{!! Form::text('AddressLine2', $HQAddresses->AddressLine2, ["class" => "form-control",'placeholder'=>'Address Line 2']) !!}</div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('City', 'City:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::text('City', $HQAddresses->City, ["class" => "form-control",'placeholder'=>'City']) !!}</div>
-    </div>
-    <div class="form-group">
         <div>{!! Form::label('State', 'State:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('State', $HQAddresses->State, ["class" => "form-control",'placeholder'=>'State']) !!}</div>
     </div>
-    <div class="form-group">
-        <div>{!! Form::label('id_Country', 'Country:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>
-            <div>{!! Form::select('id_Country', $country, $HQAddresses->id_Country, ['class' => 'form-control']) !!}</div>
-        </div>
-    </div>
-
     <div class="form-group">
         <div>{!! Form::label('PostalCode', 'Postal Code:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('PostalCode', $HQAddresses->PostalCode, ["class" => "form-control",'placeholder'=>'Postal Code']) !!}</div>
@@ -204,15 +215,8 @@
         </div>
     </div>
     <div class="form-group">
-        <div>{!! Form::label('Company_About_Us', 'Company About Us:', Array("style" => "font-size: 16px;")) !!}</div>
-        <div>{!! Form::textarea('Company_About_Us',null, ['size' => '30x2', 'class' => 'form-control','placeholder'=>'Company About Us']) !!}</div>
-    </div>
-    <div class="form-group">
         <div>{!! Form::label('Company_Description_FTM', 'Company Description:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::textarea('Company_Description_FTM',null, ['size' => '30x2', 'class' => 'form-control','placeholder'=>'Company Description']) !!}</div>
-    </div>
-	<div class="form-group">
-        <div>{!! Form::checkbox('Is_Published') !!} {!!  Form::label('Is_Published', 'Approved', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
 </div>
 <div class="row">
