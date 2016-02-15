@@ -140,7 +140,7 @@
 <div class="col-md-6">
     @if ($company->Acquired_Subsidiary == 1)
         <div class="form-group">
-            Subsidiary of {!! $ultimateParent !!}
+            Subsidiary of {!! $ultimateParentCompany->Company_Full_Name !!}
         </div>
     @endif
     <div style="font-size: 18px">Media Contact Information</div>
