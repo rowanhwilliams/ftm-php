@@ -230,7 +230,7 @@ class CompaniesController extends Controller
             $company = Companies::findOrNew($id);
             $mediaContacts = $company->mediaContacts()->get();
             $attachments = $company->attachments()->get();
-            $ultimateParentCompany = $company->ultimateParent()->get()->first();
+            $ultimateParentCompany = $company->ultimateParent()->get();
         }
         else {
             if (!Session::has('MediaContacts')) {
