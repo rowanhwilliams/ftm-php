@@ -27,6 +27,10 @@ class Companies extends Model
     {
         return $this->hasOne('App\Models\EmployeeSize', 'id_Employee_Size');
     }
+	public function ultimateParent()
+    {
+        return $this->hasOne('App\Models\Companies', 'id_Ultimate_Parent');
+    }
     protected function SelectOptionsModel()
     {
         $companies = [];
