@@ -139,7 +139,7 @@
 </div>
 <div class="col-md-6">
     @if ($company->Acquired_Subsidiary == 1)
-        <div class="form-group">
+        <div style="font-size: 18px">
             Subsidiary of {!! $ultimateParentCompany->->first()->Company_Full_Name !!}
         </div>
     @endif
