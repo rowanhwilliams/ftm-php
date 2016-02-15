@@ -224,6 +224,8 @@ class CompaniesController extends Controller
         $HQAddresses = new \App\Models\Addresses();
         $HQPhones = new \App\Models\Phones();
         $company = new \App\Models\Companies();
+		$ultimateParentCompany = new \App\Models\Companies();
+		
         if (!is_null($id)) {
             $company = Companies::findOrNew($id);
             $mediaContacts = $company->mediaContacts()->get();
