@@ -296,7 +296,7 @@ class CompaniesController extends Controller
         $country = Country::getListCountries();
 
         return compact("employeeSize", "growthProfile", "productFocusTypeList", "ownership", "revenueStage", "companyType", "companySubType",
-            "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products", "attachments");
+            "company", "ultimateParent", "mediaContacts", "country", "HQAddresses", "HQPhones", "products", "attachments", "ultimateParentCompany");
     }
 
     /**
