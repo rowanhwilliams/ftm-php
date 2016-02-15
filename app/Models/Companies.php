@@ -29,7 +29,7 @@ class Companies extends Model
     }
 	public function ultimateParent()
     {
-        return $this->hasOne('App\Models\Companies', 'id_Ultimate_Parent');
+        return $this->belongsTo('App\Models\Companies', 'id_Ultimate_Parent');
     }
     protected function SelectOptionsModel()
     {
