@@ -141,7 +141,7 @@
     @if ($company->Acquired_Subsidiary == 1)
         <div style="font-size: 18px">
             Subsidiary of {!! $ultimateParentCompany->first()->Company_Full_Name !!}
-			<br/>
+			<br/><br/>
 		</div>
     @endif
     <div style="font-size: 18px">Media Contact Information</div>
