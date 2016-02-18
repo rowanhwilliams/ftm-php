@@ -12,7 +12,7 @@
                             "columnDefs": [
                                 { null },
                                 {"width": "15%"},
-                                {"width": "40%"},
+                                {"width": "45%"},
                                 null,
                                 {"width": "5%"}
                             ],
@@ -62,7 +62,7 @@
                                           </td>
                                           <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
                                           <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
-                                              strlen($newsItem->Story_Headline) > 30 ?
+                                              strlen($newsItem->Story_Headline) > 300 ?
                                                     substr($newsItem->Story_Headline,0,300). "..." : $newsItem->Story_Headline) !!}
                                           </td>
 										  <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
