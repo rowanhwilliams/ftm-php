@@ -14,7 +14,7 @@
                                 {"width": "15%", "bSortable": true},
                                 {"width": "45%", "bSortable": true},
 								{"bSortable": true},
-                                {"width": "5%", , "bSortable": true}
+                                {"width": "5%", "bSortable": true}
                             ],
 							"aoColumns": [
                                 { "bSortable": false },
