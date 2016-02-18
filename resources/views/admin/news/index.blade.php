@@ -33,9 +33,9 @@
                             <tr>
                               <th><i class="center-block icon-tasks"></i></th>
                               <th nowrap="">Date Time</th>
+							  <th>Headline</th>
+							  <th nowrap="">News type</th>
                               <th class="without-sort">Tags</th>
-                              <th nowrap="">News type</th>
-                              <th>Headline</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,7 +54,12 @@
                                               {!! Form::close() !!}
                                           </td>
                                           <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
-                                          <td class="text-left">
+                                          <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
+                                              strlen($newsItem->Story_Headline) > 30 ?
+                                                    substr($newsItem->Story_Headline,0, 30). "..." : $newsItem->Story_Headline) !!}
+                                          </td>
+										  <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
+										  <td class="text-left">
                                               <strong>
                                                 @foreach($newsItem->tags() as $tag)
                                                     @if ($tag->target == "Companies")
@@ -70,11 +75,6 @@
                                                         </span>
                                               @endforeach
                                               </strong>
-                                          </td>
-                                          <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
-                                          <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
-                                              strlen($newsItem->Story_Headline) > 30 ?
-                                                    substr($newsItem->Story_Headline,0, 30). "..." : $newsItem->Story_Headline) !!}
                                           </td>
                                       </tr>
                                   @endforeach
