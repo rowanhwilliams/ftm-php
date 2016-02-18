@@ -12,7 +12,7 @@
                             "aoColumns": [
                                 { "bSortable": false },
                                 null,
-                                null,
+                                {width: 600px},
                                 null,
                                 null
                             ]
