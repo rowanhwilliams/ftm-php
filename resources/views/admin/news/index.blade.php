@@ -12,7 +12,7 @@
                             "columnDefs": [
                                 {"bSortable": false },
                                 {"width": "15%", "bSortable": true},
-                                {"width": "45%", "bSortable": true},
+                                {"width": "50%", "bSortable": true},
 								{"bSortable": true},
                                 {"width": "5%", "bSortable": true}
                             ],
