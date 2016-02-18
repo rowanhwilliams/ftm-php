@@ -11,10 +11,10 @@
                             "sPaginationType": "full_numbers",
                             "aoColumns": [
                                 { "bSortable": false },
+                                {"width": "15%"},
+                                {"width": "40%"},
                                 null,
-                                {width: 600px},
-                                null,
-                                null
+                                {"width": "5%"}
                             ]
                         });
                     }
@@ -56,7 +56,7 @@
                                           <td class="text-left" nowrap="">{!! \Carbon\Carbon::parse($newsItem->Story_Date)->format("d-M-Y H:i") !!}</td>
                                           <td class="text-left">{!! link_to(URL::route("admin.news.edit", $newsItem->id_News),
                                               strlen($newsItem->Story_Headline) > 30 ?
-                                                    substr($newsItem->Story_Headline,0, 30). "..." : $newsItem->Story_Headline) !!}
+                                                    substr($newsItem->Story_Headline,0,120). "..." : $newsItem->Story_Headline) !!}
                                           </td>
 										  <td class="text-left">{!! $newsItem->News_Type_Name !!}</td>
 										  <td class="text-left">
