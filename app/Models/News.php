@@ -39,7 +39,7 @@ class News extends Model
         $news = $this
             ->leftJoin('News_Type', 'News.id_News_Type', '=', 'News_Type.id_News_Type')
             ->whereNull("Deleted")
-            ->orderBy('Story_Date', 'asc');
+            ->orderBy('Story_Date', 'desc');
         return $news->get();
     }
 
