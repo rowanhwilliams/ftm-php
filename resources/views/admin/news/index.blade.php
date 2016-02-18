@@ -10,18 +10,18 @@
                             "aLengthMenu": [25,50,100],
                             "sPaginationType": "full_numbers",
                             "columnDefs": [
-                                { null },
-                                {"width": "15%"},
-                                {"width": "45%"},
-                                null,
-                                {"width": "5%"}
+                                {"bSortable": false },
+                                {"width": "15%", "bSortable": true},
+                                {"width": "45%", "bSortable": true},
+								{"bSortable": true},
+                                {"width": "5%", , "bSortable": true}
                             ],
 							"aoColumns": [
                                 { "bSortable": false },
-                                {"width": "15%"},
-                                {"width": "40%"},
                                 null,
-                                {"width": "5%"}
+                                null,
+                                null,
+                                null
                             ]
                         });
                     }
