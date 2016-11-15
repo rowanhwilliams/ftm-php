@@ -61,7 +61,7 @@ class CompaniesController extends Controller
 
         $companies = DB::table('Company')
             ->select('Company.id_Company','Company.Company_Full_Name','Company.Year_Founded','Company.Website','Company.id_Employee_Size',
-                     'Employee_Size.Employee_Size', 'Addresses.City', 'Addresses.State', 'Country.Country','Revenue_Stage.Revenue_Stage', 'Company.Is_Published')
+                     'Employee_Size.Employee_Size', 'Addresses.City', 'Addresses.State', 'Country.Country','Revenue_Stage.Revenue_Stage', 'Company.Is_Published', 'Company.Is_Capital_Markets')
             ->leftJoin('Employee_Size', 'Company.id_Employee_Size', '=', 'Employee_Size.id_Employee_Size')
             ->leftJoin('Headquarters_Information', 'Company.id_Company', '=', 'Headquarters_Information.id_Company')
             ->leftJoin('Addresses', 'Headquarters_Information.AddressId', '=', 'Addresses.AddressId')
@@ -405,6 +405,7 @@ class CompaniesController extends Controller
             'Company_About_Us' => 'string',
             'Company_Description_FTM' => 'string',
 			'Is_Published' => 'sometimes|accepted',
+            'Is_Captial_Markets' => 'sometimes|accepted',
         ];
         $this->validate($request,$CompanyValidator);
         foreach(array_keys($CompanyValidator) as $key){

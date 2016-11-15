@@ -63,6 +63,7 @@
                                   <th>Website</th>
                                   <th>Product Name </th>
 								  <th nowrap="">Approved</th>
+                                  <th nowrap="">Capital Markets</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -106,6 +107,13 @@
                                       </td>
 									  <td class=text-center">
 										@if($company->Is_Published == 1)
+											<i class="icon-ok"></i>
+										@else
+											<i class="icon-ban"></span>
+										@endif
+									  </td>
+                                      <td class=text-center">
+										@if($company->Is_Capital_Markets == 1)
 											<i class="icon-ok"></i>
 										@else
 											<i class="icon-ban"></span>

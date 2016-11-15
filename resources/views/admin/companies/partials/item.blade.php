@@ -47,6 +47,9 @@
         <div>{!! Form::checkbox('Is_Published') !!} {!!  Form::label('Is_Published', 'Approved', Array("style" => "font-size: 16px;")) !!} </div>
     </div>
     <div class="form-group">
+        <div>{!! Form::checkbox('Is_Capital_Markets') !!} {!!  Form::label('Is_Capital_Markets', 'Captial Markets', Array("style" => "font-size: 16px;")) !!} </div>
+    </div>
+    <div class="form-group">
         <div>{!! Form::label('Company_Full_Name', 'Company Full Name:', Array("style" => "font-size: 16px;")) !!}</div>
         <div>{!! Form::text('Company_Full_Name', null, Array('class'=>'form-control','placeholder'=>'Company Full Name')) !!}</div>
     </div>
