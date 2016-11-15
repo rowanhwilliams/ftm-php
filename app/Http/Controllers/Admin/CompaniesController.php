@@ -405,7 +405,7 @@ class CompaniesController extends Controller
             'Company_About_Us' => 'string',
             'Company_Description_FTM' => 'string',
 			'Is_Published' => 'sometimes|accepted',
-            'Is_Captial_Markets' => 'sometimes|accepted',
+            'Is_Capital_Markets' => 'sometimes|accepted',
         ];
         $this->validate($request,$CompanyValidator);
         foreach(array_keys($CompanyValidator) as $key){
